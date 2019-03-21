@@ -1,15 +1,18 @@
 ---
 title: Kafka Message Delivery Semantics
-date: 2019-03-17 20:19:21
 tags:
+  - Apache Kafka
+categories:
+  - Apache Kafka
+abbrlink: 3775642630
+date: 2019-03-17 20:19:21
 ---
-@[toc]
 # Kafka 消息交付（Delivery）语义
 Kafka的消息交付语义有三种，At most once、At least once和Exactly once，它们的官方解释如下：
  - At most once—Messages may be lost but are never redelivered.
  - At least once—Messages are never lost but may be redelivered.
  - Exactly once—this is what people actually want, each message is delivered once and only once.
-
+<!-- more -->
 ## Once的意义
 上面提到的Kafka的三种消息交付语义的知识点已经烂大街了，但是这里的once指的意义，需要进一步明确一下；
 这里的Once的指的不是消息接收到的次数，而是指的在没有抛出阻碍给Kafka Server反馈Offset的异常的情况下，成功处理一条消息的次数。
@@ -46,14 +49,14 @@ Kafka Topic1->BS1-Kafka Topic2->BS2-Kafka Topic3->BS3->Kafka Topic4->DB
 KafkaProducer相关配置参数：acks、retries、enable.idempotence、max.in.flight.requests.per.connection
 KafkaConsumer相关配置参数：enable.auto.commit、auto.commit.interval.ms、isolation.level
 # Kafka Client API
-
-    KafkaProducer
-    initTransactions
-    beginTransaction
-    sendOffsetsToTransaction
-    commitTransaction
-    abortTransaction
-
+``` java KafkaProducer
+KafkaProducer
+initTransactions
+beginTransaction
+sendOffsetsToTransaction
+commitTransaction
+abortTransaction
+```
 KafkaProducer事务API用来保证在Receive-Process-Produce模式中，Produce数据到Kafka Topic时的EOS语义的；
 at most once 和 at least once的实现不用KafkaProducer事务API；只需要配置上述相关参数，处理好消息的业务处理和offset保存的先后顺序即可。
 

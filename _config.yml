@@ -3,19 +3,19 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 架构新势力
 subtitle:
 description:
-keywords:
-author: John Doe
-language:
+keywords: 架构 新势力
+author: 陈振阳
+language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://www.54architect.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: posts/:abbrlink.html
 permalink_defaults:
 
 # Directory
@@ -78,5 +78,24 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: https://github.com/chenzhenyang/chenzhenyang.github.io.git
+  - type: git
+    repo: 
+      ##github: git@github.com:chenzhenyang/chenzhenyang.github.io.git
+      coding: git@git.coding.net:chenzhenyang/chenzhenyang.git
+# word count
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+
+# local search db
+search: 
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+abbrlink:
+  alg: crc32  #support crc16(default) and crc32
+  rep: dec    #support dec(default) and hex
+
