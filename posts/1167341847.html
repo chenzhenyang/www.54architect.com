@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="m7PnUxOvbm">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false,"dimmer":true},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6918616608431911",
+    enable_page_level_ads: true
+  });
+</script>
+<script type="text/javascript">
+var infolinks_pid = 3172115;
+var infolinks_wsid = 0;
+</script>
+<script type="text/javascript" src="http://resources.infolinks.com/js/infolinks_main.js"></script>
+
+
+  <meta name="description" content="java.lang.instrument简介 Java5之后，增加了一个包java.lang.instrument，这个包的东西很少，两个接口，ClassFileTransformer和Instrumentation，一个类ClassDefinition，还有两个Exception：IllegalClassFormatException和UnmodifiableClassException； 先剧">
+<meta name="keywords" content="Java ABC,Instument">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Instument Package">
+<meta property="og:url" content="https://www.54architect.com/posts/1167341847.html">
+<meta property="og:site_name" content="架构新势力">
+<meta property="og:description" content="java.lang.instrument简介 Java5之后，增加了一个包java.lang.instrument，这个包的东西很少，两个接口，ClassFileTransformer和Instrumentation，一个类ClassDefinition，还有两个Exception：IllegalClassFormatException和UnmodifiableClassException； 先剧">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-10-15T04:09:19.239Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Instument Package">
+<meta name="twitter:description" content="java.lang.instrument简介 Java5之后，增加了一个包java.lang.instrument，这个包的东西很少，两个接口，ClassFileTransformer和Instrumentation，一个类ClassDefinition，还有两个Exception：IllegalClassFormatException和UnmodifiableClassException； 先剧">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.54architect.com/posts/1167341847.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Java Instument Package | 架构新势力</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9b7427cca3869988f791f21c9bb898e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">架构新势力</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">16</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">8</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">12</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.54architect.com/posts/1167341847.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈振阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1552832480&di=1063ad4edffadcf07bf2d37cd2ed1ce1&src=http://img3.duitang.com/uploads/item/201502/08/20150208151906_sWaPQ.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="架构新势力">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java Instument Package
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-20 13:43:46" itemprop="dateCreated datePublished" datetime="2019-03-20T13:43:46+08:00">2019-03-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-10-15 12:09:19" itemprop="dateModified" datetime="2020-10-15T12:09:19+08:00">2020-10-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+              
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/posts/1167341847.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="posts/1167341847.html" itemprop="commentCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+            <span id="/posts/1167341847.html" class="leancloud_visitors" data-flag-title="Java Instument Package">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">18k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">16 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1><span id="javalanginstrument简介">java.lang.instrument简介</span></h1><p>Java5之后，增加了一个包java.lang.instrument，这个包的东西很少，两个接口，ClassFileTransformer和Instrumentation，一个类ClassDefinition，还有两个Exception：IllegalClassFormatException和UnmodifiableClassException；<br>先剧透一下整个包最重要的接口Instrumentation提供的两个功能，总体的功能就是Instrument了，具体来讲两个，从字节码级别为类增加Instrument所需的代码，第二个是获取对象的大小。<br>先看一下这个包的描述吧，下面是JavaDoc的翻译：<br><a id="more"></a></p>
+<h2><span id="package-javalanginstrument">package java.lang.instrument</span></h2><p>这个包提供允许一个Java程序语言的代理测量运行在JVM中的程序的多个指标的服务。</p>
+<h2><span id="package-javalanginstrumentdescription">Package Java.lang.instrumentDescription</span></h2><p>这个包提供允许一个Java程序语言的代理测量运行在JVM中的程序的多个指标的服务。监测的机制是修改类的方法的字节码。</p>
+<h2><span id="package-specification">Package Specification</span></h2><p>一个代理就是部署一个Jar文件。Jar文件的manifest文件（每个jar包根目录下有个META-INF文件夹，此文件夹下的MANIFEST.MF文件就是这里的manifest文件）需要指定这个代理的类，指定之后，这个类将被加载以启动代理。因为支持命令行接口，所以一个代理可以通过在命令行中指定一个选项来移动。具体的实现也可能支持在虚拟机启动之后的某个时间开启代理。例如，一个具体的实现可能提供一个机制，使一个工具附加到一个运行的应用中，然后，初始化这个工具的代理，加载到正在运行的应用中。关于类的加载如何被初始化的细节，依赖于具体的实现。</p>
+<h2><span id="command-line-interface">Command-Line Interface</span></h2><p>在用命令行接口的实现中，一个代理可以通过增加下面的Option到命令行中启动：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-javaagent:jarpath[=options]</span><br></pre></td></tr></table></figure>
+<p>Jarpath是代理jar文件的路径。Option是代理的选项。上边的命令可以在同一个命令行中使用多次，因此，可以创建多个代理。多个代理可以使用同一jarpath。一个代理Jar文件必须符合Jar文件规范。</p>
+<p>一个代理jar文件的manifest必须包含Premain-Class属性。这个属性的值是代理类的名字。代理类必须实现一个public static的premain 方法，与应用程序中的main方法作为程序入口的原理类似。JVM初始化之后，每一个premain方法将被以代理被指定时的顺序调用，然后应用程序真正的main方法将被调用。每一个premain方法必须以启动的顺序返回结果。（premain=pre-main）</p>
+<p>Premain方法有两个重载的方法。JVM首先尝试调用代理类中下面的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="title">voidpremain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>如果代理类没有实现这个方法，jvm将尝试调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="title">voidpremain</span><span class="params">(String agentArgs)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>代理类可能还有一个agentmain方法，当代理类在JVM启动之后被启动时使用。当代理类使用命令行选项被启动时，agentmain方法不被调用。</p>
+<p>Agent类通过系统的类加载器加载（ClassLoader.getSystemClassLoader）。这个类加载器通常跟用来加载包含应用程序的main方法的类加载器是一个。Premain方法将运行在跟应用程序main方法同样的安全机制和类加载下。代理的premain方法做什么是没有限制的。任何应用程序main方法可以做的，包括创建线程，在premain中都是合法的。</p>
+<p>每一个代理经由agentArgs参数传给它的代理选项。代理选项以一个字符串被被传递，任何附加的解析操作应该是代理自己执行。</p>
+<p>如果代理不能被解析（例如，因为代理类不能加载，或者因为代理类没有一个合适的premain方法），JVM将会abort。如果一个premain方法跑出一个未捕获的错误，JVM将会abort。</p>
+<h2><span id="starting-agents-after-vm-startup">Starting Agents After VM Startup</span></h2><p>一个代理具体的实现可能提供一个在JVM启动之后启动的机制。关于代理被初始化的细节是具体实现特定的，但是通常应用程序已经启动，应用程序的main方法已经被调用。在代理的实现支持在JVM启动之后启动的情况下，需要遵循下面的规则：</p>
+<ol>
+<li>代理的Jar文件中的manifest文件必须包含Agent-Class属性。这个属性的值是代理类的名字。</li>
+<li>代理类必须实现一个public static agentmain方法</li>
+<li>系统类加载器（ ClassLoader.getSystemClassLoader）必须支持增加一个代理Jar文件到系统类路径。</li>
+</ol>
+<p>代理的Jar文件被追加到系统类路径中。这个类加载器是通常用来加载包含应用程序main方法的类的类加载器。代理类被加载之后，JVM尝试调用agentmain方法。JVM首先尝试调用代理类中的下面这个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>如果代理类中没有实现这个方法，然后JVM尝试调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="title">voidagentmain</span><span class="params">(String agentArgs)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这个代理类可能也有一个premain方法，当代理在命令行选项中启动时使用；当这个代理类在JVM启动之后启动时，premain方法不会被调用。</p>
+<p>代理通过agentArgs参数传给代理选项。代理选项以字符串的形式传给代理内部的方法，任何附加的解析操作应该代理自己操作。</p>
+<p>Agentmain方法应该做一些启动代理之前必要的初始化操作。当启动完成时，这个方法应该返回。如果代理不能被启动（例如，因为代理类不能被加载，或者因为代理类不包含一致的agentmain方法），JVM将不会被abort。如果agentmain方法抛出一个未捕获的错误，这个错误将被忽略。</p>
+<p>注：著名的Java运行时分析工具Profiler有在监测Java程序时有两种模式，一种是用Profiler启动应用，一种是应用启动，然后附加到Profiler中，就是分别用的上边的两种方式。</p>
+<h2><span id="manifest-attributes">Manifest Attributes</span></h2><p>下面的manifest属性在一个代理的jar文件中被定义：</p>
+<p>Premain-Class</p>
+<p>当一个代理在JVM启动时被指定时，这个属性指定代理使用的类。也就是，这个类包含premain方法。当一个代理在JVM启动时被指定时，这个属性是必须的。如果没有配置这个属性，JVM将会abort。注意：这是一个雷的名字，不是一个文件名活路径。</p>
+<p><strong>Agent-Class</strong><br>如果一个代理的实现支持在JVM启动之后的某个时间启动，这个属性指定一个代理类。也就是说，这个类要包含agentmain方法。这个属性是必须的，如果不配置的话，代理将不会被启动。注意：这是一个类的名字，不是一个文件名字，也不是文件路径。</p>
+<p><strong>Boot-Class-Path</strong><br>这个代理的实现中用到的第三方jar包都放到这里边。</p>
+<p><strong>Can-Redefine-Classes</strong><br>Boolean（true或false）。Agent是否可以重定义类。可选的，默认是false。</p>
+<p><strong>Can-Retransform-Classes</strong><br>Boolean（true或false）。Agent是否可以将类变回原形。可选的，默认是false。</p>
+<p><strong>Can-Set-Native-Method-Prefix</strong><br>Boolean（true或false）。Agent是否可以设置本地方法的前缀。可选的，默认是false。</p>
+<p>一个代理Jar文件中的manifest文件可能同时包含Premain-Class和Agent-Class属性。当代理在命令行中用-javaagent选项被启动，使用Premain-Class属性指定的代理类的名字，然后Agent-Class属性的配置被忽略。相似地，如果代理在JVM启动之后的某个时间启动，使用Agent-Class属性指定的类的名字，Premain-Class属性被忽略。</p>
+<h1><span id="instrumentation">Instrumentation</span></h1><p>下面再看一下Instrumentation这个最主要的接口的一些介绍。</p>
+<p>这是一个接口，提供了监测java程序语言代码的服务。Instrumentation将附加的功能的字节码添加到被监控的方法中，来收集应用的运行的一些数据。因为这个改变只有增加东西，监测工具可以不用修改应用的状态和表现。这样的工具包括监控代理，分析工具，代码覆盖分析器和事件日志器等。</p>
+<p>有两种方式获得一个Instrumentation接口的实例：</p>
+<ol>
+<li>当JVM启动时，指定一个代理类。在这种情况下，一个Instrumentation实例传到代理类的premain方法中。</li>
+<li>JVM提供可以让代理类在JVM启动后启动的机制。在这种情况下，一个Instrumentation实例传给代理的agentmain方法。</li>
+</ol>
+<p>这两种机制在上边的package specification中有详尽的描述。</p>
+<p>一旦一个代理获取到一个Instrumentation实例，代理可以再之后的任何时刻调用实例的方法。</p>
+<h2><span id="method-summary">Method Summary</span></h2><p>主要的方法就是下面几个：</p>
+<p>addTransformer：指定一个ClassFileTransformer对象。可以先看下下面ClassFileTransformer接口的介绍。<br>getAllLoadedClasses：返回当前JVM中加载的所有的类的数组（牛逼）<br>getInitiatedClasses：返回指定的类加载器中的所有的类的数据（牛逼，too）<br>getObjectSize：返回一个对象近似的大小<br>redefineClasses：用给定的类的字节码数组替换指定的类的字节码文件，也就是重新定义指定的类<br>retransformClasses：指定一系列的Class对象，被指定的类都会重新变回去（去掉附加的字节码）<br>剩下的几个都是对上边manifest文件中配置的属性的一下操作和运行时接口。</p>
+<p>到这，看下Instrumentation接口的主要功能，从Instrumentation接口提供的这几个方法，可以看出Instrumentation的主要功能，就是修改类的字节码文件，更确切的说是修改类的字节码文件，增加自定义的功能的字节码，生成一个新的字节码文件。这是这个接口存在的最主要的意义。</p>
+<h1><span id="classfiletransformer">ClassFileTransformer</span></h1><p>先看下Doc上的简介，一个代理提供一个为了改变类文件而存在的接口的实现。这个改变发生在这个类被JVM定义之前。</p>
+<p>这个接口只有一个方法transform，将类的字节码传给这个方法，然后返回一个增加了自定义的功能的字节码的字节数组。</p>
+<p>这个接口存在的意义，主要是解耦Instrumentation类和改变类文件的操作。</p>
+<h1><span id="classdefinition">ClassDefinition</span></h1><p>这个类只在Instrumentation#redefineClasses方法中被调用，这个类有两个域，</p>
+<p>Class mClass；</p>
+<p>Byte[] mClassFile；</p>
+<p>mClass是要重新定义的类的Class对象</p>
+<p>mClassFile是新的类的字节码数组</p>
+<h1><span id="example1">example1</span></h1><p>下面举一个简单的例子，来感受一下，来自网络，功能是打印每一个方法的执行时间。</p>
+<h2><span id="agent类">Agent类</span></h2><figure class="highlight java"><figcaption><span>PerfMonAgent</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">packagecom.highgo.test.instrumentation;</span><br><span class="line"> </span><br><span class="line">importjava.lang.instrument.ClassFileTransformer;</span><br><span class="line">importjava.lang.instrument.Instrumentation;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PerfMonAgent</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">         <span class="keyword">private</span> <span class="keyword">static</span> Instrumentation inst = <span class="keyword">null</span>;</span><br><span class="line"> </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs, Instrumentation_inst)</span> </span>&#123;</span><br><span class="line">                   System.out.println(<span class="string">"PerfMonAgent.premain()was called. I am premain!"</span>);</span><br><span class="line">                   <span class="comment">// Initialize the static variables we use to trackinformation.</span></span><br><span class="line">                   inst = _inst;</span><br><span class="line">                   <span class="comment">// Set up the class-file transformer.</span></span><br><span class="line">                   ClassFileTransformer trans = <span class="keyword">new</span> PerfMonXformer();</span><br><span class="line">                   System.out.println(<span class="string">"Adding a PerfMonXformerinstance to the JVM."</span>);</span><br><span class="line">                   inst.addTransformer(trans);</span><br><span class="line">         &#125;</span><br><span class="line"> </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">agentmain</span><span class="params">(String agentArgs,Instrumentation _inst)</span> </span>&#123;</span><br><span class="line">                   System.out.println(<span class="string">"PerfMonAgent.premain()was called. I am agentmain!"</span>);</span><br><span class="line">                   <span class="comment">// Initialize the static variables we use to trackinformation.</span></span><br><span class="line">                   inst = _inst;</span><br><span class="line">                   <span class="comment">// Set up the class-file transformer.</span></span><br><span class="line">                   ClassFileTransformer trans = <span class="keyword">new</span> PerfMonXformer();</span><br><span class="line">                   System.out.println(<span class="string">"Adding a PerfMonXformerinstance to the JVM."</span>);</span><br><span class="line">                   inst.addTransformer(trans);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="classfiletransformer类">ClassFileTransformer类</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">packagecom.highgo.test.instrumentation;</span><br><span class="line"> </span><br><span class="line">importjava.lang.instrument.ClassFileTransformer;</span><br><span class="line">importjava.lang.instrument.IllegalClassFormatException;</span><br><span class="line">importjava.security.ProtectionDomain;</span><br><span class="line"> </span><br><span class="line">importjavassist.CannotCompileException;</span><br><span class="line"><span class="keyword">import</span> javassist.ClassPool;</span><br><span class="line"><span class="keyword">import</span> javassist.CtBehavior;</span><br><span class="line"><span class="keyword">import</span> javassist.CtClass;</span><br><span class="line">importjavassist.NotFoundException;</span><br><span class="line">importjavassist.expr.ExprEditor;</span><br><span class="line">importjavassist.expr.MethodCall;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PerfMonXformerimplements</span> <span class="title">ClassFileTransformer</span> </span>&#123;</span><br><span class="line">         <span class="keyword">public</span> <span class="keyword">byte</span>[] transform(ClassLoader loader, StringclassName, Class&lt;?&gt; classBeingRedefined,</span><br><span class="line">                            ProtectionDomain protectionDomain, <span class="keyword">byte</span>[]classfileBuffer) <span class="keyword">throws</span> IllegalClassFormatException &#123;</span><br><span class="line">                   <span class="keyword">byte</span>[] transformed = <span class="keyword">null</span>;</span><br><span class="line">                   System.out.println(<span class="string">"Transforming "</span> +className);</span><br><span class="line">                   ClassPool pool = ClassPool.getDefault();</span><br><span class="line">                   CtClass cl = <span class="keyword">null</span>;</span><br><span class="line">                   <span class="keyword">try</span> &#123;</span><br><span class="line">                            cl = pool.makeClass(newjava.io.ByteArrayInputStream(classfileBuffer));</span><br><span class="line">                            <span class="keyword">if</span> (cl.isInterface() == <span class="keyword">false</span>) &#123;</span><br><span class="line">                                     CtBehavior[] methods =cl.getDeclaredBehaviors();</span><br><span class="line">                                     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; methods.length; i++) &#123;</span><br><span class="line">                                               <span class="keyword">if</span>(methods[i].isEmpty() == <span class="keyword">false</span>) &#123;</span><br><span class="line">                                                        doMethod(methods[i]);</span><br><span class="line">                                               &#125;</span><br><span class="line">                                     &#125;</span><br><span class="line">                                     transformed = cl.toBytecode();</span><br><span class="line">                            &#125;</span><br><span class="line">                   &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                            System.err.println(<span class="string">"Could notinstrument  "</span> + className + <span class="string">",  exception : "</span> + e.getMessage());</span><br><span class="line">                   &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            <span class="keyword">if</span> (cl != <span class="keyword">null</span>) &#123;</span><br><span class="line">                                     cl.detach();</span><br><span class="line">                            &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">                   <span class="keyword">return</span> transformed;</span><br><span class="line">         &#125;</span><br><span class="line"> </span><br><span class="line">         <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doMethod</span><span class="params">(CtBehavior method)</span> throwsNotFoundException, CannotCompileException </span>&#123;</span><br><span class="line">                   <span class="comment">// method.insertBefore("long stime =System.nanoTime();");</span></span><br><span class="line">                   <span class="comment">//method.insertAfter("System.out.println(\"leave"+method.getName()+" andtime:\"+(System.nanoTime()-stime));");</span></span><br><span class="line">                   method.instrument(<span class="keyword">new</span> ExprEditor() &#123;</span><br><span class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">edit</span><span class="params">(MethodCall m)</span> throwsCannotCompileException </span>&#123;</span><br><span class="line">                                     m.replace(<span class="string">"&#123; long stime =System.nanoTime(); $_ = $proceed($$); System.out.println(\""</span></span><br><span class="line">                                                        +m.getClassName() + <span class="string">"."</span> + m.getMethodName() +<span class="string">":\"+(System.nanoTime()-stime));&#125;"</span>);</span><br><span class="line">                            &#125;</span><br><span class="line">                   &#125;);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="manifestmf文件">MANIFEST.MF文件</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: <span class="number">1.0</span></span><br><span class="line">Premain-Class:com.highgo.test.instrumentation.PerfMonAgent</span><br><span class="line">Boot-Class-Path: javassist.jar</span><br></pre></td></tr></table></figure>
+<p>Boot-Class-Path这样写要将javassist.jar文件放到jar包的根目录</p>
+<h2><span id="打jar包">打jar包</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar cvfm inst.jar MANIFEST.MFjavassist.jar com</span><br></pre></td></tr></table></figure>
+<p>使用自己写的MANIFEST.MF文件，<br>将javassist.jar和com文件夹下的类打成jar包<br>这样这个jar包就作为一个提供打印方法时间的服务而存在了</p>
+<h2><span id="使用instjar">使用inst.jar</span></h2><p>随便编写一个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">new</span> App().test();</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"HelloWorld!!"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行此类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -javaagent:../inst.jarclasspath .;../inst.jar App</span><br></pre></td></tr></table></figure>
+<p>可以看到，将运行这个类的过程中用到的所有的类的方法的方法名+时间都打印出来了。</p>
+<h1><span id="example12">example12</span></h1><p>这里使用第二种方式，也就是先启动JVM，再启动agent类的方式，做一个例子。</p>
+<p>在使用JProfiler的quick attch时，我们的使用方法是这样的：运行我们的应用程序，切换到这个界面，我们的应用就会出现在下面这个地方，ID是OS分配给这个进程的进程ID，后边是进程的名字，其实attch用到的只是进程ID号；选中这个进程，就到了分析界面了。</p>
+<p>我们下面的例子也是按照这个顺序：</p>
+<ol>
+<li>编写Agent，打包成服务</li>
+<li>编写一个应用程序，运行</li>
+<li>编写一个工具，将Agent的jar包attach到Agent所在的JVM（具体实现是将应用程序的ID传递给工具）</li>
+</ol>
+<h2><span id="编写agent">编写Agent</span></h2><figure class="highlight java"><figcaption><span>classPerfMonAgent</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">packagecom.highgo.test.instrumentation;</span><br><span class="line"> </span><br><span class="line">importjava.lang.instrument.ClassFileTransformer;</span><br><span class="line">importjava.lang.instrument.Instrumentation;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> classPerfMonAgent &#123;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> Instrumentation inst = <span class="keyword">null</span>;</span><br><span class="line"> </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs,Instrumentation _inst)</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"PerfMonAgent.premain()was called. I am premain!"</span>);</span><br><span class="line">      <span class="comment">// Initialize the static variables we useto track information.</span></span><br><span class="line">      inst = _inst;</span><br><span class="line">      <span class="comment">// Set up the class-file transformer.</span></span><br><span class="line">      ClassFileTransformer trans = newPerfMonXformer();</span><br><span class="line">      System.out.println(<span class="string">"Adding aPerfMonXformer instance to the JVM."</span>);</span><br><span class="line">      inst.addTransformer(trans);</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">agentmain</span><span class="params">(StringagentArgs, Instrumentation _inst)</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"PerfMonAgent.premain()was called. I am agentmain!"</span>);</span><br><span class="line">      inst = _inst;</span><br><span class="line">      Class&lt;?&gt;[] classes =inst.getAllLoadedClasses();</span><br><span class="line">      <span class="keyword">for</span> (Class&lt;?&gt; cls : classes) &#123;</span><br><span class="line">         System.out.println(cls.getName());</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(<span class="string">"classeslength:"</span>+classes.length);</span><br><span class="line">      System.out.println(<span class="string">"PerfMonAgent.premain()end!"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里把第二种方式用到的agentmain方法直接加到第一种方式使用的类中了。</p>
+<h2><span id="编写manifest文件">编写MANIFEST文件</span></h2><figure class="highlight java"><figcaption><span>MANIFEST</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: <span class="number">1.0</span></span><br><span class="line">Premain-Class:com.highgo.test.instrumentation.PerfMonAgent</span><br><span class="line">Agent-Class:com.highgo.test.instrumentation.PerfMonAgent</span><br><span class="line">Boot-Class-Path: javassist.jar</span><br></pre></td></tr></table></figure>
+<p>只是增加了Agent-Class的配置。</p>
+<h2><span id="将此agent打成jar包">将此Agent打成Jar包</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar cvfm inst.jar MANIFEST.MFjavassist.jar com</span><br></pre></td></tr></table></figure>
+<p>还是上边用到的命令</p>
+<h2><span id="编写应用程序">编写应用程序</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TargetVM</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">      <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">         Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就一个线程，一直运行着。</p>
+<h2><span id="查看上边进程的id">查看上边进程的ID</span></h2><p>用jps命令可以方便的查看进程的ID，名字是应用程序main方法所在的类的名字。可以很容易的分辨出来。</p>
+<h2><span id="运行attach工具类">运行Attach工具类</span></h2><figure class="highlight java"><figcaption><span>AttachUtil</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AttachUtil</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> AttachNotSupportedException, IOException, AgentLoadException,AgentInitializationException </span>&#123;</span><br><span class="line">      String id = <span class="string">"520384"</span>;</span><br><span class="line">      VirtualMachine vm = VirtualMachine.attach(id);</span><br><span class="line">        vm.loadAgent(<span class="string">"inst.jar"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里用到了JDK的tools.jar工具包，不了解这个Jar包的朋友可以再本博客搜一下关于这个jar包的详细介绍。Eclipse默认加的jar包没有这个，可以从jdk的安装目录里找到，加到项目的sspath里就行了；如果是用javac去编译的话，只要将这个类加入到系统的classpath里就可以了，这个工具类就也可以编译，也可以运行了。</p>
+<p>将ID修改成jps查看到的那个ID号，这个工具类就可以创建一个ID号所在的进程的VirtualMachine对象，这个对象就代表那个JVM。VirtualMachine#loadAgent方法可以加载一个Agent。</p>
+<p>当AttachUtil方法运行到vm.loadAgent(“inst.jar”);这行代码的时候，就可以看到Eclipse的控制台会打印出PerfMonAgent# agentmain方法执行的打印内容,应用程序所在的JVM中加载的所有的类的名字。</p>
+<h1><span id="instrumentationgetobjectsize">Instrumentation#getObjectSize</span></h1><p>从上边Instrumentation的method summary可以看出，Instrumentation接口的另一个功能就是获取一个对象的大小。</p>
+<p>这里我们直接分析一下classmexer的源码</p>
+<h2><span id="manifest文件">MANIFEST文件</span></h2><p>Classmexer的Agent使用的是第一种方式，所以看他的MANIFEST.MF文件如下：</p>
+<figure class="highlight java"><figcaption><span>MANIFEST</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: <span class="number">1.0</span></span><br><span class="line">Created-By: <span class="number">1.6</span><span class="number">.0</span> (SunMicrosystems Inc.)</span><br><span class="line">Premain-Class:com.javamex.classmexer.Agent</span><br></pre></td></tr></table></figure>
+<p>这个项目只有两个类，Agent和MemoryUtil</p>
+<h2><span id="agent类">Agent类</span></h2><p>Agent的主要目的是获取一个Instrumentation的实例。内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">packagecom.javamex.classmexer;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.Instrumentation;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Agent</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Instrumentationinstrumentation;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String args,Instrumentation instr)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    instrumentation = instr;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> Instrumentation <span class="title">getInstrumentation</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    Instrumentation instr = instrumentation;</span><br><span class="line">    <span class="keyword">if</span> (instr == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> newIllegalStateException(<span class="string">"Agent not initted"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instr;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="memoryutil类">MemoryUtil类：</span></h2><figure class="highlight java"><figcaption><span>MemoryUtil</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">packagecom.javamex.classmexer;</span><br><span class="line"> </span><br><span class="line">importjava.lang.instrument.Instrumentation;</span><br><span class="line">importjava.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemoryUtil</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> VisibilityFilter</span><br><span class="line">  &#123;</span><br><span class="line">    ALL, PRIVATE_ONLY,  NON_PUBLIC,  NONE;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">memoryUsageOf</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    returnAgent.getInstrumentation().getObjectSize(obj);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">deepMemoryUsageOf</span><span class="params">(Objectobj)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> deepMemoryUsageOf(obj,VisibilityFilter.NON_PUBLIC);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">deepMemoryUsageOf</span><span class="params">(Objectobj, VisibilityFilter referenceFilter)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    returndeepMemoryUsageOf0(Agent.getInstrumentation(), <span class="keyword">new</span> HashSet(), obj,referenceFilter);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="title">longdeepMemoryUsageOfAll</span><span class="params">(Collection&lt;? extends Object&gt; objs)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> deepMemoryUsageOfAll(objs,VisibilityFilter.NON_PUBLIC);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="title">longdeepMemoryUsageOfAll</span><span class="params">(Collection&lt;? extends Object&gt; objs, VisibilityFilterreferenceFilter)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    Instrumentation instr =Agent.getInstrumentation();</span><br><span class="line">    <span class="keyword">long</span> total = <span class="number">0L</span>;</span><br><span class="line">   </span><br><span class="line">    Set&lt;Integer&gt; counted = newHashSet(objs.size() * <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">for</span> (Object o : objs) &#123;</span><br><span class="line">      total += deepMemoryUsageOf0(instr,counted, o, referenceFilter);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="title">longdeepMemoryUsageOf0</span><span class="params">(Instrumentation instrumentation, Set&lt;Integer&gt; counted,Object obj, VisibilityFilter filter)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> SecurityException</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    Stack&lt;Object&gt; st = <span class="keyword">new</span> Stack();</span><br><span class="line">    st.push(obj);</span><br><span class="line">    <span class="keyword">long</span> total = <span class="number">0L</span>;</span><br><span class="line">    <span class="keyword">while</span> (!st.isEmpty())</span><br><span class="line">    &#123;</span><br><span class="line">      Object o = st.pop();</span><br><span class="line">      <span class="keyword">if</span> (counted.add(Integer.valueOf(System.identityHashCode(o))))</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">long</span> sz =instrumentation.getObjectSize(o);</span><br><span class="line">        total += sz;</span><br><span class="line">       </span><br><span class="line">        Class clz = o.getClass();</span><br><span class="line">       </span><br><span class="line"> </span><br><span class="line">        Class compType =clz.getComponentType();</span><br><span class="line">        Object localObject1;</span><br><span class="line">        Object localObject2;</span><br><span class="line">        Object el;</span><br><span class="line">        <span class="keyword">if</span> ((compType != <span class="keyword">null</span>) &amp;&amp;</span><br><span class="line">          (!compType.isPrimitive()))</span><br><span class="line">        &#123;</span><br><span class="line">          Object[] arr = (Object[])o;</span><br><span class="line">          Object[] arrayOfObject1 =arr;localObject1 = <span class="number">0</span>;</span><br><span class="line">         <span class="keyword">for</span> (localObject2 = arrayOfObject1.length; localObject1 &lt;localObject2; localObject1++)</span><br><span class="line">          &#123;</span><br><span class="line">            el = arrayOfObject1[localObject1];</span><br><span class="line">            <span class="keyword">if</span> (el != <span class="keyword">null</span>) &#123;</span><br><span class="line">              st.push(el);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (clz != <span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">for</span> (Field fld :clz.getDeclaredFields())</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="keyword">int</span> mod = fld.getModifiers();</span><br><span class="line">            <span class="keyword">if</span> (((mod &amp; <span class="number">0x8</span>) == <span class="number">0</span>)&amp;&amp; (isOf(filter, mod)))</span><br><span class="line">            &#123;</span><br><span class="line">              Class fieldClass = fld.getType();</span><br><span class="line">              <span class="keyword">if</span> (!fieldClass.isPrimitive())</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="keyword">if</span> (!fld.isAccessible()) &#123;</span><br><span class="line">                  fld.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                  Object subObj = fld.get(o);</span><br><span class="line">                  <span class="keyword">if</span> (subObj != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    st.push(subObj);</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (IllegalAccessExceptionillAcc)</span><br><span class="line">                &#123;</span><br><span class="line">                  <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(<span class="string">"Couldn'tread "</span> + fld);</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          clz = clz.getSuperclass();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isOf</span><span class="params">(VisibilityFilterf, <span class="keyword">int</span> mod)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (f)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> ALL:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">case</span> PRIVATE_ONLY:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">case</span> NONE:</span><br><span class="line">      <span class="keyword">return</span> (mod &amp; <span class="number">0x2</span>) != <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">case</span> NON_PUBLIC:</span><br><span class="line">      <span class="keyword">return</span> (mod &amp; <span class="number">0x1</span>) == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> newIllegalArgumentException(<span class="string">"Illegal filter "</span> + mod);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，最主要的方法是deepMemoryUsageOf0(Instrumentation instrumentation,Set<integer> counted, Object obj, VisibilityFilter filter)<br>这个方法的主要的工作是对一个对象的域进行深度遍历，获取最底层的每个对象的大小，然后加起来。<br>到这里，Instrumentation的所有的功能就完事了，其实就是两个，一个获取对象的大小，一个是作为一个服务，在JVM中的类被定义之前修改类的字节码，跟Spring的AOP不仅形似而且神似。<br>上边的两个Example的代码分别来自于：<br><a href="http://blog.csdn.net/ykdsg/article/details/12080071" target="_blank" rel="noopener">http://blog.csdn.net/ykdsg/article/details/12080071</a><br><a href="http://blog.csdn.net/pwlazy/article/details/5109742" target="_blank" rel="noopener">http://blog.csdn.net/pwlazy/article/details/5109742</a></integer></p>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="陈振阳 wechat" style="width: 200px; max-width: 100%;">
+  <div>关注公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>陈振阳</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://www.54architect.com/posts/1167341847.html" title="Java Instument Package">https://www.54architect.com/posts/1167341847.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-ABC/" rel="tag"># Java ABC</a>
+          
+            <a href="/tags/Instument/" rel="tag"># Instument</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+          
+            <span class="post-meta-divider">|</span>
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/3262808649.html" rel="next" title="Using the State pattern in a Domain Driven Design">
+                <i class="fa fa-chevron-left"></i> Using the State pattern in a Domain Driven Design
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/706353777.html" rel="prev" title="Jaas Guide">
+                Jaas Guide <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6918616608431911",
+    enable_page_level_ads: true
+  });
+</script>
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1552832480&di=1063ad4edffadcf07bf2d37cd2ed1ce1&src=http://img3.duitang.com/uploads/item/201502/08/20150208151906_sWaPQ.jpeg" alt="陈振阳">
+            
+              <p class="site-author-name" itemprop="name">陈振阳</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chenzhenyang" title="GitHub &rarr; https://github.com/chenzhenyang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-nd.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/xichenguan" title="https://blog.csdn.net/xichenguan" rel="noopener" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D2R9OOQc2A9McQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClApVlwJggwxbAL8PtxxJsl4n%2FQI53oWrxtY7x7PaKnEZlW%2BCCx7%2F2tcZBWzNPD7%2BwVn0DGfdJ6SaUYMsSHLWchUVtQl8vLdysepHjKlMEkHC06du04PdR3Oc9XUfbPSJC%2FzEPa2dO8IvxFuRABmsVWWJ7aX0WuEyt01bwjpDl6wi5xfbi2zWeKf1HudoeDPMGTcYl7w3%2FA2kb"><img src="https://img.alicdn.com/tfs/TB1TDIoCxGYBuNjy0FnXXX5lpXa-300-100.png"></a>
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">java.lang.instrument简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text">package java.lang.instrument</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.2.</span> <span class="nav-text">Package Java.lang.instrumentDescription</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.3.</span> <span class="nav-text">Package Specification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.4.</span> <span class="nav-text">Command-Line Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.5.</span> <span class="nav-text">Starting Agents After VM Startup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.6.</span> <span class="nav-text">Manifest Attributes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">Instrumentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">Method Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">ClassFileTransformer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">ClassDefinition</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">example1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.1.</span> <span class="nav-text">Agent类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.2.</span> <span class="nav-text">ClassFileTransformer类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.3.</span> <span class="nav-text">MANIFEST.MF文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.4.</span> <span class="nav-text">打jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.5.</span> <span class="nav-text">使用inst.jar</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">example12</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.1.</span> <span class="nav-text">编写Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.2.</span> <span class="nav-text">编写MANIFEST文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.3.</span> <span class="nav-text">将此Agent打成Jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.4.</span> <span class="nav-text">编写应用程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.5.</span> <span class="nav-text">查看上边进程的ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.6.</span> <span class="nav-text">运行Attach工具类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">Instrumentation#getObjectSize</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">7.1.</span> <span class="nav-text">MANIFEST文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">7.2.</span> <span class="nav-text">Agent类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">7.3.</span> <span class="nav-text">MemoryUtil类：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+    <div id="sidebar-dimmer"></div>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <a href="http://www.miitbeian.gov.cn" rel="noopener" target="_blank">鲁ICP备19008601号-2 </a>&copy; 2019 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">架构新势力</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">56k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">51 分钟</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1.0.0/dist/quicklink.umd.js"></script>
+  <script>
+		window.addEventListener('load', () => {
+      quicklink({
+        timeout: 3000,
+        priority: true,
+        ignores: [uri => uri.includes('#'), ]
+      });
+    });
+  </script>
+
+  
+  
+  <script>
+  (function() {
+    var appid = 'cyu8If4Hr';
+    var conf = '4258f23dfe04bf63e46bb90f55e9c9a0';
+    var width = window.innerWidth || document.documentElement.clientWidth;
+    if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+    }
+    else {
+      var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})});
+    }
+  })();
+  </script>
+  <script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'vDI5ABlKiVm9M9QcDlgKTPkL-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'vDI5ABlKiVm9M9QcDlgKTPkL-gzGzoHsz',
+                'X-LC-Key': 'A7leI3UHnC0UUQYCR2HypEHo',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+
+  
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 17393,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
+
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/pangu@3/dist/browser/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      
+        background-color: #eee;
+        background-image: linear-gradient(#fcfcfc, #eee);
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+      
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      
+        right: 4px;
+        top: 8px;
+      
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1;
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; // Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.readOnly = true;
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, code.length);
+        ta.readOnly = false;
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); // For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="m7PnUxOvbm">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false,"dimmer":true},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6918616608431911",
+    enable_page_level_ads: true
+  });
+</script>
+<script type="text/javascript">
+var infolinks_pid = 3172115;
+var infolinks_wsid = 0;
+</script>
+<script type="text/javascript" src="http://resources.infolinks.com/js/infolinks_main.js"></script>
+
+
+  <meta name="description" content="领域驱动设计是软件开发的一种方式，问题复杂的地方通过将具体实现和一个不断改进的核心业务概念的模型连接解决。这个概念是Eric Evans提出的，domaindrivendesign这个网站来促进领域驱动设计的使用。关于领域驱动设计的定义，dddcommunity，这个网站有很多的描述，DDD是一种软件开发的方式：    1. 对于大多数的软件项目，主要的精力应该在领域和领域的逻辑。  2. 复杂的">
+<meta name="keywords" content="DDD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using the State pattern in a Domain Driven Design">
+<meta property="og:url" content="https://www.54architect.com/posts/3262808649.html">
+<meta property="og:site_name" content="架构新势力">
+<meta property="og:description" content="领域驱动设计是软件开发的一种方式，问题复杂的地方通过将具体实现和一个不断改进的核心业务概念的模型连接解决。这个概念是Eric Evans提出的，domaindrivendesign这个网站来促进领域驱动设计的使用。关于领域驱动设计的定义，dddcommunity，这个网站有很多的描述，DDD是一种软件开发的方式：    1. 对于大多数的软件项目，主要的精力应该在领域和领域的逻辑。  2. 复杂的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-10-15T04:09:19.239Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using the State pattern in a Domain Driven Design">
+<meta name="twitter:description" content="领域驱动设计是软件开发的一种方式，问题复杂的地方通过将具体实现和一个不断改进的核心业务概念的模型连接解决。这个概念是Eric Evans提出的，domaindrivendesign这个网站来促进领域驱动设计的使用。关于领域驱动设计的定义，dddcommunity，这个网站有很多的描述，DDD是一种软件开发的方式：    1. 对于大多数的软件项目，主要的精力应该在领域和领域的逻辑。  2. 复杂的">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.54architect.com/posts/3262808649.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Using the State pattern in a Domain Driven Design | 架构新势力</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9b7427cca3869988f791f21c9bb898e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">架构新势力</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">16</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">8</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">12</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.54architect.com/posts/3262808649.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈振阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1552832480&di=1063ad4edffadcf07bf2d37cd2ed1ce1&src=http://img3.duitang.com/uploads/item/201502/08/20150208151906_sWaPQ.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="架构新势力">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Using the State pattern in a Domain Driven Design
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-20 13:22:21" itemprop="dateCreated datePublished" datetime="2019-03-20T13:22:21+08:00">2019-03-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-10-15 12:09:19" itemprop="dateModified" datetime="2020-10-15T12:09:19+08:00">2020-10-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DDD/" itemprop="url" rel="index"><span itemprop="name">DDD</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+              
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/posts/3262808649.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="posts/3262808649.html" itemprop="commentCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+            <span id="/posts/3262808649.html" class="leancloud_visitors" data-flag-title="Using the State pattern in a Domain Driven Design">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">8.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">8 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>领域驱动设计是软件开发的一种方式，问题复杂的地方通过将具体实现和一个不断改进的核心业务概念的模型连接解决。这个概念是Eric Evans提出的，<a href="http://www.domaindrivendesign.org/" target="_blank" rel="noopener">domaindrivendesign</a>这个网站来促进领域驱动设计的使用。关于领域驱动设计的定义，<a href="http://dddcommunity.org/resources/ddd_terms/" target="_blank" rel="noopener">dddcommunity</a>，这个网站有很多的描述，DDD是一种软件开发的方式：<br><a id="more"></a></p>
+<ol>
+<li>对于大多数的软件项目，主要的精力应该在领域和领域的逻辑。</li>
+<li>复杂的领域设计应该基于一个模型。</li>
+</ol>
+<p>DDD促进了技术和领域专家之前的创造性的合作，迭代地接近问题的概念核心。注意，在没有领域专家的帮助时，一个技术专家可能不会完全理解领域的错综复杂，当然，没有技术专家的帮助，一个领域专家实际上也不能应用它的知识到项目中。</p>
+<p>大多数情况下，一个领域模型对象封装一个内部的状态，本质上是一个系统中某个元素的历史，也就是，对象的操作是有状态的。在那种情况下，对象保持它的私有状态，这个状态最终将影响他的行为。状态设计模式可以干净地代表一个对象的状态，处理它的状态转换。简而言之，状态模式是针对依赖于状态做出行为的问题的解决方案。</p>
+<p>很明显,DDD和状态设计模式息息相关。我对DDD是个新手，所以我将让我们最出色的JCG伙伴Tomasz Nurkiewicz，用一个例子来介绍使用状态设计模式的DDD。</p>
+<p>注意：为了提高可读性，原始邮件被稍微重新编辑了下。</p>
+<p>一些企业应用中的领域对象包含状态的概念。状态有两个主要的特性：</p>
+<ol>
+<li>领域对象的表现（如何响应业务方法）依赖于它的状态。</li>
+<li>业务方法可能改变对象的状态，在一个特定的调用之后，对象可能表现出不同的行为。</li>
+</ol>
+<p>如果你不能想象任何领域对象的例子，想象在租赁公司的一个Car实体。这个Car，尽管是同一个对象，但是它有一个附加的状态标识，这对公司来说至关重要。这个状态标识可能有三个值：</p>
+<ol>
+<li>AVAILABLE</li>
+<li>RENTED</li>
+<li>MISSING</li>
+</ol>
+<p>很明显，当一个Car处于RENTED或者MISSING的时候，是不能被租出去的，rent()方法应该失效。但是当Car被还回来的时候，它的状态时AVALIABLE，对这个Car实体调用rent()方法应该与之前租借这个Car的用户无关，将车的状态改为RENTED。状态标识（可能是一个字符或者是数据库中的int类型）是对象状态的一个例子，因为它影响着业务方法，反之亦然，业务方法也可以改变状态。</p>
+<p>现在，思考一个问题，你将怎么实现这个场景，我相信，这个场景你在工作中遇到过很多次了。你有很多依赖于当前的状态的业务方法和很多种的状态。如果你喜欢面向对象编程，你可能立即想到继承然后创建一个继承自Car的AvailableCar，RentedCar和MissingCar。这看上去很好，但是不切实际地，特别是当Car是一个持久化对象的时候。实际上，这种继承的方式不是一种好的设计：我们想要的不是改变整个对象，仅仅是对象的一条内部状态，也就是说，我们不会替换一个对象，仅仅是改变它。也许你想在每一个依赖于状态执行不同的任务的方法中用if-else-if-else这种层叠的方式。。。不要这么做，相信我，那是代码维护的地狱。</p>
+<p>相反，我们将不使用继承和多态，但这是一个更聪明的方式：使用状态模式。举个例子，我选择了一个叫做Reservation的实体，这个实体有下面这些状态。</p>
+<p>这个生命周期是非常简单的“当Reservation被创建，它是NEW状态。然后一些被授权的人可以接受这个Reservation，导致像座位被短暂地保留的事件发生，然后给人发送一个e-mail，让其为Reservation付费。再然后，用户执行转账，钱到账，打印票据，然后发送第二封邮件给客户。</p>
+<p>你肯定已经意识到一些动作依据Reservation 当前的状态有不同的效果。例如，你可以在任意时间取消reservation，但是依赖于Reservation当前的状态，取消动作可能导致退款然后取消reservation，或者仅仅是发送给用户一个e-mail。一些动作不依赖于特定的状态（如果用户为一个已经取消的reservation付账会怎么样）或者应该被忽略。如果你在每个状态和每个业务方法中用了if-else结构，现在想象一下依据上边的状态机写出业务方法将有多难。</p>
+<p>为了解决这个问题，我将不解释原始的GoF状态设计模式。而是介绍一些在使用了java ENUM的功能之后，我对这个设计模式的一些改变的地方。代替为状态抽象创建一个抽象的类或接口，然后为每一个状态写实现这种方式，我简单的创建一个包含了所有可用的状态的enum。</p>
+<figure class="highlight java"><figcaption><span>ReservationStatus</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ReservationStatus &#123;</span><br><span class="line"> NEW,</span><br><span class="line"> ACCEPTED,</span><br><span class="line"> PAID,</span><br><span class="line"> CANCELLED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我为所有依赖于状态的业务方法创建了一个接口。把这个接口当做所有状态的抽象基类，但是我们将以稍微不同的方式使用它。</p>
+<figure class="highlight java"><figcaption><span>ReservationStatusOperations</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReservationStatusOperations</span> </span>&#123;</span><br><span class="line"> <span class="function">ReservationStatus <span class="title">accept</span><span class="params">(Reservationreservation)</span></span>;</span><br><span class="line"> <span class="function">ReservationStatus <span class="title">charge</span><span class="params">(Reservationreservation)</span></span>;</span><br><span class="line"> <span class="function">ReservationStatus <span class="title">cancel</span><span class="params">(Reservationreservation)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，Reservation领域对象，恰巧同时也是一个JPA实体（省略getters/setters）。</p>
+<figure class="highlight java"><figcaption><span>Reservation</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Reservation</span> </span>&#123;</span><br><span class="line"> <span class="keyword">private</span> intid;</span><br><span class="line"> privateString name;</span><br><span class="line"> privateCalendar date;</span><br><span class="line"> privateBigDecimal price;</span><br><span class="line"> privateReservationStatus status = ReservationStatus.NEW;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">//getters/setters</span></span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果Reservation是一个持久的领域对象，他的状态（ReservationStatus）很明显也应该被持久化。这个观察结果将使我们第一次体会到使用enum代替抽象类的巨大好处：JPA/Hibernate可以很容易地使用enum的名字或者顺序的值（默认）序列化和持久化java enum到数据库中。在原始的GoF模式中，我们将直接把ReservationStatusOperations 对象放到领域对象中，然后状态改变时切换不同的实现。我建议使用enum然后仅改变enum的值。使用enum的另一个优势（不是以框架为中心的但是更重要的）是所有可能的状态在一个地方列出。你不必在你的源码中爬行来寻找所有的状态基类的实现。所有的东西都能在一个地方被看到，一个逗号分隔的列表。</p>
+<p>OK，深呼吸。现在我解释一下所有的部分如何在一起工作，ReservationStatusOperations 中的业务操作为什么返回ReservationStatus。首先，你必须回忆一下， enum究竟是什么。他们不仅仅是像C/C++那样的多个常量在一个命名空间下的集合。在JAVA中，enum是多个类的闭集，继承自一个公共的基类（例如ReservationStatus），最后继承自enum类。所以当使用enum的时候，我们可能就使用了多态和继承。</p>
+<figure class="highlight java"><figcaption><span>ReservationStatus</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ReservationStatus implements ReservationStatusOperations &#123;</span><br><span class="line"></span><br><span class="line">  NEW &#123;</span><br><span class="line">   <span class="function">publicReservationStatus <span class="title">accept</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">     <span class="comment">//..</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function">publicReservationStatus <span class="title">charge</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">     <span class="comment">//..</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function">publicReservationStatus <span class="title">cancel</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">     <span class="comment">//..</span></span><br><span class="line">   &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  ACCEPTED &#123;</span><br><span class="line">   <span class="function">publicReservationStatus <span class="title">accept</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//..</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function">publicReservationStatus <span class="title">charge</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//..</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function">publicReservationStatus <span class="title">cancel</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//..</span></span><br><span class="line">   &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  PAID &#123;<span class="comment">/*...*/</span>&#125;,</span><br><span class="line"></span><br><span class="line">  CANCELLED &#123;<span class="comment">/*...*/</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然以上边的方式写一个ReservationStatusOperations 类很容易，但是从长远来看，这是一个坏主意。不仅enum源代码会极其的长（所有要实现的方法的数量等于状态的数量乘以业务方法的数量），而且是一个坏的设计（所有状态的业务逻辑在一个类中）。一个enum也可以实现一个接口，这个奇特的语法可能与没有参加过SCJP exam 考试的人的直觉相反。我们将提供一个简单的中间层，因为计算机科学中的任何问题都可以被另一个中间层解决。</p>
+<figure class="highlight java"><figcaption><span>ReservationStatus</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ReservationStatus implementsReservationStatusOperations &#123;</span><br><span class="line"> </span><br><span class="line">  NEW(newNewRso()),</span><br><span class="line">  ACCEPTED(newAcceptedRso()),</span><br><span class="line">  PAID(newPaidRso()),</span><br><span class="line">  CANCELLED(<span class="keyword">new</span> CancelledRso());</span><br><span class="line"> </span><br><span class="line">  privatefinal ReservationStatusOperations operations;</span><br><span class="line"> </span><br><span class="line">  ReservationStatus(ReservationStatusOperationsoperations) &#123;</span><br><span class="line">    <span class="keyword">this</span>.operations = operations;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">publicReservationStatus <span class="title">accept</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">    returnoperations.accept(reservation);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">publicReservationStatus <span class="title">charge</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">    returnoperations.charge(reservation);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">publicReservationStatus <span class="title">cancel</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">    returnoperations.cancel(reservation);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是我们的ReservationStatus enum的最终的源代码（实现ReservationStatusOperations 不是必须的）。把事情变简单：每一个enum值都自己特定的ReservationStatusOperations 实现（简写为Rso）。ReservationStatusOperations 的实现作为构造函数的参数，然后赋给一个命名为operations的final类型的域。现在，不管enum中的业务方法什么时候被调用，调用将被委托给特定的ReservationStatusOperations 实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReservationStatus.NEW.accept(reservation);       <span class="comment">// will call NewRso.accept()</span></span><br><span class="line">ReservationStatus.ACCEPTED.accept(reservation);  <span class="comment">// will call AcceptedRso.accept()</span></span><br></pre></td></tr></table></figure>
+<p>最后一个要实现的部分是包含业务方法Reservation领域对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  setStatus(status.accept(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">charge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  setStatus(status.charge(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  setStatus(status.cancel(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStatus</span><span class="params">(ReservationStatus status)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (status!= <span class="keyword">null</span> &amp;&amp; status != <span class="keyword">this</span>.status) &#123;</span><br><span class="line">    log.debug(<span class="string">"Reservation#"</span> + id + <span class="string">": changing status from"</span> + <span class="keyword">this</span>.status+ <span class="string">" to "</span> + status);</span><br><span class="line">    <span class="keyword">this</span>.status = status;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里发生了什么？当你在一个Reservation领域对象实例上调用任何业务方法，ReservationStatus  enum的某个值的相应的方法就会被调用。依据当前的状态，一个不同的方法（不同ReservationStatusOperations 实现的）将会被调用。但是没有switch-case 和if-else结构，仅仅使用了多态。例如，如果当status域指向ReservationStatus.ACCEPTED，你调用了charge()方法，AcceptedRso.charge() 将会被调用，消费者将会被要求付款，付款之后，Reservation状态改变成PAID。</p>
+<p>但是如果我们在同一个实例再次调用charge()会发生什么？status域现在指向ReservationStatus.PAID，所以PaidRso.charge() 将会被执行，这将会抛出一个业务错误（为一个已付款的Reservation付款是无效的）。没有条件判断的代码，我们实现了一个业务方法状态敏感的领域对象。</p>
+<p>我还没有提到的一件事是如何从一个业务方法改变Reservation的状态。这是与原始的GoF模式第二个不同的地方。我从业务方法简单的返回一个新的状态，而不是传递一个StateContext 实例给每一个状态敏感的操作（像accept()或者charge()方法），这种方式经常被用来改变状态。如果给定的状态不是null而且与先前的状态不同（setStatus方法中实现），Reservation对象将转变为给定的状态。让我们看一下在AcceptedRso 对象中是如何工作的（Reservation对象在ReservationStatus.ACCEPTED 状态，它的方法将要被执行）。</p>
+<figure class="highlight java"><figcaption><span>implementsReservationStatusOperations</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AcceptedRso</span> <span class="title">implementsReservationStatusOperations</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">publicReservationStatus <span class="title">accept</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">throw</span> newUnsupportedStatusTransitionException(<span class="string">"accept"</span>,ReservationStatus.ACCEPTED);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">publicReservationStatus <span class="title">charge</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//chargeclient's credit card</span></span><br><span class="line">    <span class="comment">//sende-mail</span></span><br><span class="line">    <span class="comment">//printticket</span></span><br><span class="line">    returnReservationStatus.PAID;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">   <span class="function">publicReservationStatus <span class="title">cancel</span><span class="params">(Reservation reservation)</span> </span>&#123;</span><br><span class="line">     <span class="comment">//sendcancellation e-mail</span></span><br><span class="line">     returnReservationStatus.CANCELLED;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在ACCEPTED 状态的Reservation 可以通过上边的类源码很容易地理解：当一个Reservation已经被accept时，试图accept第二次将会跑出一个错误，收费将使用客户的信用卡，打印给他一个票据然后发送一个email等等。同时，付费操作将返回一个PAID状态，这将使Reservation转换成这个状态。这意味着第二次调用charge将被不同的ReservationStatusOperations 实现处理（PaidRso），没有条件判断。</p>
+<p>上边是关于状态模式的全部。如果你不相信这种设计模式，比较一下使用条件判断的代码这种传统的方式的工作量和容易出错的代码。</p>
+<p>我没有展示所有的ReservationStatusOperations 的实现，但是如果你将在基于JavaEE的String或者EJB中引入这种方式，你可能已经看到一个弥天大谎。我描述了每一个业务方法应该发生的事情，但是没有提供具体的实现。我没有的原因是因为我遇到了一个大问题：一个Reservation实例通过手工（用new）或者持久化框架像hibernate创建。 It uses statically created enum which creates manuallyReservationStatusOperations implementations.没有办法去注入依赖，DAOs和service.对于这个类来说，它的整个生命周期都在spring或者ejb的容器管辖之外。实际上，有一个简单有效的解决方案，使用Spring和AspectJ。但是耐心点，我将在下一封邮件中详细的解释，如何给应用增加一点领域驱动的味道。</p>
+<p>就这样。一个非常有趣的邮件，解释了如何在DDD方式中使用状态模式，作者是我们的JCG伙伴，Tomasz Nurkiewicz.。我非常期待这个教程的下一个部分。下一个部分是：Domain Driven Design with Spring and AspectJ.</p>
+<p><strong>Related Articles:</strong><br><a href="https://www.javacodegeeks.com/2011/02/domain-driven-design-spring-aspectj.html" target="_blank" rel="noopener">Domain Driven Design with Spring and AspectJ</a><br><a href="https://www.javacodegeeks.com/2011/01/spring-configuration-zero-xml.html" target="_blank" rel="noopener">Spring configuration with zero XML</a><br><a href="https://www.javacodegeeks.com/2011/01/10-tips-proper-application-logging.html" target="_blank" rel="noopener">10 Tips for Proper Application Logging</a><br><a href="https://www.javacodegeeks.com/2010/12/things-every-programmer-should-know.html" target="_blank" rel="noopener">Things Every Programmer Should Know</a><br><a href="https://www.javacodegeeks.com/2010/12/dependency-injection-manual-way.html" target="_blank" rel="noopener">Dependency Injection – The manual way</a></p>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="陈振阳 wechat" style="width: 200px; max-width: 100%;">
+  <div>关注公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>陈振阳</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://www.54architect.com/posts/3262808649.html" title="Using the State pattern in a Domain Driven Design">https://www.54architect.com/posts/3262808649.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DDD/" rel="tag"># DDD</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+          
+            <span class="post-meta-divider">|</span>
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/3384101157.html" rel="next" title="The Perfect Singleton">
+                <i class="fa fa-chevron-left"></i> The Perfect Singleton
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/1167341847.html" rel="prev" title="Java Instument Package">
+                Java Instument Package <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6918616608431911",
+    enable_page_level_ads: true
+  });
+</script>
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1552832480&di=1063ad4edffadcf07bf2d37cd2ed1ce1&src=http://img3.duitang.com/uploads/item/201502/08/20150208151906_sWaPQ.jpeg" alt="陈振阳">
+            
+              <p class="site-author-name" itemprop="name">陈振阳</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chenzhenyang" title="GitHub &rarr; https://github.com/chenzhenyang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-nd.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/xichenguan" title="https://blog.csdn.net/xichenguan" rel="noopener" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D2R9OOQc2A9McQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClApVlwJggwxbAL8PtxxJsl4n%2FQI53oWrxtY7x7PaKnEZlW%2BCCx7%2F2tcZBWzNPD7%2BwVn0DGfdJ6SaUYMsSHLWchUVtQl8vLdysepHjKlMEkHC06du04PdR3Oc9XUfbPSJC%2FzEPa2dO8IvxFuRABmsVWWJ7aX0WuEyt01bwjpDl6wi5xfbi2zWeKf1HudoeDPMGTcYl7w3%2FA2kb"><img src="https://img.alicdn.com/tfs/TB1TDIoCxGYBuNjy0FnXXX5lpXa-300-100.png"></a>
+
+        </div>
+      </div>
+
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+    <div id="sidebar-dimmer"></div>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <a href="http://www.miitbeian.gov.cn" rel="noopener" target="_blank">鲁ICP备19008601号-2 </a>&copy; 2019 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">架构新势力</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">56k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">51 分钟</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1.0.0/dist/quicklink.umd.js"></script>
+  <script>
+		window.addEventListener('load', () => {
+      quicklink({
+        timeout: 3000,
+        priority: true,
+        ignores: [uri => uri.includes('#'), ]
+      });
+    });
+  </script>
+
+  
+  
+  <script>
+  (function() {
+    var appid = 'cyu8If4Hr';
+    var conf = '4258f23dfe04bf63e46bb90f55e9c9a0';
+    var width = window.innerWidth || document.documentElement.clientWidth;
+    if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+    }
+    else {
+      var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})});
+    }
+  })();
+  </script>
+  <script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'vDI5ABlKiVm9M9QcDlgKTPkL-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'vDI5ABlKiVm9M9QcDlgKTPkL-gzGzoHsz',
+                'X-LC-Key': 'A7leI3UHnC0UUQYCR2HypEHo',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+
+  
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 17393,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
+
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/pangu@3/dist/browser/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      
+        background-color: #eee;
+        background-image: linear-gradient(#fcfcfc, #eee);
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+      
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      
+        right: 4px;
+        top: 8px;
+      
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1;
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; // Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.readOnly = true;
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, code.length);
+        ta.readOnly = false;
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); // For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+</body>
+</html>
