@@ -22,6 +22,30 @@
       </tags>
   </entry>
   <entry>
+    <title>Centos上ShadowSocks搭建Socket5服务器</title>
+    <url>/posts/3396596425.html</url>
+    <content><![CDATA[<p>买的VPN最近好像跑路了，看了下阿里云的国外ECS，超便宜，美国西部做活动一年才300多RMB；</p>
+<p>Shadowsock是一个安全的socks5代理软件，提供了服务端和客户端；可以很方便的搭建一个VPN；</p>
+<h1><span id="服务器端搭建">服务器端搭建</span></h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget –no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">$ ./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>安装成功会显示如下的信息，将下面的信息填写到客户端里面就可以了；<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Starting Shadowsocks success</span><br><span class="line"></span><br><span class="line">Congratulations, Shadowsocks-python server install completed!</span><br><span class="line">Your Server IP        :  47.88.56.208 </span><br><span class="line">Your Server Port      :  8989</span><br><span class="line">Your Password         :  xxxx </span><br><span class="line">Your Encryption Method:  rc4-md5</span><br><span class="line"></span><br><span class="line">Welcome to visit:https://teddysun.com/342.html</span><br><span class="line">Enjoy it!</span><br></pre></td></tr></table></figure></p>
+<h1><span id="客户端配置">客户端配置</span></h1><p><img src="![](https://54architect.oss-cn-beijing.aliyuncs.com/blog.54architect.com/2019-03-21 15-06-37 的屏幕截图.png" alt="image"><br>)</p>
+<p>这里需要特别注意的是，有些socks5客户端提供了将socks5转为http(s)的功能，这里要选则socks5。</p>
+<h1><span id="privoxy配置">Privoxy配置</span></h1><p>Privoxy可以将socks5转为http(s)协议；<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">forward-socks5   /               127.0.0.1:1080 .</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install privoxy </span><br><span class="line">//开启privoxy 服务就行</span><br><span class="line">sudo  service  privoxy start </span><br><span class="line">// 设置http 和 https 全局代理</span><br><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">'http://localhost:8118'</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=<span class="string">'https://localhost:8118'</span></span><br><span class="line">// 测试一下</span><br><span class="line">wget https://www.google.com</span><br></pre></td></tr></table></figure>
+<h1><span id="参考">参考</span></h1><p><a href="https://blog.csdn.net/li740207611/article/details/52045471" target="_blank" rel="noopener">使用Privoxy将socks5代理转为http代理</a><br><a href="https://blog.csdn.net/yanzi1225627/article/details/51064306" target="_blank" rel="noopener">Mac上Privoxy将shadowsocks的socks5代理转为http代理(解决SublimeText无法安装插件的问题)</a></p>
+]]></content>
+      <categories>
+        <category>Nuclear</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Centos</tag>
+        <tag>ShadowSocks</tag>
+        <tag>Socks5</tag>
+        <tag>Privoxy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Confluent Platform Quick Start (Docker)</title>
     <url>/posts/1992991654.html</url>
     <content><![CDATA[<h1><span id="问题">问题</span></h1><p>Confluent提供了Kafka的整套生态的docker镜像：<a href="https://github.com/confluentinc/cp-docker-images" target="_blank" rel="noopener">confluentinc/cp-docker-images</a>，并在<a href="https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html" target="_blank" rel="noopener">官方文档 Confluent Platform Quick Start (Docker) </a>中详细的描述了这些镜像的使用方法。<br><a id="more"></a></p>
@@ -318,33 +342,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Shared Transaction Resource Pattern Implements Distributed Transactions in Spring without XA</title>
-    <url>/posts/3984494298.html</url>
-    <content><![CDATA[<h1><span id="概述">概述</span></h1><p><a href="https://www.javaworld.com/article/2077963/distributed-transactions-in-spring--with-and-without-xa.html" target="_blank" rel="noopener">Distributed transactions in Spring, with and without XA</a>一文中描述了在Spring中实现分布式事务的7种处理模式；3种基于XA协议，4种特定场景的非XA协议的模式；</p>
-<p>共享事务资源模式（Shared Transaction Resource pattern）是四种非XA协议的第一种，其提供了特定场景的多资源事务同步模式；</p>
-<p>熟悉Spring 事务框架的看到Transaction Resource应该立马就明白了，Transaction Resource就是JDBC里的Connection对象，Hibernete里的Session对象，以此类比；<br><a id="more"></a><br>像JDBC的Connection，Hibernete的Session等如果要共享，也就意味着两个事务使用的是同一个连接，也就意味着不再有分布式事务一说，两个系统的操作真的是在同一个事务之中。</p>
-<h1><span id="orm框架和spring-jdbc">ORM框架和Spring JDBC</span></h1><p>先描述一下文中的两个例子：<br>第一个是ORM框架和JDBC，这是一个好像不是分布式事务的例子，在这里我们描述的更具体一些，将JDBC换乘Spring JDBC，让他看上去更像分布式事务一些，理解这个例子是基础，一定要仔细看看：<br>在基于Spring架构的应用中，如果同时使用了ORM框架Hibernete和Spring JDBC一起操作数据库，那么如何将Spring JDBC的事务和Hibernete的事务进行同步呢？</p>
-<p>答案就是共用一个JDBC Connection对象，Spring JDBC封装了Java JDBC，Hibernete也是基于JDBC构建的，也就是说如果在Spring  JDBC 和 Hibernete中使用同一个Java JDBC Connection对象，就可以实现事务的同步，其实根本就是在一个JDBC 事务中。</p>
-<h1><span id="消息驱动的单个数据库更新">消息驱动的单个数据库更新</span></h1><p>文中提到共享事务资源模式的典型应用场景是<strong>消息驱动的单个数据库更新</strong>。这是一个看上去就需要分布式事务同步场景。</p>
-<h2><span id="基于activemq实现消息驱动的单个数据库更新场景">基于ActiveMQ实现消息驱动的单个数据库更新场景</span></h2><p>文中同时举了一个ActiveMQ + JDBC的例子，ActiveMQ是JMS协议的实现，同时ActiveMQ支持可配置的消息存储的，其中就可以将ActiveMQ的队列中的消息存储到关系型数据库中。</p>
-<p>当把ActiveMQ把消息存储到关系型数据库中之后，如果我们后续的消息的业务处理之后的结果，也写到同一个数据库中，那ActiveMQ中消息的更新和业务系统中消息的处理结果持久化就可以共用一个数据库连接了。</p>
-<p>可以共用一个数据库连接，也就意味着不再牵扯到分布式事务；</p>
-<h2><span id="基于kafka实现消息驱动的单个数据库更新场景">基于Kafka实现消息驱动的单个数据库更新场景</span></h2><p>这里在送大家一个特定的例子，基于Kafka实现消息驱动的单个数据库更新的场景。上边的例子有着很大的性能问题，而基于Kafka实现消息驱动的单个数据库更新的场景就像是天造地设一般。</p>
-<p>Kafka消息队列里的读取进度是存储在Consumer端的，在Kafka中，叫做Offset。也就是说，如果我们在拉取消息之后，将最新的offset和消息的处理结果，共用同一个事务资源，写到一个地方，要么一起成功，要么一起失败；如果发生Partition的重新分配，只需要从存储中读取最近一次成功处理的那批消息的最大的offfset，然后让Consumer，seek此offset即可。实际上Kafka Connect的很多实现，比如Kafka Connect HDFS就是这么搞的。</p>
-<p>这里描述一个具体的例子，Kafka + 关系型数据库：</p>
-<h1><span id="参考">参考</span></h1><p><a href="https://www.javaworld.com/article/2077963/distributed-transactions-in-spring--with-and-without-xa.html" target="_blank" rel="noopener">Distributed transactions in Spring, with and without XA</a><br><a href="http://www.importnew.com/15812.html" target="_blank" rel="noopener">如何实现XA式、非XA式Spring分布式事务</a></p>
-]]></content>
-      <categories>
-        <category>Spring</category>
-        <category>Spring Transaction</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>Transaction</tag>
-        <tag>Distributed Transaction</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kafka Message Delivery Semantics</title>
     <url>/posts/3775642630.html</url>
     <content><![CDATA[<h1><span id="kafka-消息交付delivery语义">Kafka 消息交付（Delivery）语义</span></h1><p>Kafka的消息交付语义有三种，At most once、At least once和Exactly once，它们的官方解释如下：</p>
@@ -388,6 +385,33 @@ commitAsync
       </categories>
       <tags>
         <tag>Apache Kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Shared Transaction Resource Pattern Implements Distributed Transactions in Spring without XA</title>
+    <url>/posts/3984494298.html</url>
+    <content><![CDATA[<h1><span id="概述">概述</span></h1><p><a href="https://www.javaworld.com/article/2077963/distributed-transactions-in-spring--with-and-without-xa.html" target="_blank" rel="noopener">Distributed transactions in Spring, with and without XA</a>一文中描述了在Spring中实现分布式事务的7种处理模式；3种基于XA协议，4种特定场景的非XA协议的模式；</p>
+<p>共享事务资源模式（Shared Transaction Resource pattern）是四种非XA协议的第一种，其提供了特定场景的多资源事务同步模式；</p>
+<p>熟悉Spring 事务框架的看到Transaction Resource应该立马就明白了，Transaction Resource就是JDBC里的Connection对象，Hibernete里的Session对象，以此类比；<br><a id="more"></a><br>像JDBC的Connection，Hibernete的Session等如果要共享，也就意味着两个事务使用的是同一个连接，也就意味着不再有分布式事务一说，两个系统的操作真的是在同一个事务之中。</p>
+<h1><span id="orm框架和spring-jdbc">ORM框架和Spring JDBC</span></h1><p>先描述一下文中的两个例子：<br>第一个是ORM框架和JDBC，这是一个好像不是分布式事务的例子，在这里我们描述的更具体一些，将JDBC换乘Spring JDBC，让他看上去更像分布式事务一些，理解这个例子是基础，一定要仔细看看：<br>在基于Spring架构的应用中，如果同时使用了ORM框架Hibernete和Spring JDBC一起操作数据库，那么如何将Spring JDBC的事务和Hibernete的事务进行同步呢？</p>
+<p>答案就是共用一个JDBC Connection对象，Spring JDBC封装了Java JDBC，Hibernete也是基于JDBC构建的，也就是说如果在Spring  JDBC 和 Hibernete中使用同一个Java JDBC Connection对象，就可以实现事务的同步，其实根本就是在一个JDBC 事务中。</p>
+<h1><span id="消息驱动的单个数据库更新">消息驱动的单个数据库更新</span></h1><p>文中提到共享事务资源模式的典型应用场景是<strong>消息驱动的单个数据库更新</strong>。这是一个看上去就需要分布式事务同步场景。</p>
+<h2><span id="基于activemq实现消息驱动的单个数据库更新场景">基于ActiveMQ实现消息驱动的单个数据库更新场景</span></h2><p>文中同时举了一个ActiveMQ + JDBC的例子，ActiveMQ是JMS协议的实现，同时ActiveMQ支持可配置的消息存储的，其中就可以将ActiveMQ的队列中的消息存储到关系型数据库中。</p>
+<p>当把ActiveMQ把消息存储到关系型数据库中之后，如果我们后续的消息的业务处理之后的结果，也写到同一个数据库中，那ActiveMQ中消息的更新和业务系统中消息的处理结果持久化就可以共用一个数据库连接了。</p>
+<p>可以共用一个数据库连接，也就意味着不再牵扯到分布式事务；</p>
+<h2><span id="基于kafka实现消息驱动的单个数据库更新场景">基于Kafka实现消息驱动的单个数据库更新场景</span></h2><p>这里在送大家一个特定的例子，基于Kafka实现消息驱动的单个数据库更新的场景。上边的例子有着很大的性能问题，而基于Kafka实现消息驱动的单个数据库更新的场景就像是天造地设一般。</p>
+<p>Kafka消息队列里的读取进度是存储在Consumer端的，在Kafka中，叫做Offset。也就是说，如果我们在拉取消息之后，将最新的offset和消息的处理结果，共用同一个事务资源，写到一个地方，要么一起成功，要么一起失败；如果发生Partition的重新分配，只需要从存储中读取最近一次成功处理的那批消息的最大的offfset，然后让Consumer，seek此offset即可。实际上Kafka Connect的很多实现，比如Kafka Connect HDFS就是这么搞的。</p>
+<p>这里描述一个具体的例子，Kafka + 关系型数据库：</p>
+<h1><span id="参考">参考</span></h1><p><a href="https://www.javaworld.com/article/2077963/distributed-transactions-in-spring--with-and-without-xa.html" target="_blank" rel="noopener">Distributed transactions in Spring, with and without XA</a><br><a href="http://www.importnew.com/15812.html" target="_blank" rel="noopener">如何实现XA式、非XA式Spring分布式事务</a></p>
+]]></content>
+      <categories>
+        <category>Spring</category>
+        <category>Spring Transaction</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>Transaction</tag>
+        <tag>Distributed Transaction</tag>
       </tags>
   </entry>
   <entry>
@@ -495,30 +519,6 @@ commitAsync
       </categories>
       <tags>
         <tag>DDD</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Centos上ShadowSocks搭建Socket5服务器</title>
-    <url>/posts/3396596425.html</url>
-    <content><![CDATA[<p>买的VPN最近好像跑路了，看了下阿里云的国外ECS，超便宜，美国西部做活动一年才300多RMB；</p>
-<p>Shadowsock是一个安全的socks5代理软件，提供了服务端和客户端；可以很方便的搭建一个VPN；</p>
-<h1><span id="服务器端搭建">服务器端搭建</span></h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget –no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">$ ./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
-<p>安装成功会显示如下的信息，将下面的信息填写到客户端里面就可以了；<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Starting Shadowsocks success</span><br><span class="line"></span><br><span class="line">Congratulations, Shadowsocks-python server install completed!</span><br><span class="line">Your Server IP        :  47.88.56.208 </span><br><span class="line">Your Server Port      :  8989</span><br><span class="line">Your Password         :  xxxx </span><br><span class="line">Your Encryption Method:  rc4-md5</span><br><span class="line"></span><br><span class="line">Welcome to visit:https://teddysun.com/342.html</span><br><span class="line">Enjoy it!</span><br></pre></td></tr></table></figure></p>
-<h1><span id="客户端配置">客户端配置</span></h1><p><img src="![](https://54architect.oss-cn-beijing.aliyuncs.com/blog.54architect.com/2019-03-21 15-06-37 的屏幕截图.png" alt="image"><br>)</p>
-<p>这里需要特别注意的是，有些socks5客户端提供了将socks5转为http(s)的功能，这里要选则socks5。</p>
-<h1><span id="privoxy配置">Privoxy配置</span></h1><p>Privoxy可以将socks5转为http(s)协议；<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">forward-socks5   /               127.0.0.1:1080 .</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install privoxy </span><br><span class="line">//开启privoxy 服务就行</span><br><span class="line">sudo  service  privoxy start </span><br><span class="line">// 设置http 和 https 全局代理</span><br><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">'http://localhost:8118'</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=<span class="string">'https://localhost:8118'</span></span><br><span class="line">// 测试一下</span><br><span class="line">wget https://www.google.com</span><br></pre></td></tr></table></figure>
-<h1><span id="参考">参考</span></h1><p><a href="https://blog.csdn.net/li740207611/article/details/52045471" target="_blank" rel="noopener">使用Privoxy将socks5代理转为http代理</a><br><a href="https://blog.csdn.net/yanzi1225627/article/details/51064306" target="_blank" rel="noopener">Mac上Privoxy将shadowsocks的socks5代理转为http代理(解决SublimeText无法安装插件的问题)</a></p>
-]]></content>
-      <categories>
-        <category>Nuclear</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Centos</tag>
-        <tag>ShadowSocks</tag>
-        <tag>Socks5</tag>
-        <tag>Privoxy</tag>
       </tags>
   </entry>
 </search>
