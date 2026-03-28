@@ -6,7 +6,7 @@ tags:
 - Technology
 categories:
 - Technology
-lastUpdated: '2026-03-28'
+lastUpdated: 2026-03-28
 origin_title: Auto mode for Claude Code | Claude
 author: Claude
 skill_id: 3cddf4dd
