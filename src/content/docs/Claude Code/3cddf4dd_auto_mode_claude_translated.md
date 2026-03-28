@@ -1,6 +1,6 @@
 ---
 title: Auto mode for Claude Code | Claude
-description: '---'
+description: '今天，我们推出 auto mode（自动模式），这是 Claude Code 中的一种新权限模式，由 Claude 代表你做出权限决策，同时在操作运行前有安全保护措施进行监控'
 tags:
 - AI
 - Technology
