@@ -1,21 +1,18 @@
 ---
-title: OpenAI 推出 Harness Engineering：Codex Agent 驱动大规模软件开发
-description: OpenAI 详细阐述了 Harness engineering，一种利用 AI Agent 驱动软件开发生命周期的新方法。在五个月的实验中，工程师仅通过提示和反馈就构建了
-  100 万行代码的测试版产品。
+title: "OpenAI 推出 Harness Engineering：Codex Agent 驱动大规模软件开发"
+description: "OpenAI 详细阐述了 Harness engineering，一种利用 AI Agent 驱动软件开发生命周期的新方法。在五个月的实验中，工程师仅通过提示和反馈就构建了 100 万行代码的测试版产品。"
 tags:
-- AI
-- Software Engineering
-- Codex
-- Agent
+  - AI
+  - Software Engineering
+  - Codex
+  - Agent
 categories:
-- Technology
+  - Technology
 lastUpdated: 2026-03-28
-origin_title: 'OpenAI Introduces Harness Engineering: Codex Agents Power Large‑Scale
-  Software Development'
-author: Leela Kumili
-original_url: https://www.infoq.com/news/2026/02/openai-harness-engineering-codex/
+origin_title: "OpenAI Introduces Harness Engineering: Codex Agents Power Large‑Scale Software Development"
+author: "Leela Kumili"
+original_url: "https://www.infoq.com/news/2026/02/openai-harness-engineering-codex/"
 ---
-# OpenAI 推出 Harness Engineering：Codex Agent 驱动大规模软件开发
 
 **作者**: Leela Kumili  
 **日期**: 2026 年 2 月 21 日  
