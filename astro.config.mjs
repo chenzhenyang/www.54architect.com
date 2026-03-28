@@ -7,18 +7,42 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			// social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
 			sidebar: [
+				// {
+				// 	label: 'Guides',
+				// 	items: [
+				// 		// Each item here is one entry in the navigation menu.
+				// 		{ label: 'Example Guide', slug: 'guides/example' },
+				// 	],
+				// },
 				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
+					label: 'Agent',
+					autogenerate: { directory: 'Agent' },
+				},				
+				{
+					label: 'Exploring Generative AI',
+					autogenerate: { directory: 'Exploring Generative AI' },
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					label: 'Agentic Engineering Patterns',
+					autogenerate: { directory: 'Agentic Engineering Patterns' },
+				},
+				{
+					label: 'Agent Harness',
+					autogenerate: { directory: 'Agent Harness' },
+				},
+				{
+					label: 'Claude Code',
+					autogenerate: { directory: 'Claude Code' },
+				},
+				{
+					label: 'Oh My ClaudeCode',
+					autogenerate: { directory: 'Oh My ClaudeCode' },
+				},
+				{
+					label: 'Spec-Driven Development',
+					autogenerate: { directory: 'Spec-Driven Development' },
 				},
 			],
 		}),
