@@ -1,0 +1,1 @@
+https://martinfowler.com/articles/exploring-gen-ai.html

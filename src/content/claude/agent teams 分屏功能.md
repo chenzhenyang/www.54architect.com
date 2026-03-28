@@ -1,0 +1,4 @@
+**环境变量：**
+CLAUDE_CODE_EXPERIMENTAL_AGENT_TEARMS=1
+iterm2
+tmux
