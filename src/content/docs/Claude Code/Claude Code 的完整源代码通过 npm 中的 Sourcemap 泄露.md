@@ -1,16 +1,17 @@
 ---
-title: 20260401_094449_translated
-description: '**URL:** https://kuber.studio/blog/AI/Claude-Code''s-Entire-Source-Code-Got-Leaked-via-a-Sourcemap-in-npm,-Let''s-Talk-About-it'
-tags:
-- AI
-- Technology
-categories:
-- Technology
-lastUpdated: 2026-04-01
-origin_title: Claude Code's Entire Source Code Got Leaked via a Sourcemap in npm,
-  Let's Talk About it
+title: Claude Code 的完整源代码通过 npm 中的 Sourcemap 泄露，我们来聊聊
+origin_title: Claude Code's Entire Source Code Got Leaked via a Sourcemap in npm, Let's Talk About it
 author: Kuber Studio
+tags:
+  - AI
+  - Claude Code
+  - Security
+  - Open Source
+categories:
+  - Technology
+lastUpdated: 2026-04-01
 ---
+
 **URL:** https://kuber.studio/blog/AI/Claude-Code's-Entire-Source-Code-Got-Leaked-via-a-Sourcemap-in-npm,-Let's-Talk-About-it
 
 **Fetched:** 2026-04-01
