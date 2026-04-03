@@ -21,6 +21,8 @@ Context Engineering（上下文工程）是 AI 领域正在获得关注的新术
 
 要理解上下文工程，我们首先必须扩展"上下文"的定义。它不仅仅是你发送给 LLM 的单个提示。把它想象成模型在生成响应之前看到的一切。
 
+![Context](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/context-engineering/context.png)
+
 - **Instructions / System Prompt（指令/系统提示）：** 一组初始指令，定义模型在对话期间的行为，可以/应该包括示例、规则等。
 
 - **User Prompt（用户提示）：** 用户的即时任务或问题。
