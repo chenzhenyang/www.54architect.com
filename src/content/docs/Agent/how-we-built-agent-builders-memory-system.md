@@ -60,7 +60,7 @@ categories:
   * `tools.json`：定义了一个 MCP 服务器，可以访问 LinkedIn 搜索工具
   * 记忆中目前还有 3 个其他文件，代表不同候选人的职位描述（JD）。随着我们与 Agent 一起处理这些搜索，它已经更新并维护了这些 JD。
 
-![Agent Builder 记忆文件系统](/images/3e76e24d.png)
+![Agent Builder 记忆文件系统](/images/agent-builder-memory-filesystem.png)
 
 ### 记忆编辑如何工作：一个具体示例
 
