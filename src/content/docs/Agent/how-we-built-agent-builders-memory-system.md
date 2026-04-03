@@ -1,8 +1,10 @@
 ---
 title: 我们如何构建 Agent Builder 的记忆系统
 description: LangChain 团队分享如何为 Agent Builder 设计和实现记忆系统，包括架构决策和技术细节
-origin_title: How we built Agent Builder's memory system
+lastUpdated: 2026-04-03
 author: LangChain Team
+origin_title: "How we built Agent Builder's memory system"
+original_url: "https://blog.langchain.com/how-we-built-agent-builders-memory-system/"
 tags:
   - AI
   - Agent
@@ -10,10 +12,6 @@ tags:
   - LangChain
 categories:
   - Technology
-lastUpdated: 2026-04-03
-skill_id: a484cfbd
-generated: 2026-04-03T21:28:00
-original_url: https://blog.langchain.com/how-we-built-agent-builders-memory-system/
 ---
 
 上个月我们推出了 [LangSmith Agent Builder](https://smith.langchain.com/agents?skipOnboarding=true&ref=blog.langchain.com)，这是一个无需代码即可构建 Agent（智能体）的工具。Agent Builder 的一个关键组成部分是它的记忆系统（memory system）。在本文中，我们将介绍优先开发记忆系统的理由、构建它的技术细节、从构建过程中获得的经验、记忆系统能够实现的功能，并讨论未来的工作方向。
