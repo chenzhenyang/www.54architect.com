@@ -11,10 +11,10 @@ tags:
   - Agent Harness
 categories:
   - Technology
-cover: /images/specs-are-not-free.jpg
+cover: https://raw.githubusercontent.com/chenzhenyang/images/master/specs-are-not-free.jpg
 ---
 
-![封面图](https://chenzhenyang.github.io/images/specs-are-not-free.jpg)
+![封面图](https://raw.githubusercontent.com/chenzhenyang/images/master/specs-are-not-free.jpg)
 
 **URL:** https://www.hugo.im/posts/specs-are-not-free
 
