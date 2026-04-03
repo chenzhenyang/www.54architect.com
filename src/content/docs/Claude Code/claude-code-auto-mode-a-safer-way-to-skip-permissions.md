@@ -1,19 +1,20 @@
 ---
-title: "Claude Code 自动模式：一种更安全的跳过权限方式"
-origin_title: "Claude Code auto mode: a safer way to skip permissions"
-author: "John Hughes, Anthropic"
-original_url: "https://www.anthropic.com/engineering/claude-code-auto-mode"
-skill_id: "claude-code-auto-mode"
-generated: "2026-04-04T00:08:00+08:00"
+title: Claude Code 自动模式：一种更安全的跳过权限方式
+description: '---'
 tags:
-  - Claude Code
-  - AI Safety
-  - Agent
-  - Permissions
+- Claude Code
+- AI Safety
+- Agent
+- Permissions
 categories:
-  - Claude Code
+- Claude Code
+lastUpdated: 2026-04-04
+origin_title: 'Claude Code auto mode: a safer way to skip permissions'
+author: John Hughes, Anthropic
+original_url: https://www.anthropic.com/engineering/claude-code-auto-mode
+skill_id: claude-code-auto-mode
+generated: '2026-04-04T00:08:00+08:00'
 ---
-
 默认情况下，Claude Code 在运行命令或修改文件之前会请求用户批准。这保证了用户的安全，但也意味着需要不断点击"批准"。久而久之会导致**批准疲劳**（approval fatigue），人们不再仔细关注自己批准的内容。
 
 用户有两种解决方案来避免这种疲劳：一种是内置的沙箱（sandbox），工具在其中被隔离以防止危险操作；另一种是 `--dangerously-skip-permissions` 标志，它会禁用所有权限提示并让 Claude 自由行动，这在大多数情况下是不安全的。图 1 展示了这种权衡。沙箱是安全的但维护成本高：每个新功能都需要配置，任何需要网络或主机访问的操作都会破坏隔离。绕过权限是零维护但不提供保护。手动提示介于两者之间，实际上用户会批准 93% 的请求。
