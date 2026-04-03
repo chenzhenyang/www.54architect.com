@@ -45,6 +45,10 @@ export default defineConfig({
 					label: 'Spec-Driven Development',
 					autogenerate: { directory: 'Spec-Driven Development' },
 				},
+				{
+					label: 'OpenClaw',
+					autogenerate: { directory: 'OpenClaw' },
+				},				
 			],
 		}),
 	],
