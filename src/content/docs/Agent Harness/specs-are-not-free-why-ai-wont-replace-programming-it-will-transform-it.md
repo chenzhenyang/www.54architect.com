@@ -1,18 +1,16 @@
 ---
 title: 规范不是免费的：为什么 AI 不会取代编程（但会改变它）
 description: 讨论 AI 编程时代的规范即代码趋势，强调编写好的规范需要工程判断力
-origin_title: Specs Are Not Free: Why AI Won't Replace Programming (It Will Transform It)
+lastUpdated: 2026-04-03
 author: Hugo Nogueira
+origin_title: "Specs Are Not Free: Why AI Won't Replace Programming (It Will Transform It)"
+original_url: "https://www.hugo.im/posts/specs-are-not-free"
 tags:
   - AI
   - Programming
   - Agent Harness
 categories:
   - Technology
-lastUpdated: 2026-04-03
-skill_id: specs-are-not-free
-generated: 2026-04-03T21:20:00
-original_url: https://www.hugo.im/posts/specs-are-not-free
 ---
 
 **URL:** https://www.hugo.im/posts/specs-are-not-free
