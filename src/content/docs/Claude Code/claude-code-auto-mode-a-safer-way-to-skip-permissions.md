@@ -1,6 +1,11 @@
 ---
 title: Claude Code 自动模式：一种更安全的跳过权限方式
-description: '---'
+origin_title: 'Claude Code auto mode: a safer way to skip permissions'
+author: John Hughes, Anthropic
+original_url: https://www.anthropic.com/engineering/claude-code-auto-mode
+skill_id: claude-code-auto-mode
+generated: '2026-04-04T00:08:00+08:00'
+lastUpdated: 2026-04-04
 tags:
 - Claude Code
 - AI Safety
@@ -8,12 +13,6 @@ tags:
 - Permissions
 categories:
 - Claude Code
-lastUpdated: 2026-04-04
-origin_title: 'Claude Code auto mode: a safer way to skip permissions'
-author: John Hughes, Anthropic
-original_url: https://www.anthropic.com/engineering/claude-code-auto-mode
-skill_id: claude-code-auto-mode
-generated: '2026-04-04T00:08:00+08:00'
 ---
 默认情况下，Claude Code 在运行命令或修改文件之前会请求用户批准。这保证了用户的安全，但也意味着需要不断点击"批准"。久而久之会导致**批准疲劳**（approval fatigue），人们不再仔细关注自己批准的内容。
 
