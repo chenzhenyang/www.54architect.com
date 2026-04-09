@@ -48,7 +48,11 @@ export default defineConfig({
 				{
 					label: 'OpenClaw',
 					autogenerate: { directory: 'OpenClaw' },
-				},				
+				},	
+				{
+					label: 'Mix',
+					autogenerate: { directory: 'Mix' },
+				},					
 			],
 		}),
 	],
