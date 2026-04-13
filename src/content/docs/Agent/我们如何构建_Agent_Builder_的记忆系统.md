@@ -1,216 +1,208 @@
 ---
 title: 我们如何构建 Agent Builder 的记忆系统
-description: LangChain 团队分享如何为 Agent Builder 设计和实现记忆系统，包括架构决策和技术细节
-lastUpdated: 2026-04-03
-author: LangChain Team
-origin_title: "How we built Agent Builder's memory system"
-original_url: "https://blog.langchain.com/how-we-built-agent-builders-memory-system/"
+description: 本文深入解析 LangSmith Agent Builder 记忆系统的设计理念、技术实现细节、构建过程中的经验教训，以及未来的发展方向。
 tags:
-  - AI
-  - Agent
-  - Memory
-  - LangChain
+- AI
+- Technology
 categories:
-  - Technology
+- Technology
+lastUpdated: 2026-04-13
+origin_title: How we built Agent Builder's memory system
+author: LangChain Team
+original_url: https://blog.langchain.com/how-we-built-agent-builders-memory-system/
+---
+URL: https://blog.langchain.com/how-we-built-agent-builders-memory-system/
+
 ---
 
-我们上个月推出了 [LangSmith Agent Builder](https://smith.langchain.com/agents?skipOnboarding=true&ref=blog.langchain.com)，这是一种无需代码即可构建智能体的方式。Agent Builder 的一个关键组成部分是其记忆系统。在本文中，我们将介绍优先开发记忆系统的理由、构建它的技术细节、从构建记忆系统中获得的经验、记忆系统能够实现的功能，并讨论未来的工作方向。
+我们如何构建 Agent Builder 的记忆系统
+
+记忆系统是 Agent Builder 的核心组成部分。在本文中，我们将阐述优先开发记忆系统的理由、技术实现细节、构建过程中的经验教训、记忆系统带来的能力，并讨论未来的工作方向。
+
+**阅读时间**: 9 分钟  
+**发布日期**: 2026 年 2 月 21 日
+
+上个月我们推出了 LangSmith Agent Builder，这是一个无需编码即可构建代理 (agent) 的平台。记忆系统是 Agent Builder 的关键组成部分。在本文中，我们将阐述优先开发记忆系统的理由、技术实现细节、构建过程中的经验教训、记忆系统带来的能力，并讨论未来的工作方向。
 
 ## 什么是 LangSmith Agent Builder
 
-[LangSmith Agent Builder](https://smith.langchain.com/agents?skipOnboarding=true&ref=blog.langchain.com) 是一个无需代码的智能体构建工具。它构建在 [Deep Agents harness](https://docs.langchain.com/oss/python/deepagents/overview?ref=blog.langchain.com) 之上。这是一个面向 [技术轻量级](https://x.com/ericzakariasson/status/1996347523880165857?s=20&ref=blog.langchain.com) 公民开发者的托管 Web 解决方案。在 LangSmith Agent Builder 中，构建者将创建一个智能体来自动化特定的工作流或日常任务的一部分。示例包括 [邮件助手](https://x.com/hwchase17/status/2011126016287113681?s=20&ref=blog.langchain.com)、[文档助手](https://x.com/docs_plz/status/2011536177556570203?s=20&ref=blog.langchain.com) 等。
+LangSmith Agent Builder 是一个无需编码的代理构建工具。它基于 Deep Agents harness 构建，是一个面向技术背景较弱的公民开发者 (citizen developers) 的托管 Web 解决方案。在 LangSmith Agent Builder 中，构建者可以创建代理来自动化特定工作流程或日常任务的一部分。例如：邮件助手 (email assistant)、文档助手 (documentation helper) 等。
 
-![使用自然语言创建 Agent](/images/4462eda3.png)
+早期我们就有意识地选择将记忆作为平台的核心功能。这并不是一个显而易见的选择——大多数 AI 产品最初发布时都没有任何形式的记忆功能，即使后来添加了记忆功能，也尚未像一些人预期的那样为产品带来变革。我们之所以优先考虑记忆功能，是基于用户的使用模式。
 
-早期我们有意识地选择将记忆作为平台的优先功能。这并不是一个显而易见的选择——大多数 AI 产品最初发布时都没有任何形式的记忆，甚至添加记忆功能 [尚未像一些人预期的那样改变产品](https://simonwillison.net/2025/May/21/chatgpt-new-memory/?ref=blog.langchain.com)。我们优先考虑它的原因是用户的使用模式。
+与 ChatGPT、Claude 或 Cursor 不同，LangSmith Agent Builder 不是通用代理。它专门设计用于让构建者为特定任务定制代理。在通用代理中，用户执行的任务种类繁多且可能完全不相关，因此一次会话中的学习成果可能不适用于下一次会话。而当 LangSmith Agent 执行任务时，它会一遍又一遍地执行相同的任务。一次会话中的经验教训会以更高的比率转化到下一次会话中。事实上，如果没有记忆功能，用户体验会很糟糕——这意味着你不得不在不同会话中反复向代理重复相同的信息。
 
-与 ChatGPT、Claude 或 Cursor 不同，LangSmith Agent Builder 不是通用智能体。相反，它专门设计用于让构建者为特定任务定制智能体。在通用智能体中，你执行的任务种类繁多，可能完全不相关，因此与智能体一次会话中学到的内容可能与下一次会话无关。当 LangSmith 智能体执行任务时，它一遍又一遍地执行相同的任务。一次会话中的经验教训会以更高的比率转化到下一次会话中。事实上，如果没有记忆功能，用户体验会很糟糕——这意味着你不得不在不同会话中一遍又一遍地向智能体重复自己。
+在思考记忆对 LangSmith Agents 究竟意味着什么时，我们参考了第三方的记忆定义。COALA 论文将代理记忆分为三类：
 
-在思考记忆对 LangSmith 智能体到底意味着什么时，我们参考了第三方的记忆定义。[COALA 论文](https://arxiv.org/abs/2309.02427?ref=blog.langchain.com) 将智能体的记忆分为三类：
-
-- **程序性记忆（Procedural）**：可应用于工作记忆以确定智能体行为的一组规则
-- **语义性记忆（Semantic）**：关于世界的事实
-- **情景性记忆（Episodic）**：智能体过去行为的序列
-
-![COALA 记忆图](/images/6e029143.png)
+- **程序性记忆 (Procedural)**: 可应用于工作记忆以确定代理行为的一组规则
+- **语义记忆 (Semantic)**: 关于世界的事实
+- **情景记忆 (Episodic)**: 代理过去行为的序列
 
 ## 我们如何构建记忆系统
 
-我们将 Agent Builder 中的记忆表示为一组文件。这是一个有意的选择，目的是利用模型 [擅长使用文件系统](https://www.blog.langchain.com/how-agents-can-use-filesystems-for-context-engineering/?ref=blog.langchain.com) 这一事实。通过这种方式，我们可以轻松地让智能体读取和修改其记忆，而无需提供专用工具——我们只需让它访问文件系统！
+在 Agent Builder 中，我们将记忆表示为一组文件。这是一个有意的选择，目的是利用模型擅长使用文件系统 (filesystems) 这一特性。通过这种方式，我们可以轻松让代理读取和修改其记忆，而无需提供专用工具——我们只需赋予它访问文件系统的权限即可！
 
-在可能的情况下，我们尽量使用行业标准。我们使用 [AGENTS.md](http://agents.md/?ref=blog.langchain.com) 来定义智能体的核心指令集。我们使用 [agent skills](https://agentskills.io/home?ref=blog.langchain.com) 为智能体提供针对特定任务的专门指令。虽然没有子智能体（subagent）标准，但我们使用了 [与 Claude Code 类似的格式](https://code.claude.com/docs/en/sub-agents?ref=blog.langchain.com)。对于 [MCP](https://modelcontextprotocol.io/docs/getting-started/intro?ref=blog.langchain.com) 访问，我们使用自定义的 `tools.json` 文件。我们使用自定义 `tools.json` 文件而不是标准 `mcp.json` 的原因是，我们希望允许用户只给智能体提供 MCP 服务器中的一部分工具，以避免上下文溢出。
+在可能的情况下，我们尽量使用行业标准。我们使用 `AGENTS.md` 来定义代理的核心指令集 (instruction set)。我们使用代理技能 (agent skills) 为代理提供针对特定任务的专门指令。虽然没有子代理 (subagent) 标准，但我们使用了与 Claude Code 类似的格式。对于 MCP 访问，我们使用自定义的 `tools.json` 文件。之所以使用自定义的 `tools.json` 而不是标准的 `mcp.json`，是因为我们希望允许用户只给代理提供 MCP 服务器中的一部分工具，以避免上下文溢出 (context overflow)。
 
-![记忆 = 文件系统](/images/2e201d2d.png)
+实际上，我们并不使用真实的文件系统来存储这些文件。而是将它们存储在 Postgres 中，并以文件系统的形式暴露给代理。这样做是因为 LLM 非常擅长处理文件系统，但从基础设施角度来看，使用数据库更简单、更高效。这种"虚拟文件系统"由 DeepAgents 原生支持——并且完全可插拔，因此你可以使用任何存储层（如 S3、MySQL 等）。
 
-我们实际上并不使用真实的文件系统来存储这些文件。相反，我们将它们存储在 Postgres 中，并以文件系统的形状向智能体暴露。我们这样做是因为 LLM 非常擅长处理文件系统，但从基础设施的角度来看，使用数据库更简单、更高效。这种"虚拟文件系统"由 [DeepAgents 原生支持](https://docs.langchain.com/oss/python/deepagents/backends?ref=blog.langchain.com)——并且完全可插拔，因此你可以使用任何存储层（S3、MySQL 等）。
+我们还允许用户（以及代理本身）将其他文件写入代理的记忆文件夹。这些文件可以包含任意知识，代理在运行时可以参考。代理会在工作过程中编辑这些文件，即在"热路径"(in the hot path) 中进行编辑。
 
-我们还允许用户（以及智能体本身）将其他文件写入智能体的记忆文件夹。这些文件也可以包含任意知识，智能体在运行时可以参考。智能体会在工作时编辑这些文件，即 "[在热路径中](https://docs.langchain.com/oss/python/concepts/memory?ref=blog.langchain.com#in-the-hot-path)"。
+之所以能够在没有任何代码或领域特定语言 (DSL) 的情况下构建复杂的代理，是因为我们在底层使用了像 Deep Agents 这样的通用代理 harness。Deep Agents 抽象掉了许多复杂的上下文工程（如摘要 summarization、工具调用卸载 tool call offloading 和规划 planning），让你能够通过相对简单的配置来引导代理。
 
-之所以能够在没有任何代码或领域特定语言（DSL）的情况下构建复杂的智能体，是因为我们在底层使用了像 Deep Agents 这样的通用智能体 harness。Deep Agents 抽象掉了许多复杂的上下文工程（如 [摘要](https://docs.langchain.com/oss/python/deepagents/harness?ref=blog.langchain.com#conversation-history-summarization)、[工具调用卸载](https://docs.langchain.com/oss/python/deepagents/harness?ref=blog.langchain.com#large-tool-result-eviction) 和 [规划](https://docs.langchain.com/oss/python/deepagents/harness?ref=blog.langchain.com#to-do-list-tracking)），并让你能够通过相对简单的配置来引导智能体。
+这些文件很好地映射到了 COALA 论文中定义的记忆类型。程序性记忆——驱动核心代理指令的内容——是 `AGENTS.md` 和 `tools.json`。语义记忆是代理技能和其他知识文件。唯一缺失的记忆类型是情景记忆，我们认为对于这类代理来说，情景记忆不如其他两种类型重要。
 
-这些文件很好地映射到 COALA 论文中定义的记忆类型。程序性记忆——驱动核心智能体指令——是 [AGENTS.md](http://agents.md/?ref=blog.langchain.com) 和 `tools.json`。语义性记忆是 agent skills 和其他知识文件。唯一缺失的记忆类型是情景性记忆，我们认为对于这类智能体来说，它不如其他两种类型重要。
+## 文件系统中的代理记忆是什么样的
 
-### 文件系统中的智能体记忆是什么样的
+我们可以看看一个内部使用的真实代理案例——一个 LinkedIn 招聘代理，它基于 LangSmith Agent Builder 构建。
 
-我们可以看看我们内部一直在使用的一个真实智能体——一个 LinkedIn 招聘人员——它是基于 LangSmith Agent Builder 构建的。
+- **AGENTS.md**: 定义核心代理指令
+- **subagents/**: 仅定义一个子代理
+  - `linkedin_search_worker`: 主代理校准搜索后，会启动这个代理来寻找约 50 名候选人
+- **tools.json**: 定义一个 MCP 服务器，可访问 LinkedIn 搜索工具
 
-- [AGENTS.md](http://agents.md/?ref=blog.langchain.com)：定义核心智能体指令
-- `subagents/`：只定义了一个子智能体
-  - `linkedin_search_worker`：在主智能体校准搜索后，它会启动这个智能体来寻找约 50 名候选人
-- `tools.json`：定义了一个 MCP 服务器，可以访问 LinkedIn 搜索工具
-- 记忆中目前还有 3 个其他文件，代表不同候选人的职位描述（JD）。随着我们与智能体一起处理这些搜索，它已经更新并维护了这些 JD
+记忆中目前还有另外 3 个文件，代表不同候选人的职位描述 (JDs)。随着我们在这个搜索任务上与代理合作，它已经更新并维护了这些 JDs。
 
-![Agent Builder 记忆文件系统](/images/agent-builder-memory-filesystem.png)
+## 记忆编辑如何工作：具体示例
 
-### 记忆编辑如何工作：一个具体示例
+为了让记忆的工作原理更加具体，我们来看一个说明性示例。
 
-为了更具体地说明记忆如何工作，我们可以 walkthrough 一个示例。
-
-**开始：**
-
-你从一个简单的 [AGENTS.md](http://agents.md/?ref=blog.langchain.com) 开始：
-
+**开始**:  
+你从一个简单的 `AGENTS.md` 开始：
 ```
-总结会议记录。
+总结会议笔记。
 ```
 
-**第 1 周：**
-
-智能体生成段落式摘要。你纠正它："使用项目符号而不是段落。"智能体将 [AGENTS.md](http://agents.md/?ref=blog.langchain.com) 编辑为：
-
+**第 1 周**:  
+代理生成段落式摘要。你纠正它："使用项目符号而不是段落。"代理将 `AGENTS.md` 编辑为：
 ```
 # 格式偏好
-用户更喜欢使用项目符号进行摘要，而不是段落。
+用户更喜欢用项目符号进行总结，而不是段落。
 ```
 
-**第 2 周：**
-
-你要求智能体总结另一个会议。它读取记忆并自动使用项目符号。无需提醒。在此会话期间，你要求它："在末尾单独提取行动项目。"记忆更新为：
-
+**第 2 周**:  
+你让代理总结另一个会议。它读取记忆并自动使用项目符号。无需提醒。在这次会话中，你要求它："在末尾单独提取行动项。"记忆更新为：
 ```
 # 格式偏好
-用户更喜欢使用项目符号进行摘要，而不是段落。
-在末尾单独部分提取行动项目。
+用户更喜欢用项目符号进行总结，而不是段落。
+在末尾单独提取行动项。
 ```
 
-**第 4 周：**
+**第 4 周**:  
+两种模式都自动应用。随着新的边缘情况出现，你继续添加改进。
 
-两种模式都自动应用。随着新边缘情况的出现，你继续添加改进。
-
-**第 3 个月：**
-
-智能体的记忆包括：
-
+**第 3 个月**:  
+代理的记忆包括：
 - 不同文档类型的格式偏好
 - 领域特定术语
-- "行动项目"、"决策"和"讨论要点"之间的区别
-- 频繁会议参与者的姓名和角色
-- 会议类型处理（工程 vs. 规划 vs. 客户）
-- 通过使用积累的边缘情况修正
+- "行动项"、"决策"和"讨论要点"之间的区别
+- 频繁参会者的姓名和角色
+- 会议类型处理（工程 vs 规划 vs 客户）
+- 通过积累使用得到的边缘情况修正
 
 记忆文件可能如下所示：
-
-```
-# 会议摘要偏好
+```markdown
+# 会议总结偏好
 
 ## 格式
 - 使用项目符号，而不是段落
-- 在末尾单独部分提取行动项目
+- 在末尾单独提取行动项
 - 对决策使用过去时
 - 在顶部包含时间戳
 
 ## 会议类型
-- 工程会议：强调技术决策和理由
+- 工程会议：突出技术决策和理由
 - 规划会议：强调优先级和时间表
-- 客户会议：删除敏感信息
-- 短会议（<10 分钟）：只列出要点
+- 客户会议：隐藏敏感信息
+- 短会议 (<10 分钟)：只记录要点
 
 ## 人员
-- Sarah Chen（工程负责人）- 关注技术细节
-- Mike Rodriguez（产品经理）- 关注业务影响
+- Sarah Chen (工程负责人) - 关注技术细节
+- Mike Rodriguez (产品经理) - 关注业务影响
 ...
 ```
 
-[AGENTS.md](http://agents.md/?ref=blog.langchain.com) 通过修正自行构建，而不是通过前期文档。我们迭代地得出了适当详细的智能体规范，用户无需手动更改 [AGENTS.md](http://agents.md/?ref=blog.langchain.com)。
+`AGENTS.md` 通过纠正自行构建，而不是通过预先编写的文档。我们迭代地得出了适当详细的代理规范，而用户从未手动更改过 `AGENTS.md`。
 
-## 构建这个记忆系统的经验
+## 构建此记忆系统的经验教训
 
-我们在此过程中学到了几个教训。
+在此过程中，我们学到了几个教训。
 
-**最困难的部分是提示（prompting）**
+### 最难的部分是提示词 (prompting)
 
-构建能够记住事情的正智能体最困难的部分是提示。在几乎所有智能体表现不佳的情况下，解决方案都是改进提示。通过这种方式解决的问题示例：
+构建能够记忆的代理时，最难的部分是提示词。在几乎所有代理表现不佳的情况下，解决方案都是改进提示词。以下是一些通过这种方式解决的问题示例：
 
-- 智能体在应该记住的时候没有记住
-- 智能体在不应该记住的时候记住了
-- 智能体向 [AGENTS.md](http://agents.md/?ref=blog.langchain.com) 写入太多内容，而不是写入 skills
-- 智能体不知道 skills 文件的正确格式
-- …… 还有很多更多
+- 代理在应该记忆的时候没有记忆
+- 代理在不应该记忆的时候记忆了
+- 代理向 `AGENTS.md` 写入了太多内容，而不是写入技能文件
+- 代理不知道技能文件的正确格式
+- ……还有很多其他问题
 
-我们有一个人全职从事记忆提示工作（这占了团队的很大比例）。
+我们曾有一人全职从事记忆相关的提示词工作（这占了团队的很大比例）。
 
-**验证文件类型**
+### 验证文件类型
 
-几个文件需要遵循特定的模式（`tools.json` 需要有有效的 MCP 服务器，skills 需要有正确的 frontmatter 等）。我们发现 Agent Builder 有时会忘记这一点，因此生成了无效文件。我们添加了一个步骤来明确验证这些自定义形状，如果验证失败，则将任何错误返回给 LLM，而不是提交文件。
+几个文件需要遵循特定的模式 (schemas)（`tools.json` 需要有有效的 MCP 服务器，技能文件需要有正确的前端元数据 frontmatter 等）。我们发现 Agent Builder 有时会忘记这一点，从而生成无效文件。我们添加了一个步骤来明确验证这些自定义结构，如果验证失败，则将错误返回给 LLM，而不是提交文件。
 
-**智能体擅长向文件添加内容，但不会压缩**
+### 代理擅长添加内容，但不擅长压缩
 
-智能体在工作时编辑它们的记忆。它们非常擅长向文件添加具体内容。然而，它们不擅长的一件事是意识到何时压缩学习内容。例如：我的邮件助手在某一刻开始列出它应该忽略的所有特定供应商的冷启动推广，而不是更新自己以忽略所有冷启动推广。
+代理在工作时会编辑其记忆。它们相当擅长向文件添加具体内容。然而，它们不擅长意识到何时应该压缩学习成果。例如：我的邮件助手一度开始列出它应该忽略的所有具体供应商的冷邮件，而不是更新自己以忽略所有冷邮件。
 
-**作为最终用户，显式提示有时仍然有用**
+### 作为最终用户，显式提示有时仍然有用
 
-即使智能体能够在工作时更新其记忆，仍有几种情况（作为最终用户）我们发现显式提示智能体管理其记忆很有用。一种情况是在工作结束时反思对话并更新其记忆，以获取它可能遗漏的任何内容。另一种情况是提示它压缩记忆，以解决它记住具体案例但不进行概括的情况。
+即使代理能够在工作过程中更新其记忆，但在某些情况下，作为最终用户，我们发现显式提示代理管理其记忆仍然很有用。一种情况是在工作结束时让代理反思对话并更新记忆，以补充可能遗漏的内容。另一种情况是提示代理压缩其记忆，以解决它记住具体案例但没有进行概括的问题。
 
-**人在回路（Human-in-the-loop）**
+### 人在回路 (Human-in-the-loop)
 
-我们使所有对记忆的编辑都采用人在回路模式——也就是说，在更新之前需要明确的人工批准。这主要是为了最大限度地减少提示注入（prompt injection）的潜在攻击载体。我们确实为用户提供了一种关闭此功能的方法（"yolo 模式"），适用于他们不太担心这种情况的情况。
+我们让所有记忆编辑都采用人在回路模式——也就是说，在更新之前需要明确的人工批准。这主要是为了最大限度地减少提示注入 (prompt injection) 的潜在攻击向量。我们确实提供了一种方式让用户关闭此功能（"yolo 模式"），适用于那些不太担心此问题的情况。
 
-## 这使得什么成为可能
+## 这带来了什么能力
 
 除了更好的产品体验之外，以这种方式表示记忆还实现了许多功能。
 
-**无需代码的体验**
+### 无需编码的体验
 
-无需代码构建器的问题之一是，它们要求你学习一个不熟悉的 DSL，而这个 DSL 无法很好地扩展复杂性。通过将智能体表示为 markdown 和 json 文件，智能体现在采用了一种（a）对大多数技术轻量级人员来说熟悉的格式，（b）更具可扩展性。
+无需编码构建工具的一个问题是，它们要求你学习不熟悉的 DSL，而这种 DSL 无法很好地随复杂度扩展。通过将代理表示为 markdown 和 json 文件，代理现在采用了 (a) 对大多数技术背景较弱的人来说熟悉的格式，(b) 更具可扩展性的格式。
 
-**更好的智能体构建**
+### 更好的代理构建体验
 
-记忆实际上允许更好的智能体构建体验。智能体构建是非常迭代的——在很大程度上是因为在你尝试之前你不知道智能体会做什么。记忆使迭代更容易，因为你不必每次手动更新智能体配置，只需以自然语言提供反馈，它就会自行更新。
+记忆实际上允许更好的代理构建体验。代理构建是非常迭代的——在很大程度上是因为在尝试之前你不知道代理会做什么。记忆使迭代更容易，因为你无需每次都手动更新代理配置，只需以自然语言提供反馈，它就会自行更新。
 
-**可移植的智能体**
+### 可移植的代理
 
-文件非常可移植！这使你可以轻松地将 Agent Builder 中构建的智能体移植到其他 harness（只要它们使用相同的文件约定）。出于这个原因，我们尽量使用尽可能多的标准约定。我们希望轻松地在 Deep Agents CLI 中使用 Agent Builder 中构建的智能体。或者完全使用其他智能体 harness，如 Claude Code 或 OpenCode。
+文件非常便于移植！这使你可以轻松地将 Agent Builder 中构建的代理移植到其他 harness（只要它们使用相同的文件约定）。出于这个原因，我们尽量使用尽可能多的标准约定。我们希望让在 Agent Builder 中构建的代理能够轻松用于 Deep Agents CLI，或者完全用于其他代理 harness，如 Claude Code 或 OpenCode。
 
 ## 未来方向
 
-有很多记忆改进我们想要实现，但在发布之前我们没有足够的时间或信心来实现。
+有很多记忆功能的改进我们想要实现，但在发布之前我们没有足够的时间或信心来完成。
 
-**情景性记忆**
+### 情景记忆
 
-Agent Builder 缺少的一种 COALA 记忆类型是情景性记忆：智能体过去行为的序列。我们计划通过将之前的对话作为文件暴露在文件系统中来实现这一点，智能体可以与这些文件交互。
+Agent Builder 缺少的一种 COALA 记忆类型是情景记忆：代理过去行为的序列。我们计划通过将之前的对话作为文件暴露在文件系统中来实现这一点，代理可以与这些文件交互。
 
-**后台记忆进程**
+### 后台记忆进程
 
-目前，所有记忆都在"热路径中"更新；也就是说，在智能体运行时。我们想要添加一个在后台运行的进程（可能是一些 cron 作业，每天运行一次左右）来反思所有对话并更新记忆。我们认为这将捕捉到智能体在当时未能识别的项目，并且对于概括特定学习内容特别有用。
+目前，所有记忆都在"热路径"中更新；也就是说，在代理运行时更新。我们想添加一个在后台运行的进程（可能是一个 cron 作业，每天运行一次左右），以反思所有对话并更新记忆。我们认为这将捕捉代理在当时未能识别的项目，并且对于概括具体的学习成果特别有用。
 
-![在热路径中](/images/f31eba08.png)
+### `/remember` 命令
 
-**`/remember`**
+我们想暴露一个显式的 `/remember` 命令，这样你就可以提示代理反思对话并更新其记忆。我们发现自己偶尔会这样做，并获得了很大的好处，因此想让这变得更容易、更受鼓励。
 
-我们想要暴露一个显式的 `/remember` 命令，这样你就可以提示智能体反思对话并更新其记忆。我们发现自己偶尔这样做会带来很大的好处，因此想要使其更容易、更受鼓励。
+### 语义搜索
 
-**语义搜索**
+虽然能够使用 `glob` 和 `grep` 搜索记忆是一个很好的起点，但在某些情况下，允许代理对其记忆进行语义搜索会带来一些增益。
 
-虽然能够使用 `glob` 和 `grep` 搜索记忆是一个很好的起点，但在某些情况下，允许智能体对其记忆进行语义搜索会带来一些增益。
+### 不同级别的记忆
 
-**不同级别的记忆**
-
-目前，所有记忆都特定于该智能体。我们没有用户级别或组织级别记忆的概念。我们计划通过向智能体暴露代表这些记忆类型的特定目录来实现这一点，并提示智能体相应地使用和更新这些记忆。
+目前，所有记忆都是特定于该代理的。我们没有用户级或组织级记忆的概念。我们计划通过向代理暴露代表这些记忆类型的特定目录来实现这一点，并提示代理使用和更新这些记忆。
 
 ## 结论
 
-如果构建具有记忆的智能体听起来很有趣，请试用 [LangSmith Agent Builder](https://smith.langchain.com/agents?skipOnboarding=true&ref=blog.langchain.com)。如果你想帮助我们构建这个记忆系统，[我们正在招聘](https://www.langchain.com/careers?ref=blog.langchain.com)。
+如果构建具有记忆的代理听起来很有趣，请试用 LangSmith Agent Builder。如果你想帮助我们构建这个记忆系统，我们正在招聘。
 
 ---
 
-**原文链接**: [https://blog.langchain.com/how-we-built-agent-builders-memory-system/](https://blog.langchain.com/how-we-built-agent-builders-memory-system/)
+**加入我们的通讯**  
+获取 LangChain 团队和社区的更新
+
+（订阅表单略）
