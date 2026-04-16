@@ -50,6 +50,10 @@ export default defineConfig({
 					autogenerate: { directory: 'OpenClaw' },
 				},	
 				{
+					label: 'Hermes Agent',
+					autogenerate: { directory: 'Hermes Agent' },
+				},	
+				{
 					label: 'Mix',
 					autogenerate: { directory: 'Mix' },
 				},					
