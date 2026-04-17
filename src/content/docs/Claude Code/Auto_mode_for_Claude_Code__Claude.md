@@ -13,6 +13,7 @@ skill_id: 3cddf4dd
 generated: 2026-03-28 15:31:59.279393
 original_url: https://claude.com/blog/auto-mode
 ---
+
 今天，我们推出 auto mode（自动模式），这是 Claude Code 中的一种新权限模式，由 Claude 代表你做出权限决策，同时在操作运行前有安全保护措施进行监控。该功能现已作为研究预览（research preview）向 Team 计划用户开放，并将在未来几天内向 Enterprise 计划用户和 API 用户推出。
 
 ## 工作原理（How it works）
@@ -33,15 +34,13 @@ Auto mode 可能对工具调用的 token 消耗、成本和延迟产生轻微影
 
 Auto mode 现已在 Claude Code 中作为研究预览向 Claude Team 用户开放，并将在未来几天内向 Enterprise 和 API 用户推广。它适用于 Claude Sonnet 4.6 和 Opus 4.6。
 
-  * **面向管理员（For admins）**：Auto mode 很快将向 Enterprise、Team 和 Claude API 计划的所有 Claude Code 用户开放。要在 CLI 和 VS Code 扩展中禁用它，请在托管设置中设置 `"disableAutoMode": "disable"`。Auto mode 在 Claude 桌面应用中默认禁用，可以通过 Organization Settings -> Claude Code 切换开启。
-  * **面向开发者（For developers）**：运行 `claude --enable-auto-mode` 启用 auto mode，然后使用 Shift+Tab 循环切换到该模式。在桌面应用和 VS Code 扩展中，首先在 Settings -> Claude Code 中切换开启 auto mode，然后在会话的权限模式下拉菜单中选择它。
+* **面向管理员（For admins）**：Auto mode 很快将向 Enterprise、Team 和 Claude API 计划的所有 Claude Code 用户开放。要在 CLI 和 VS Code 扩展中禁用它，请在托管设置中设置 `"disableAutoMode": "disable"`。Auto mode 在 Claude 桌面应用中默认禁用，可以通过 Organization Settings -> Claude Code 切换开启。
+* **面向开发者（For developers）**：运行 `claude --enable-auto-mode` 启用 auto mode，然后使用 Shift+Tab 循环切换到该模式。在桌面应用和 VS Code 扩展中，首先在 Settings -> Claude Code 中切换开启 auto mode，然后在会话的权限模式下拉菜单中选择它。
 
 [查看文档](https://code.claude.com/docs/en/permission-modes#eliminate-prompts-with-auto-mode) 获取更多信息。
 
 `
-
 --dangerously-skip-permissions
-
 `
 
 ---
