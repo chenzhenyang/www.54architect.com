@@ -1,3 +1,18 @@
+---
+title: "@mariozechner Pi 系列库 API 参考"
+description: "介绍 @mariozechner 三个核心库（pi-ai、pi-agent-core、pi-coding-agent）的依赖关系和典型 API 使用方法。"
+tags:
+  - OpenClaw
+  - API
+  - SDK
+  - pi-ai
+  - pi-coding-agent
+  - pi-agent-core
+categories:
+  - OpenClaw
+lastUpdated: 2026-04-19
+---
+
 # @mariozechner Pi 系列库 API 参考
 
 本文档介绍 `@mariozechner` 三个核心库的依赖关系和典型 API 使用方法，从底层到高层排列。
