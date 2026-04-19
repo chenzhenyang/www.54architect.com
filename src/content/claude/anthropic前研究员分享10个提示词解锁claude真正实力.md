@@ -20,6 +20,8 @@ lastUpdated: 2026-04-19
 
 下面这 10 个提示词，基本就是官方思路。
 
+![Claude 内部使用技巧](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK43B7bUAAdWkV.jpg)
+
 ---
 
 ## 提示词1：情境简报
@@ -31,6 +33,8 @@ lastUpdated: 2026-04-19
 内部测试显示这一改变能提升41%的输出质量。
 
 **Claude需要地图才能导航。**
+
+![提示词1：情境简报](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK43OMacAAnMH_.jpg)
 
 ---
 
@@ -44,6 +48,8 @@ lastUpdated: 2026-04-19
 
 你得到的不仅是答案，还有可质证的思考过程。
 
+![提示词2：推理要求](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK43czaoAAWsSL.jpg)
+
 ---
 
 ## 提示词3：诚实约束
@@ -53,6 +59,8 @@ Claude天性乐于助人。有时这意味着说你想听的。覆盖它：
 > 即使难受也要诚实。我的计划有致命缺陷就直说。别软化。我宁愿现在听硬话，也不想以后失败。
 
 **解锁Claude的宪法基础。**
+
+![提示词3：诚实约束](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK43sPbgAE8zer.jpg)
 
 ---
 
@@ -64,6 +72,8 @@ Claude天性乐于助人。有时这意味着说你想听的。覆盖它：
 
 **身份越具体，推理越具体。** 模糊角色=模糊输出。每次都是。
 
+![提示词4：角色设定](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK439facAAiVCV.jpg)
+
 ---
 
 ## 提示词5：魔鬼代言人
@@ -73,6 +83,8 @@ Claude被训练得很温顺。打破这个模式：
 > 我要分享计划。你的工作是摧毁它。找出所有错误假设、忽视的风险、失败原因。别手软。
 
 **这就是Anthropic团队内部如何检验想法。** 挑战你的模型值10倍同意你的。
+
+![提示词5：魔鬼代言人](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK44MHaoAAyGj5.jpg)
 
 ---
 
@@ -84,6 +96,8 @@ Claude会答你的问题加三个衍生问题。早期锁定范围：
 
 **这从源头杀死幻觉。** Claude停止用可信的虚构填补空白。
 
+![提示词6：范围锁定](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK44XWa0AAAg8b.jpg)
+
 ---
 
 ## 提示词7：格式命令
@@ -93,6 +107,8 @@ Claude默认为全面而写。你可能需要简洁。提前设定格式：
 > 结构为：1）一句总结。2）三个要点。3）一个下一步建议。除非我问，其他都不要。
 
 **Claude遵循格式指令比任何模型更精确。** 有意使用这种精确性。
+
+![提示词7：格式命令](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK44nmbYAEg_I7.jpg)
 
 ---
 
@@ -104,6 +120,8 @@ Claude默认为全面而写。你可能需要简洁。提前设定格式：
 
 **最少使用的提示词。** 揭示每个回应下的隐藏基础。大多数计划在基础处崩溃。
 
+![提示词8：假设审计](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK4406a4AAMCqK.jpg)
+
 ---
 
 ## 提示词9：压缩循环
@@ -114,6 +132,8 @@ Claude默认为全面而写。你可能需要简洁。提前设定格式：
 
 **保持对话聚焦重点。** 防止Claude自信地解决错误问题。
 
+![提示词9：压缩循环](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK45AuagAAk-Hh.jpg)
+
 ---
 
 ## 提示词10：前期验尸
@@ -123,6 +143,8 @@ Claude帮助的东西上线前：
 > 假设6个月后失败。列出3个最可能原因。具体说。失败实际样子如何？
 
 **这是Anthropic产品团队每项重大决定都运行的。** 抓住其他审查流程遗漏的。
+
+![提示词10：前期验尸](https://raw.githubusercontent.com/chenzhenyang/images/master/claude-prompts/HGK45MQa8AA-xgN.jpg)
 
 ---
 
