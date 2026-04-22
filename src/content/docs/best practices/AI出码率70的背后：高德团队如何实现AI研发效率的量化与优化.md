@@ -1,6 +1,6 @@
 ---
 title: AI出码率70%+的背后：高德团队如何实现AI研发效率的量化与优化
-description: '---'
+description: "高德团队从零搭建AI统一数据采集能力，定义AI出码率等核心指标，3个月内实现团队AI出码率从30%提升至70%以上的实践总结"
 tags:
 - AI Coding
 - 研发效率
@@ -11,11 +11,11 @@ categories:
 lastUpdated: 2026-04-22
 origin_title: AI出码率70%+的背后：高德团队如何实现AI研发效率的量化与优化-阿里云开发者社区
 author: 益禾
-original_url: '"https://developer.aliyun.com/article/1686822"'
+original_url: "https://developer.aliyun.com/article/1686822"
 ---
 随着AI技术的快速发展，AI辅助编程已成为提升研发效率的重要手段，也是不可逆转的编码新方式。AI编程工具也从原本根据上下文自动生成补全代码片段发展到以Cursor为首的各种AI编辑IDE及CLI工具，这些工具将编码效率提升至前所未有的高度。在这一背景下，国内外许多公司都在宣传AI工具帮开发者提升多少效率，但问题是如何通过指标准确衡量这些工具带来的研发效率提升呢？同时由于不同的AI编程工具各具特点和功能，也会为指标衡量带来挑战，主要聚焦为两点：**无统一的指标量化体系及AI工具多样化带来统计数据挑战** ，如下图所示：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/7dd0e26ffc304494933d4a13d6bcfb4e.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/7dd0e26ffc304494933d4a13d6bcfb4e.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 过去几个月，围绕建立统一的数据采集和指标体系这一核心问题，我们从零搭建AI统一数据采集能力，覆盖团队同学使用AI工具，定义了AI出码率等核心指标，逐步构建了AI效率研发指标体系。通过持续迭代优化，实现从指标量化到问题识别、再到工具使用效果优化的数据驱动闭环。
 
@@ -28,7 +28,7 @@ _ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/7
 
 AI出码率主要用于衡量AI工具生成的代码在最终提交代码中的有效占比。主要定义如下：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/83860eae55904b53aafc702eb3f3f44d.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/83860eae55904b53aafc702eb3f3f44d.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 **AI采纳行数：** 统计周期内AI生成中与commit提交逐行的匹配得到的代码行数。
 
@@ -38,7 +38,7 @@ _ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/8
 
 以AI出码率为核心质量指标，围绕其我们建立了一些其他指标进行分析与参考，一些其他指标如下：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/e9d85b8c1f964ce281733b2492204023.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/e9d85b8c1f964ce281733b2492204023.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
   * 代码量统计信息：用于反映用户统计实际产出代码统计相关数据。
   * 会话交互信息：通过会话数、会话采纳率、轮次等评估AI对话效率。
@@ -50,7 +50,7 @@ _ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/e
 
 针对整个高德信息工程团队和前端团队进行指标统计，团队成员AI Coding主要以使用的编辑器为Cursor和Qoder为主。以我所在前端团队整个8月指标统计为例，最终效果如下：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/3f6d3396f9034aea97833c3a6c4919a9.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/3f6d3396f9034aea97833c3a6c4919a9.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 团队的整体出码率**从30%上升至70%以上(6月-8月)** ，基于效率体系相关指标计的统计情况，我们进行了相关分析及优化，主要包括：
 
@@ -63,7 +63,7 @@ _ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/3
 
 整个指标评价体系建设系统方案及系统如下图，基于分层架构设计实现了从数据采集能力建设、平台能力搭建、指标数据分析的业务闭环。
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/4ee634a448fa47d4a6c41b78d747c5d6.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/4ee634a448fa47d4a6c41b78d747c5d6.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 主要模块包括：
 
@@ -100,7 +100,7 @@ IDE插件采集方案
 
 针对Cursor等AI编辑器，可通过逆向工程识别其存在的本地数据库文件，直接获取AI生成代码记录，实现AI生成信息的全部获取，包括**AI会话历史记录、AI出码数据等所有结构信息** 。三种方案各有优缺点，主要对比如下：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/e2a16ff62f2e428581dec0e4696752af.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/e2a16ff62f2e428581dec0e4696752af.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 ## 5.2 我们的方案：从本地数据库逆向方案到MCP协议标准化采集方案
 
@@ -131,7 +131,7 @@ _ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/e
 
 主要流程如下图：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/fdc9cda60ba54f53ae633eca36031527.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/fdc9cda60ba54f53ae633eca36031527.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 该方案也存在一定的缺点，主要如下：
 
@@ -163,11 +163,11 @@ _ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/f
 
 规则主要优化设计思路如下：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/7f490f8dc8ab45fcb7d76ab3f61f1002.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/7f490f8dc8ab45fcb7d76ab3f61f1002.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 规则的策略设计如下图，只需按照以下策略针对不同的项目进行书写即可。
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/0dc7099257744dd880ff2d0c7cde6664.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/0dc7099257744dd880ff2d0c7cde6664.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 **（2） 智能采集规则设定**
 
@@ -227,13 +227,13 @@ AI采集数据目前在Cursor中还使用本地数据库逆向方案，在Claude
   * 指标计算阶段：针对不同维度、不同版本的出码率指标进行统计，获取分析数据。
 
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/1ca77febec874be6ba916525cfede3f3.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/1ca77febec874be6ba916525cfede3f3.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
 **5.3.2 构建多维度的AI出码率指标**
 
 对于AI出码率这一核心质量指标，在不同时期，我们也进行了系列优化，针对不同场景进行数据分析和使用，指标发展变化如下图：
 
-_ _ ![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/5ec8e7cb5fed4680b129da178b7b4ce2.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
+![](https://ucc.alicdn.com/6ibaby6qg4ku4/developer-article1686822/20251030/5ec8e7cb5fed4680b129da178b7b4ce2.webp?tmpCode=aab1d7c7-45e8-49f9-b406-7620b6c88e3e&x-oss-process=image%2Fresize%2Cw_1400%2Cm_lfit%2Fformat%2Cwebp)
 
   * **基础统计阶段指标V1：** 基于AI代码被采纳行数进行计算与git提交数据进行计算，git提交数据会去除一些特殊标注文件，如项目配置(package.json等）、依赖包(node_modules等)。但**可能会受噪声影响** ，如项目脚手架自动生成代码等会被计入。
   * **优化过滤阶段V2：** 该指标降低大规模重构对指标的影响，过滤删除文件等信息，是个人日常分析的较好选择。
