@@ -9,7 +9,7 @@ tags:
 categories:
 - Technology
 lastUpdated: 2026-04-22
-origin_title: "AI 编程 2025 总结：国产模型"能力追平"，国产编程工具还在"情感陪伴""
+origin_title: 'AI 编程 2025 总结：国产模型"能力追平"，国产编程工具还在"情感陪伴"'
 original_url: https://www.phodal.com/blog/ai-coding-2025-summary/
 ---
 
