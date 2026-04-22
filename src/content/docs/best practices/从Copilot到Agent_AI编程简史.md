@@ -12,7 +12,7 @@ categories:
   - AI 工程
 lastUpdated: 2026-04-22
 original_url: https://www.coderabbit.ai/blog/a-very-brief-history-of-ai-coding-from-copilot-to-next-gen-agents
-origin_title: From Copilot to agents: The history of AI coding
+origin_title: "From Copilot to agents: The history of AI coding"
 ---
 
 AI 编程智能体的历史始于人们还没有认真称之为"智能体"的时代。2017 年，《Attention Is All You Need》论文引入了 Transformer 架构，正是这一架构使现代大语言模型成为可能。
