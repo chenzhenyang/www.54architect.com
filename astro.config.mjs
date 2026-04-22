@@ -54,6 +54,10 @@ export default defineConfig({
 					autogenerate: { directory: 'Hermes Agent' },
 				},	
 				{
+					label: 'best practices',
+					autogenerate: { directory: 'best practices' },
+				},					
+				{
 					label: 'Mix',
 					autogenerate: { directory: 'Mix' },
 				},					
