@@ -1,15 +1,17 @@
 ---
 title: 团队AI编码率稳步提升到89.2%的AIcoding实践分享
-description: '---'
+description: AI应用火爆全世界，近两年不断有新的独角兽涌现。乘着AI应用的浪潮，我们潜心专研AI在实际需求编码中的提效应用。经过近1年的探索和实践，AI编码采纳率由4月初的9.6%稳步提升至89.2%，需求交付效率提升23.6%。
 tags:
-- AI
-- Technology
+- AI编码
+- 研发提效
+- Prompt工程
+- 技术方案
 categories:
 - Technology
 lastUpdated: 2026-04-22
 origin_title: 团队AI编码率稳步提升到89.2%的AIcoding实践分享
 author: 微信公众号
-original_url: '"https://mp.weixin.qq.com/s/dq87Orqr8SyeyECZg3BMfA"'
+original_url: https://mp.weixin.qq.com/s/dq87Orqr8SyeyECZg3BMfA
 ---
 _AI应用火爆全世界，近两年不断有新的独角兽涌现，而且估值也是一浪高过一浪。乘着AI应用的浪潮，我们也在潜心专研AI在实际需求编码中的提效应用。经过近1年的探索和实践，逐渐摸索出了一些经验。截至9月底，AI编码采纳率由4月初的9.6%稳步提升至89.2%，需求交付效率提升23.6%。_
 
