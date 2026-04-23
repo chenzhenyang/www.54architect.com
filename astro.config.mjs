@@ -58,6 +58,10 @@ export default defineConfig({
 					autogenerate: { directory: 'best practices' },
 				},					
 				{
+					label: 'OpenAI',
+					autogenerate: { directory: 'OpenAI' },
+				},
+				{
 					label: 'Mix',
 					autogenerate: { directory: 'Mix' },
 				},					
