@@ -13,7 +13,7 @@ categories:
 lastUpdated: 2026-04-23
 origin_title: The next evolution of the Agents SDK
 author: OpenAI
-original_url: '"https://openai.com/zh-Hant-HK/index/the-next-evolution-of-the-agents-sdk/"'
+original_url: https://openai.com/index/the-next-evolution-of-the-agents-sdk/
 ---
 **来源**: [OpenAI](https://openai.com/zh-Hant-HK/index/the-next-evolution-of-the-agents-sdk/)
 
@@ -21,11 +21,65 @@ original_url: '"https://openai.com/zh-Hant-HK/index/the-next-evolution-of-the-ag
 
 我们正在为 [Agents SDK](https://developers.openai.com/api/docs/guides/agents) 引入新的能力，为开发者提供易于上手且为 OpenAI 模型正确构建的标准化基础设施：一个 model-native harness，让 agent 能够跨计算机上的文件和工具工作，以及原生 sandbox execution，确保安全地运行这些工作。
 
+![Agent SDK 连接用户输入、模型和工具的示意图](https://raw.githubusercontent.com/chenzhenyang/images/master/openai-agents-sdk/AgentSDK_BuildingAgentsWithModels.svg)
+
 例如，开发者可以为 agent 提供受控的工作空间、明确的指令以及检查证据所需的工具：
+
+```python
+# pip install "openai-agents>=0.14.0"
+
+import asyncio
+import tempfile
+from pathlib import Path
+
+from agents import Runner
+from agents.run import RunConfig
+from agents.sandbox import Manifest, SandboxAgent, SandboxRunConfig
+from agents.sandbox.entries import LocalDir
+from agents.sandbox.sandboxes import UnixLocalSandboxClient
+
+
+async def main() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        dataroom = Path(tmp) / "dataroom"
+        dataroom.mkdir()
+        (dataroom / "metrics.md").write_text(
+            """# Annual metrics
+
+| Year | Revenue | Operating income | Operating cash flow |
+| --- | ---: | ---: | ---: |
+| FY2025 | $124.3M | $18.6M | $24.1M |
+| FY2024 | $98.7M | $12.4M | $17.9M |
+""",
+            encoding="utf-8",
+        )
+
+        agent = SandboxAgent(
+            name="Dataroom Analyst",
+            model="gpt-5.4",
+            instructions="Answer using only files in data/. Cite source filenames.",
+            default_manifest=Manifest(entries={"data": LocalDir(src=dataroom)}),
+        )
+
+        result = await Runner.run(
+            agent,
+            "Compare FY2025 revenue, operating income, and operating cash flow with FY2024.",
+            run_config=RunConfig(
+                sandbox=SandboxRunConfig(client=UnixLocalSandboxClient()),
+            ),
+        )
+        print(result.final_output)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
 
 > 开发者需要的不仅仅是最好的模型来构建有用的 agent——他们还需要支持 agent 如何检查文件、运行命令、编写代码以及在多个步骤中持续工作的系统。
 
 当团队从原型走向生产时，现有的系统各有取舍。模型无关的框架虽然灵活，但无法充分利用前沿模型的能力；模型提供商的 SDK 可能更接近模型，但往往缺乏对 harness 的足够可见性；托管 agent API 可以简化部署，但限制了 agent 的运行位置以及访问敏感数据的方式。
+
+![使用 Agent SDK 构建 AI 智能体的示意图](https://raw.githubusercontent.com/chenzhenyang/images/master/openai-agents-sdk/AgentSDK_BuildingWithAgentsSDK.svg)
 
 以下是与我们一起测试新 SDK 的一些客户的反馈：
 
@@ -37,6 +91,8 @@ original_url: '"https://openai.com/zh-Hant-HK/index/the-next-evolution-of-the-ag
 
 harness 还通过将执行与前沿模型的最佳表现方式对齐，帮助开发者释放更多模型能力。这使得 agent 更接近模型的自然运行模式，在复杂任务上提高了可靠性和性能——尤其是当工作需要长时间运行或跨多种工具和系统协调时。
 
+![Agent SDK harness 利用额外计算资源的流程图](https://raw.githubusercontent.com/chenzhenyang/images/master/openai-agents-sdk/AgentSDK_HarnessWithCompute.svg)
+
 此外，我们意识到每个产品都是独特的，很少能整齐地套入某种模式。我们设计 Agents SDK 就是为了支持这种多样性。开发者获得的是一个既开箱即用又灵活的 harness——可以轻松适配自己的技术栈——包括工具使用、memory 和 sandbox 环境。
 
 ## Sandbox Execution
@@ -47,6 +103,8 @@ harness 还通过将执行与前沿模型的最佳表现方式对齐，帮助开
 
 开发者可以自带 sandbox，或使用对 Blaxel、Cloudflare、Daytona、E2B、Modal、Runloop 和 Vercel 的内置支持。
 
+![支持的沙箱提供商徽标](https://raw.githubusercontent.com/chenzhenyang/images/master/openai-agents-sdk/sandbox-providers-logos.png)
+
 为了让这些环境能够跨提供商移植，SDK 还引入了 Manifest 抽象来描述 agent 的工作空间。开发者可以挂载本地文件、定义输出目录，并从存储提供商引入数据，包括 AWS S3、Google Cloud Storage、Azure Blob Storage 和 Cloudflare R2。
 
 这为开发者提供了一种一致的方式来塑造 agent 的环境，从本地原型到生产部署。它还为模型提供了一个可预测的工作空间：在哪里找到输入、在哪里写入输出，以及在长时间运行的任务中如何保持工作有序。
@@ -54,6 +112,8 @@ harness 还通过将执行与前沿模型的最佳表现方式对齐，帮助开
 ## 安全与可扩展性
 
 Agent 系统的设计应该假设存在 prompt-injection 和数据 exfiltration 的尝试。将 harness 和 compute 分离，有助于将凭据排除在模型生成代码执行的环境之外。
+
+![Agent SDK 编排不同计算系统的示意图](https://raw.githubusercontent.com/chenzhenyang/images/master/openai-agents-sdk/AgentSDK_HarnessSeparate.svg)
 
 它还支持 durable execution。当 agent 的状态被外部化时，失去一个 sandbox 容器并不意味着丢失整个运行。通过内置的 snapshotting 和 rehydration，Agents SDK 可以在新容器中恢复 agent 的状态，并从最后一个 checkpoint 继续，如果原始环境发生故障或过期。
 
