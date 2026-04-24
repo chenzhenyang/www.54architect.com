@@ -78,7 +78,7 @@ MCP 标准化了 AI 智能体（[_客户端_](https://modelcontextprotocol.io/do
 
 [工具搜索（Tool search）](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool) 延迟了将所有工具加载到上下文的时机，而不是在启动时就全部加载。这让智能体能够在运行时搜索工具目录，仅在需要时拉入相关工具。在我们的[测试](https://www.anthropic.com/engineering/advanced-tool-use)中，工具搜索通常能将工具定义相关的 token 消耗减少 85% 以上，同时保持很高的选择准确性。
 
-![](https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/69e920e636fbec575e46319c_context-usage.webp)
+![](https://raw.githubusercontent.com/chenzhenyang/images/master/images/mcp_article_img_0.webp)
 
 使用工具搜索减少上下文消耗。来源：[高级工具使用](https://www.anthropic.com/engineering/advanced-tool-use)
 
