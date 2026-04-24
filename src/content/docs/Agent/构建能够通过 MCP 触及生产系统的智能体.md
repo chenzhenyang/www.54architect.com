@@ -98,7 +98,7 @@ Claude 的[插件（Plugins）](https://code.claude.com/docs/en/plugins-referenc
 
 将 MCP 服务器与技能结合，让 Claude 更像一个领域专家。通过 MCP 获取工具，并赋予 Claude 端到端编排工作流的技能。以我们用于 Cowork 的[数据插件](https://claude.ai/directory/plugins/data%40knowledge-work-plugins)为例，它包含 10 个技能和 8 个 MCP 服务器，覆盖 Snowflake、Databricks、BigQuery、Hex 等应用。
 
-![](https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6945b3dfa8f134d0104e4e23_How%20Skills%20and%20MCP%20work%20together%20-%20v3B%402x%20\(2\).png)
+![](https://raw.githubusercontent.com/chenzhenyang/images/master/images/mcp_article_img_1.png)
 
 技能与 MCP 的结合。来源：[通过技能和 MCP 服务器扩展 Claude 的能力](https://claude.com/blog/extending-claude-capabilities-with-skills-mcp-servers)
 
