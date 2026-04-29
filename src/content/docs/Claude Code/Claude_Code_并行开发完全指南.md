@@ -513,7 +513,6 @@ backend-dev plan 确认后，执行迁移。
 claude --team dev
 ```
 启动后，architect 会自动分析项目结构并给出模块划分建议。
-```
 
 下次在这个项目里开 Claude Code，它自己就加载好了，不用再手动配。
 
