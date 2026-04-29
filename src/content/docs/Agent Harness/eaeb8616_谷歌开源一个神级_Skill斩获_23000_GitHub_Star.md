@@ -9,13 +9,6 @@ skill_id: "eaeb8616"
 generated: "2026-04-29T22:58:16.867564"
 original_url: "https://mp.weixin.qq.com/s/DiRKOSV7BPkWaGUxPnLqyQ"
 ---
-
----
-title: 谷歌开源一个神级 Skill，斩获 23000+ GitHub Star！
-skill_id: eaeb8616
-generated: 2026-04-29T22:58:03.201912
-original_url: https://mp.weixin.qq.com/s/DiRKOSV7BPkWaGUxPnLqyQ
----
 AI 编程工具的能力进化速度，远超所有人预期，当前已经能快速帮我们完成众多开发任务。
 
 但很快大家便发现一个问题，模型能力越强，AI 走捷径的毛病越明显，拿到任务就一股脑按指令往前冲。
