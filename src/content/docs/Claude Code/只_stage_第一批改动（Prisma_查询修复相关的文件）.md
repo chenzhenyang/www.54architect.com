@@ -1,20 +1,15 @@
 ---
 title: Claude Code 与 Git 的完美协作流程
-description: '---'
-tags:
-- Claude Code
-- AI
-- Git
-- 开发工具
-categories:
-- Claude Code
 lastUpdated: 2026-04-29
+tags: ["Claude Code", "AI", "Git", "开发工具"]
+categories: ["Claude Code"]
 origin_title: Claude Code 与 Git 的完美协作流程
 author: 三木AI编程
-skill_id: 09cef014
-generated: '"2026-04-29T22:56:54.818062"'
-original_url: '"https://mp.weixin.qq.com/s/VH17-xaXUuCP2vzfZjIniQ"'
+skill_id: "09cef014"
+generated: "2026-04-29T22:56:54.818062"
+original_url: "https://mp.weixin.qq.com/s/VH17-xaXUuCP2vzfZjIniQ"
 ---
+
 不是夸它。是真的比我强。
 
 我写了10年的 commit message，格式大概是这样：`fix bug`、`update payment`、`change stuff`。
@@ -247,6 +242,7 @@ feat(api): add GET /api/billing/invoices endpoint to retrieve Stripe invoice lis
 `# 把已经 staged 的文件先 unstage  
 git restore --staged .  
   
+# 只 stage 第一批改动（Prisma 查询修复相关的文件）  
 git add lib/db.ts app/api/subscription/route.ts  
   
 # commit 第一个  
