@@ -178,6 +178,8 @@ Subagents 本质上是同一个 Claude 实例在跑，只是用不同指令集�
 - 需要"架构师"和"开发者"同时讨论一个设计方案
 - 同一个模块两个 AI 各自探索不同实现路径，最后合并
 
+![Claude Code Agent Teams 典型场景](https://raw.githubusercontent.com/chenzhenyang/images/master/wechat/20260429/img1.jpg)
+
 ### 4.2 启用 Agent Teams
 
 **方法一：settings.json（推荐）**
@@ -329,6 +331,8 @@ A：用 Shift+↑ / Shift+↓ 确认当前所在的窗口。也可以用 `tmux l
 
 Git Worktree 允许你在同一个 Git 仓库里，同时创建多个工作目录，每个目录对应一个独立的分支。它们共享同一个 `.git` 对象库，但文件系统和提交历史完全隔离。
 
+![Git Worktree 工作原理](https://raw.githubusercontent.com/chenzhenyang/images/master/wechat/20260429/img2.jpg)
+
 ### 5.3 基础命令
 
 ```bash
@@ -469,6 +473,8 @@ Claude Code 内置 `/plan` 命令，它不是一个执行命令，而是一个�
 ├─ 合并各分支到 main
 └─ 运行集成测试
 ```
+
+![Multi-Agent 协作工作流模板](https://raw.githubusercontent.com/chenzhenyang/images/master/wechat/20260429/img3.jpg)
 
 ### 6.5 把工作流模板固化到 CLAUDE.md
 
