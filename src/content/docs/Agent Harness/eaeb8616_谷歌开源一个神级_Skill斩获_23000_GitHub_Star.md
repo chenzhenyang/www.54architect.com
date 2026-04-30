@@ -1,6 +1,6 @@
 ---
 title: 谷歌开源一个神级 Skill斩获 23000 GitHub Star
-lastUpdated: 2026-04-29
+lastUpdated: 2026-04-30
 tags: ["Agent Skills", "AI", "开发工具", "Google"]
 categories: ["Agent Harness"]
 origin_title: 谷歌开源一个神级 Skill，斩获 23000+ GitHub Star！
@@ -9,6 +9,9 @@ skill_id: "eaeb8616"
 generated: "2026-04-29T22:58:16.867564"
 original_url: "https://mp.weixin.qq.com/s/DiRKOSV7BPkWaGUxPnLqyQ"
 ---
+
+![cover](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/DiRKOSV7/cover.png)
+
 AI 编程工具的能力进化速度，远超所有人预期，当前已经能快速帮我们完成众多开发任务。
 
 但很快大家便发现一个问题，模型能力越强，AI 走捷径的毛病越明显，拿到任务就一股脑按指令往前冲。
@@ -19,19 +22,25 @@ AI 编程工具的能力进化速度，远超所有人预期，当前已经能�
 
 开源后不久，便拿下 23000+ GitHub Star，目前还在持续上涨。
 
+![Agent Skills GitHub 页面](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/DiRKOSV7/img_02.png)
+
 它把资深工程师的工作流和开发规范，封装成了 Skills 技能包，让 AI 在每个开发阶段都能保持一致的高标准。
 
 这些技能并非凭空编造出来，背后大多源自 《Software Engineering at Google》，这本书主要讲的是 Google 内部做大规模软件工程的那套方法论。
 
 Agent Skills 正是围绕软件开发生命周期设计，包含了 20 个 Skill、7 个 Slash 命令，外加 3 个 Agent 人设。
 
-覆盖了定义、规划、构建、验证、评审、发布六个阶段的完整开发链路。 
+覆盖了定义、规划、构建、验证、评审、发布六个阶段的完整开发链路。
+
+![Slash 命令工作流](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/DiRKOSV7/img_03.png)
 
 在 Claude Code 里装上后，我们能用 `/spec` 做需求梳理，`/plan` 拆分任务。
 
 接着 `/build` 增量实现、`/test` 跑测试、`/review` 做评审，最后 `/ship` 走上线，将整个开发节奏串联起来。
 
 另外三个预设的 Agent 人设也值得一提，分别是 code-reviewer、test-engineer、security-auditor。
+
+![Agent 人设并行工作](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/DiRKOSV7/img_04.png)
 
 在跑 `/ship` 部署上线时，它们会并行开工，分别出具代码评审、测试、安全三份报告，最后给出是否可以上线的结论。
 
@@ -49,12 +58,18 @@ Agent Skills 则把 Google 资深工程师的工作习惯，拆成 20 个可组�
 
 一句话总结，Spec Kit 用文档定 AI，Superpowers 用流程带 AI，Agent Skills 用纪律管 AI。
 
+![三者对比](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/DiRKOSV7/img_05.png)
+
 具体选哪个，就看各自的使用场景。
 
 最后讲下 Agent Skills 上手方式，在 Claude Code 里两行命令即可搞定。
-    
-    
-    /plugin marketplace add addyosmani/agent-skills/plugin install agent-skills@addy-agent-skills
+
+```
+/plugin marketplace add addyosmani/agent-skills
+/plugin install agent-skills@addy-agent-skills
+```
+
+![安装指南](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/DiRKOSV7/img_06.png)
 
 如果用的是 Cursor，把对应的 SKILL.md 复制到 `.cursor/rules/` 目录即可。
 
@@ -76,25 +91,9 @@ Agent Skills 的意义也正在于此。
 
 GitHub 项目地址：https://github.com/addyosmani/agent-skills
 
+![GitHub 项目页面](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/DiRKOSV7/img_07.png)
+
 今天的分享到此结束，感谢大家抽空阅读，我们下期再见，Respect！
-
-`/spec`
-
-`/plan`
-
-`/build`
-
-`/test`
-
-`/review`
-
-`/ship`
-
-`/ship`
-
-`.cursor/rules/`
-
-![cover_image](https://mmbiz.qpic.cn/sz_mmbiz_jpg/snxIHWuwQomhrUJ5MvYOWtQPnIrDT4YTYqXdYAPn930Tib98GerMZ7WRgCXE4h3b1iaTwfV8wl9agsUHoZiaxOWU9JXDyRP3Pcf78k0lrCk43g/0?wx_fmt=jpeg)![image-20260422203414292](https://mmbiz.qpic.cn/sz_mmbiz_png/snxIHWuwQokYUaianJwb1ckWTkezH6ppEkFx6iaXibn3TU787ScTcKfgPP5PPEUsA2ibVgia1eOSYGMqUBrqAP8HamLF9Q0Pvwkajphib3sCZSIME/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=0)![](http://mmbiz.qpic.cn/mmbiz_png/uDRkMWLia28ia8xsyOClt8NDDCTAZNaDsEic4EEpUG1FPduFr5TUMK1GbDiaFX0qNCJiaS2XPfHzWlFicK95v1a9ic7Vg/0?wx_fmt=png)![](https://mmbiz.qpic.cn/mmbiz_png/uDRkMWLia28ia8xsyOClt8NDDCTAZNaDsEic4EEpUG1FPduFr5TUMK1GbDiaFX0qNCJiaS2XPfHzWlFicK95v1a9ic7Vg/300?wx_fmt=png&wxfrom=18)![划线引导图](https://res.wx.qq.com/op_res/opqv3ix6k9E4e64ZzO7uIqE3ZblwIojfmt7u70m59yS1ylFK-hTu6Ra8V_LaWQJ1P4OlUJPdXLfVBtrm3TwRrw)
 
 
 ---
