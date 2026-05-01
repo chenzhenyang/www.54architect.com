@@ -4,7 +4,6 @@ skill_id: bd7a7e06
 generated: 2026-05-02T01:11:38.405994
 original_url: https://mp.weixin.qq.com/s/4v2WNdg3p8sX69czFMpmEA
 ---
-# 14B小模型挑战GPT-4o？让AI真正「想出」科研新点子的训练框架来了！
 
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/2bd2f135/4Zfl6dmm5Yc89XSxGKKZJGjGhCv9ib16YEWWvMFu7BDciaGa4bDz5wKV7gAyBUd6LRIFa92mv80sYWdT7hVAWdhcVhBQsokT6UZS)
 
