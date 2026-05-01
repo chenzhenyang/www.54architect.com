@@ -1,6 +1,6 @@
 ---
-title: 37d6f5fa_60条科研写作高频Prompt_original
-description: 随着生成式AI在科研写作中的应用越来越广泛，越来越多教师开始利用AI辅助完成：
+title: "60条科研写作高频Prompt"
+description: "60条覆盖科研写作全过程的高频Prompt，包括课题选题、文献综述、研究设计、课题申报书、论文写作五大场景"
 tags:
 - AI
 - Technology
