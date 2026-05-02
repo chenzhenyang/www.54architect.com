@@ -1,15 +1,15 @@
 ---
-title: "为什么需要一个 Multi-Pass Review Skill：让大模型代码审核从"会说"变成"可控""
+title: '为什么需要一个 Multi-Pass Review Skill：让大模型代码审核从"会说"变成"可控"'
 lastUpdated: 2026-05-02
 tags: ["代码审核", "大模型", "Multi-Pass Review", "AI"]
 categories: ["Software Engineering"]
-origin_title: "为什么需要一个 Multi-Pass Review Skill：让大模型代码审核从"会说"变成"可控""
+origin_title: '为什么需要一个 Multi-Pass Review Skill：让大模型代码审核从"会说"变成"可控"'
 original_url: https://mp.weixin.qq.com/s/E7tLeZjf_3u6eT5NZN7SkA
 ---
 
 # 为什么需要一个 Multi-Pass Review Skill：让大模型代码审核从“会说”变成“可控”
 
-![在这里插入图片描述](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/a5f11415/AfrEnGqAhI2mZia93hk1uRFmR26onw1WmqLLtQB2QsKXsgRjkclF5JeM6RMoVOm46rogzeuArnmHicmtuiaEhedhvrMz4ZQAjotc)在这里插入图片描述
+![](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/a5f11415/AfrEnGqAhI2mZia93hk1uRFmR26onw1WmqLLtQB2QsKXsgRjkclF5JeM6RMoVOm46rogzeuArnmHicmtuiaEhedhvrMz4ZQAjotc)
 
 ## 开篇：大模型已经能审代码，但还不能无约束地审代码
 
