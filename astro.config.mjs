@@ -20,7 +20,7 @@ export default defineConfig({
 				{
 					label: 'Agent',
 					autogenerate: { directory: 'Agent' },
-				},				
+				},
 				{
 					label: 'Exploring Generative AI',
 					autogenerate: { directory: 'Exploring Generative AI' },
@@ -48,15 +48,15 @@ export default defineConfig({
 				{
 					label: 'OpenClaw',
 					autogenerate: { directory: 'OpenClaw' },
-				},	
+				},
 				{
 					label: 'Hermes Agent',
 					autogenerate: { directory: 'Hermes Agent' },
-				},	
+				},
 				{
 					label: 'best practices',
 					autogenerate: { directory: 'best practices' },
-				},					
+				},
 				{
 					label: 'OpenAI',
 					autogenerate: { directory: 'OpenAI' },
@@ -64,7 +64,15 @@ export default defineConfig({
 				{
 					label: 'Mix',
 					autogenerate: { directory: 'Mix' },
-				},					
+				},
+				{
+					label: 'Software Engineering',
+					autogenerate: { directory: 'Software Engineering' },
+				},
+				{
+					label: 'Dissertation',
+					autogenerate: { directory: 'Dissertation' },
+				},
 			],
 		}),
 	],
