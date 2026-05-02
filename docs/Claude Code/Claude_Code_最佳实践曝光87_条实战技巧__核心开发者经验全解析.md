@@ -33,7 +33,7 @@ Claude Code 有三种扩展方式，很多人搞混。先说清楚：
 
   * 子智能体 = 开个新对话（重量级）
 
-![Image](https://mmbiz.qpic.cn/mmbiz_jpg/ToyTxtS81RO6IWq50FOzOIVQvFBq1QpGPqY3YWlXFVPhwvS4Utvmov4tDEFM82XpBZGHTKXcxDkyOkn0Eb7PqUK6TOWK1voUchzto5G7wic8/640?wx_fmt=jpeg&watermark=1#imgIndex=0)
+![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/best_practice_1.jpg)
 
 ### 怎么组合使用
     
@@ -90,7 +90,7 @@ Claude Code 有三种扩展方式，很多人搞混。先说清楚：
 **用 context: fork 隔离运行**  
 复杂技能在隔离的子智能体中运行，主上下文只看最终结果。
 
-![Image](https://mmbiz.qpic.cn/mmbiz_jpg/ToyTxtS81RPupcFSDciaWZoPkNs6INUKG2KUiaAuxUPicKickWxicx6pfXfFgXRwa8ICCam5xqFB4pNZN9zglzgBjnicawz45oyqGKKnzapGQNicfM/640?wx_fmt=jpeg&watermark=1#imgIndex=1)
+![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/best_practice_2.jpg)
 
 ## CLAUDE.md 怎么写
 
