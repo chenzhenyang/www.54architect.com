@@ -1,6 +1,7 @@
 ---
+
 title: Meta将AI采用与员工目标挂钩：50-80% AI辅助代码目标
-description: 'Meta内部文件显示，公司正通过将AI工具使用与员工目标挂钩来推动"AI原生"转型，部分团队设定了50%-80% AI辅助代码目标。'
+description: 'Meta内部文件显示，公司正通过将AI工具使用与员工目标挂钩来推动“AI原生”转型，部分团队设定了50%-80% AI辅助代码目标。'
 tags:
 - AI Coding
 - Meta
@@ -12,6 +13,7 @@ lastUpdated: 2026-04-22
 origin_title: "Meta's AI Push Ties Employee Goals to AI Tool Adoption - Business Insider"
 original_url: https://www.businessinsider.com/meta-ai-push-employee-goals-tool-adoption-2-026-3
 ---
+
 
 马克·扎克伯格希望Meta成为一家"AI原生"公司。一份内部文件揭示了这位CEO实现目标的一种方式。
 

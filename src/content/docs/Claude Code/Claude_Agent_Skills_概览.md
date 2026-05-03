@@ -1,15 +1,16 @@
 ---
+
 title: Claude Agent Skills 第一性原理深度解析
-description: '---'
 tags:
 - AI
 - Technology
 categories:
 - Technology
 lastUpdated: 2025-10-26
-origin_title: '"Claude Agent Skills: A First Principles Deep Dive"'
+origin_title: '“Claude Agent Skills: A First Principles Deep Dive”'
 author: Lee, Hanchung
 ---
+
 Claude 的 Agent `Skills`（智能体技能）系统代表了一种复杂的基于提示词的元工具（meta-tool）架构，它通过 specialized instruction injection（专用指令注入）扩展了大语言模型的能力。与传统的函数调用或代码执行不同，`skills` 通过**提示词扩展**和**上下文修改**来改变 Claude 处理后续请求的方式，而无需编写可执行代码。
 
 本文从第一性原理出发，深入解构 Claude 的 Agent `Skills` 系统，记录了一种名为"`Skill`"的工具如何作为元工具将领域特定的提示词注入对话上下文的架构。我们将以 `skill-creator` 和 `internal-comms` 技能为案例，完整梳理其生命周期，从文件解析到 API 请求结构，再到 Claude 的决策过程。

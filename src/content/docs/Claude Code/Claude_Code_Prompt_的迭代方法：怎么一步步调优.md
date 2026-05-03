@@ -1,13 +1,20 @@
 ---
+
 title: Claude Code Prompt 的迭代方法：怎么一步步调优
 lastUpdated: 2026-05-01
-tags: ["Claude Code", "AI 编程", "Prompt 工程", "最佳实践"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - AI 编程
+  - Prompt 工程
+  - 最佳实践
+categories:
+  - Claude Code
 author: 未知
 skill_id: 5b22e11e
 generated: 2026-05-01T22:19:46.801267
 original_url: https://mp.weixin.qq.com/s/ttAh0dz8HyYKkwH3A0X1RQ
 ---
+
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/83e7fc26/B19QjeJMDNA8xcSicBUM2XR9kdibLYuoicNNHFib7HWK2XK3Gp5up9NhUIPLtUhQmFx0eIaxDG0eL6iaBtaqT7ibWqQdud1kic6v)
 
 我的 Claude Code Prompt 从 30 字迭代到 150 字，输出质量翻了三倍。
@@ -45,8 +52,6 @@ Prompt 迭代最常见的错误模式是：**同时改太多东西** 。
   * 输出里有什么是你想要的
   * 输出里有什么是你不想要的
   * 有什么你想要但没有出现的
-
-
 
 这三点就是你迭代的方向。
 
@@ -144,8 +149,6 @@ C类问题：需要加规格约束，明确说「怎么做」。
   * 也没有处理「优惠码已达使用上限」的情况
   * 函数直接 import 了 Stripe client，不方便测试
 
-
-
 问题类型：B类（范围不够，漏了边界情况）+ C类（规格不符，依赖注入方式不对）
 
 **第一次修改（v2）：只解决 B类问题，加边界情况**
@@ -195,7 +198,6 @@ C类问题：需要加规格约束，明确说「怎么做」。
 * * *
 
 **最后一个实际的问题：** 你现在手头有没有一个「反复用但效果不稳定」的 Prompt——今天能出好结果，明天同样用却出了垃圾？如果有，用今天这套诊断框架分类一下：它是 A类（方向错）、B类（范围不对）还是 C类（规格不符）的问题？
-
 
 ---
 

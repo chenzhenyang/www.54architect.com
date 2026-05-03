@@ -1,6 +1,5 @@
 ---
 title: LLM 智能体外化：记忆、技能、协议与工程框架的统一综述
-description: '---'
 tags:
 - AI
 - Technology

@@ -1,6 +1,5 @@
 ---
 title: Equipping agents for the real world with Agent Skills  Anthropic | Claude
-description: '---'
 tags:
 - AI
 - Technology

@@ -1,14 +1,21 @@
 ---
+
 title: 谷歌开源一个神级 Skill斩获 23000 GitHub Star
 lastUpdated: 2026-04-29
-tags: ["Agent Skills", "AI", "开发工具", "Google"]
-categories: ["Agent Harness"]
+tags:
+  - Agent Skills
+  - AI
+  - 开发工具
+  - Google
+categories:
+  - Agent Harness
 origin_title: 谷歌开源一个神级 Skill，斩获 23000+ GitHub Star！
 author: GitHubDaily
 skill_id: "eaeb8616"
 generated: "2026-04-29T22:58:16.867564"
 original_url: "https://mp.weixin.qq.com/s/DiRKOSV7BPkWaGUxPnLqyQ"
 ---
+
 
 ---
 title: 谷歌开源一个神级 Skill，斩获 23000+ GitHub Star！
@@ -102,7 +109,6 @@ GitHub 项目地址：https://github.com/addyosmani/agent-skills
 `.cursor/rules/`
 
 ![cover_image](https://mmbiz.qpic.cn/sz_mmbiz_jpg/snxIHWuwQomhrUJ5MvYOWtQPnIrDT4YTYqXdYAPn930Tib98GerMZ7WRgCXE4h3b1iaTwfV8wl9agsUHoZiaxOWU9JXDyRP3Pcf78k0lrCk43g/0?wx_fmt=jpeg)![image-20260422203414292](https://mmbiz.qpic.cn/sz_mmbiz_png/snxIHWuwQokYUaianJwb1ckWTkezH6ppEkFx6iaXibn3TU787ScTcKfgPP5PPEUsA2ibVgia1eOSYGMqUBrqAP8HamLF9Q0Pvwkajphib3sCZSIME/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=0)![](http://mmbiz.qpic.cn/mmbiz_png/uDRkMWLia28ia8xsyOClt8NDDCTAZNaDsEic4EEpUG1FPduFr5TUMK1GbDiaFX0qNCJiaS2XPfHzWlFicK95v1a9ic7Vg/0?wx_fmt=png)![](https://mmbiz.qpic.cn/mmbiz_png/uDRkMWLia28ia8xsyOClt8NDDCTAZNaDsEic4EEpUG1FPduFr5TUMK1GbDiaFX0qNCJiaS2XPfHzWlFicK95v1a9ic7Vg/300?wx_fmt=png&wxfrom=18)![划线引导图](https://res.wx.qq.com/op_res/opqv3ix6k9E4e64ZzO7uIqE3ZblwIojfmt7u70m59yS1ylFK-hTu6Ra8V_LaWQJ1P4OlUJPdXLfVBtrm3TwRrw)
-
 
 ---
 

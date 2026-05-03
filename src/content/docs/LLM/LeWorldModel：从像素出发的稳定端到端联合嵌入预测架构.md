@@ -1,6 +1,6 @@
 ---
+
 title: LeWorldModel：从像素出发的稳定端到端联合嵌入预测架构
-description: '---'
 tags:
 - 世界模型
 - JEPA
@@ -12,8 +12,9 @@ lastUpdated: 2026-03-24
 origin_title: '"LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture
   from Pixels"'
 author: Lucas Maes, Quentin Le Lidec, Damien Scieur, Yann LeCun, Randall Balestriero
-original_url: '"https://arxiv.org/html/2603.19312v2"'
+original_url: '“https://arxiv.org/html/2603.19312v2”'
 ---
+
 ## 摘要
 
 

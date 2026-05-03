@@ -1,12 +1,20 @@
 ---
+
 title: 让 Claude Code 成本爆降 89%，这个开源工具有点猛
 lastUpdated: 2026-05-01
-tags: ["Claude Code", "RTK", "CLI Agent", "Token 优化", "开发工具"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - RTK
+  - CLI Agent
+  - Token 优化
+  - 开发工具
+categories:
+  - Claude Code
 skill_id: d6b6558b
 generated: 2026-05-01T23:30:14.496111
 original_url: https://mp.weixin.qq.com/s/CHkoP5Y90yZNy_uVtMGqAw
 ---
+
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/21bbf882/ULE52ybiacStfuG63kBJOk6Nhof1NiaVLSSRNicRX9K8yIUickqlAPMwnic7DLibG3hGeq2ibq4tT5Ma3WZOjV7JgaJZWSETBbia)
 
 > 使用过Claude Code的小伙伴应该有所了解，Claude Code有个200k的LLM上下文。如果我们在命令达到LLM上下文之前，不做过滤和压缩的话，上下文很快就会占用过高了，不仅会导致AI推理能力变差，而且会消耗大量的token。今天给大家分享一款高性能CLI代理RTK，能大大降低token的消耗！
@@ -39,7 +47,6 @@ RTK是一款高性能的CLI代理，它能在命令输出到达LLM上下文之�
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/21bbf882/ULE52ybiacSv9VYHdIicxETb5S7wu5vria3haBOcib7hLfVOo4AbwY1tvSG0b5aSJLkpNTR37XA4Gj4ltgSODkLtvLzQwf80KV5m)
 
   * 下载成功后解压会得到一个`rtk.exe`可执行程序，我们需要把这个路径添加到`环境变量->系统变量->Path`中去；
-
 
     
     
@@ -87,7 +94,6 @@ RTK是一款高性能的CLI代理，它能在命令输出到达LLM上下文之�
 https://github.com/rtk-ai/rtk
 
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/21bbf882/CKvMdchsUwlkU1ysoMgG69dVYbCQcI6Byneb8ibzZWPfUCr3T8CuBicCSGyFE6SpAtxpxtDCp6VlZ4F1hEL1BNyg.jpg)
-
 
 ---
 

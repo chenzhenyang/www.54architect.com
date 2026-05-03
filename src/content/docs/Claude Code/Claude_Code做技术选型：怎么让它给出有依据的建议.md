@@ -1,13 +1,20 @@
 ---
+
 title: Claude Code做技术选型：怎么让它给出有依据的建议
 lastUpdated: 2026-05-01
-tags: ["Claude Code", "AI 编程", "技术选型", "Prompt 工程"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - AI 编程
+  - 技术选型
+  - Prompt 工程
+categories:
+  - Claude Code
 author: 未知
 skill_id: d445dab4
 generated: 2026-05-01T22:13:11.647312
 original_url: https://mp.weixin.qq.com/s/qGE0Q0WqzdHJdq08ItRLyw
 ---
+
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/dbf03f5b/B19QjeJMDNDI63kVTYhSjZeI3tiaMXpK9bWYWNB1X0MO8icuOMVuJ1nmLugxgsnSOnicTEwvJ5o8icwr7KhOFHOHYiaATD29Qhjy)
 
 有一次我问 Claude Code「用 Zustand 还是 Redux」，它给了我一个废话答案
@@ -126,7 +133,6 @@ original_url: https://mp.weixin.qq.com/s/qGE0Q0WqzdHJdq08ItRLyw
 >   2. 最关键理由（一条）
 > 
 
-
 它的回答（核心部分）：
 
 **推荐：方案 B（轮询），间隔改为 60 秒。**
@@ -192,7 +198,6 @@ original_url: https://mp.weixin.qq.com/s/qGE0Q0WqzdHJdq08ItRLyw
 * * *
 
 **最后一个实际的问题：** 你最近做过的一次技术选型，当时是怎么做决定的——查文档自己研究、问 AI 拿到「各有优缺点」然后自己判断，还是别的方式？现在看来，当时的决定是对的还是出现了什么问题？
-
 
 ---
 

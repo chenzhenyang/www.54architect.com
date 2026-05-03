@@ -1,6 +1,6 @@
 ---
+
 title: 如何将 AI 代码采纳率从30%提升到80%？-阿里云开发者社区
-description: '---'
 tags:
 - AI
 - Technology
@@ -9,11 +9,12 @@ categories:
 lastUpdated: 2026-04-22
 origin_title: 如何将 AI 代码采纳率从30%提升到80%？
 author: 森叶
-original_url: '"https://developer.aliyun.com/article/1683372"'
+original_url: '“https://developer.aliyun.com/article/1683372”'
 source: 阿里云开发者社区
 skill_id: 26aff38b
 generated: 2026-04-22 08:25:51.393630
 ---
+
 目前尝试过不少 AI 编程工具，重度使用过的包括 VSCode+Roo Code 、Continue、Trae、Claude Code，Cursor 浅用了一下，因为没有申请到公司企业版本，不算很了解。包括之前还没有兴起 Agent 概念时，也经常用对话方式让 AI 生成部分代码片段。
 
   

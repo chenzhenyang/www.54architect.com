@@ -1,6 +1,7 @@
 ---
+
 title: 3年、1万人，快手技术团队首次系统披露AI研发范式升级历程
-description: '快手首次系统性披露自2023年以来的AI研发范式升级历程，从平台化、数字化、精益化到智能化，定义L1 AI辅助（Copilot）→ L2 AI协同（Agent）→ L3 AI自主（Agentic）的分级体系，揭示"用AI开发工具 ≠ 个人提效 ≠ 组织提效"的本质问题与解决方案。'
+description: '快手首次系统性披露自2023年以来的AI研发范式升级历程，从平台化、数字化、精益化到智能化，定义L1 AI辅助（Copilot）→ L2 AI协同（Agent）→ L3 AI自主（Agentic）的分级体系，揭示“用AI开发工具 ≠ 个人提效 ≠ 组织提效”的本质问题与解决方案。'
 tags:
 - AI Coding
 - 研发效能
@@ -15,6 +16,7 @@ lastUpdated: 2026-04-22
 origin_title: "3年、1万人，快手技术团队首次系统披露AI研发范式升级历程"
 original_url: https://www.infoq.cn/article/9rX1Ov951gKtaTmQb8Jq
 ---
+
 
 ## 编者按
 

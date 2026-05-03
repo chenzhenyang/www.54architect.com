@@ -1,12 +1,20 @@
 ---
+
 title: 测试+Debug Skill：AI陪跑开发全流程
 lastUpdated: 2026-05-01
-tags: ["AI", "Skill", "测试", "Debug", "开发工具"]
-categories: ["Agent Harness"]
+tags:
+  - AI
+  - Skill
+  - 测试
+  - Debug
+  - 开发工具
+categories:
+  - Agent Harness
 skill_id: 03f98245
 generated: 2026-05-01T23:47:42.713080
 original_url: https://mp.weixin.qq.com/s/QbEorfs2FmDYw_tQ96eBxA
 ---
+
 
 > AI测试, AI调试, 单元测试, 自动化测试, BUG定位
 
@@ -184,7 +192,6 @@ AI 能做的是帮你设计更贴近生产的数据场景，而不是帮你搭�
 
   
 
-
 **盲区2：Bug 修完就上线，没有验证闭环**
 
 修了一个 Bug，上线。然后发现另一个地方裂了。
@@ -204,7 +211,6 @@ AI 能做的是帮你设计更贴近生产的数据场景，而不是帮你搭�
 Debug Skill 的核心：错误信息是结果，还原路径才是解题思路。
 
 下次遇到 Bug，先问 AI：这整条路径是什么样的？而不是：这个错误怎么解决？
-
 
 ---
 

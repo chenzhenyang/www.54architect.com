@@ -1,6 +1,6 @@
 ---
+
 title: CodeBuddy AI Coding 企业场景落地实践与思考-腾讯云开发者社区-腾讯云
-description: '---'
 tags:
 - AI
 - Technology
@@ -8,10 +8,11 @@ categories:
 - Technology
 lastUpdated: 2026-04-22
 origin_title: CodeBuddy AI Coding 企业场景落地实践与思考-腾讯云开发者社区-腾讯云
-original_url: '"https://cloud.tencent.com/developer/article/2555275"'
+original_url: '“https://cloud.tencent.com/developer/article/2555275”'
 generated: 2026-04-22 00:53:06.848242
 skill_id: 868bb766
 ---
+
 在 AI 浪潮席卷全球的今天，AI CODING 已经不是企业研发团队的可选项，而是必选项。
 
 如果你是企业研发团队的负责人、 AI CODING 落地推动者或希望在工作中正在使用 AI CODING 工具的一线开发者，或多或少遇到一些落地困难，这篇文章结合日常团队的探索与实战，为你及你的团队提供一份可执行的 AI CODING 落地指南，欢迎和大家一起交流、探讨，也欢迎大家贡献更多相关 AI CODING 的优秀实践，相互学习，共同进步。

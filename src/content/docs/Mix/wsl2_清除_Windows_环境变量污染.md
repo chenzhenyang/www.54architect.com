@@ -1,6 +1,5 @@
 ---
 title: wsl2 清除 Windows 环境变量污染
-description: '---'
 tags:
 - AI
 - Technology

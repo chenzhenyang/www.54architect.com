@@ -1,7 +1,7 @@
 ---
 title: 打造高效的 AI 编程环境：Claude Code LSP 完整配置指南
 author: 技术极简主义
-date: "2026-01-10 11:30:05"
+date: 2026-01-10 11:30:05
 source: "https://mp.weixin.qq.com/s?__biz=MjM5NzA1NzMyOQ==&mid=2247486487&idx=1&sn=b6f02c6ca6d6e57fff631c62ed139f2c&scene=21"
 ---
 

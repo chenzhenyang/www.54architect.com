@@ -1,14 +1,21 @@
 ---
+
 title: Claude Code 与 Git 的完美协作流程
 lastUpdated: 2026-04-29
-tags: ["Claude Code", "AI", "Git", "开发工具"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - AI
+  - Git
+  - 开发工具
+categories:
+  - Claude Code
 origin_title: Claude Code 与 Git 的完美协作流程
 author: 三木AI编程
 skill_id: "09cef014"
 generated: "2026-04-29T22:56:54.818062"
 original_url: "https://mp.weixin.qq.com/s/VH17-xaXUuCP2vzfZjIniQ"
 ---
+
 
 不是夸它。是真的比我强。
 
@@ -79,7 +86,6 @@ Git 的纪律是最先崩的那个东西。
 >   1. 判断这次改动是否应该拆成多个 commit，如果是，告诉我怎么拆
 >   2. 按照 Conventional Commits 规范，给每个 commit 写一个 message
 > 
-
 
 它会告诉你：这次改动混了两件事——修了一个 Prisma 查询的 bug 和加了一个新的 API 路由，建议拆成两个 commit。
 
@@ -218,16 +224,13 @@ Claude Code 帮你写 commit 不是在偷懒，是在强制你把每次改动说
 
 `git commit -m "fix"`
 
-
 `feature/billing-history-ui # 前端页面和组件  
 feature/billing-history-api # API 路由，从 Stripe 拉取数据  
 feature/billing-history-db # 数据库 schema 变更（如果需要本地缓存）  
 `
 
-
 `git diff --staged  
 `
-
 
 `fix(db): resolve N+1 query in subscription status fetch by adding include clause  
   
@@ -237,7 +240,6 @@ feat(api): add GET /api/billing/invoices endpoint to retrieve Stripe invoice lis
 `feat:`
 
 `fix:`
-
 
 `# 把已经 staged 的文件先 unstage  
 git restore --staged .  
@@ -257,7 +259,6 @@ git commit -m "feat(api): add GET /api/billing/invoices endpoint to retrieve Str
 
 `git restore --staged .`
 
-
 `<<<<<<< HEAD  
 const subscription = await prisma.subscription.findFirst({  
 where: { userId, status: 'active' }  
@@ -272,7 +273,6 @@ where: { userId_status: { userId, status: 'active' } }
 `@@unique([userId, status])`
 
 `findUnique`
-
 
 `git log main..HEAD --oneline  
 `
@@ -293,7 +293,6 @@ where: { userId_status: { userId, status: 'active' } }
 
 `git add -p`
 
-
 `feat(billing): implement Stripe invoice retrieval endpoint with pagination support and proper error handling for expired invoices  
 `
 
@@ -302,7 +301,6 @@ where: { userId_status: { userId, status: 'active' } }
 `git revert`
 
 ![cover_image](https://mmbiz.qpic.cn/sz_mmbiz_jpg/B19QjeJMDNAkAqLI0ut49nH5FSicU2riaicFZeqEf1kvoSicce52WHZnVwSibRmA52ib5K8H4uAu6dibmpMzx2SbFIiajkRn4f8TcUnyfAd7AZf5JCM/0?wx_fmt=jpeg)![](http://mmbiz.qpic.cn/mmbiz_png/B19QjeJMDNCs7Oz5CJK7U75WWw29qkslcJkzLenZkhbQuJlEpziccoQ2Tg2g3njrEYDFQ33XDIu3hhnBKtM9x1Q5fJsKCLMhDPicuwwGkcgvI/0?wx_fmt=png)![](https://mmbiz.qpic.cn/mmbiz_png/B19QjeJMDNCs7Oz5CJK7U75WWw29qkslcJkzLenZkhbQuJlEpziccoQ2Tg2g3njrEYDFQ33XDIu3hhnBKtM9x1Q5fJsKCLMhDPicuwwGkcgvI/300?wx_fmt=png&wxfrom=18)![划线引导图](https://res.wx.qq.com/op_res/opqv3ix6k9E4e64ZzO7uIqE3ZblwIojfmt7u70m59yS1ylFK-hTu6Ra8V_LaWQJ1P4OlUJPdXLfVBtrm3TwRrw)
-
 
 ---
 

@@ -1,11 +1,18 @@
 ---
+
 title: "Claude Code Git 工作流"
 lastUpdated: 2026-05-02
-tags: ["Claude Code", "Git", "工作流", "开发工具"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - Git
+  - 工作流
+  - 开发工具
+categories:
+  - Claude Code
 origin_title: "Claude Code Git 工作流 | 菜鸟教程"
 original_url: https://www.runoob.com/claude-code/claude-code-git-workflow.html
 ---
+
 
 Claude Code 深度集成了 Git 功能，可以用自然语言完成几乎所有 Git 操作，包括创建提交、管理分支、处理合并冲突，以及利用 Git Worktree 实现并行工作流。本章详细介绍如何在 Claude Code 中高效使用 Git。
 
@@ -109,8 +116,6 @@ Git Worktree 允许你在不同目录中同时处理不同的分支，而无需�
   * 基于 `origin/HEAD`（远程默认分支）创建新分支
   * 在新目录中启动独立 Claude 会话
 
-
-
 同时开多个 worktree：
     
     
@@ -129,8 +134,6 @@ Git Worktree 允许你在不同目录中同时处理不同的分支，而无需�
 | 分支命名 | `worktree-<name>`                 |
 | 基础分支 | 远程 `origin/HEAD` 指向的分支            |
 
-
-
 ### 3、Worktree 生命周期
 
 | 场景                     | 行为                                |
@@ -138,8 +141,6 @@ Git Worktree 允许你在不同目录中同时处理不同的分支，而无需�
 | 没有做出任何修改               | Worktree 和分支自动删除                  |
 | 存在变更或提交                | Claude 提示你选择保留或删除                 |
 | Claude 崩溃导致孤立 worktree | 超过 `cleanupPeriodDays` 设置的天数后自动删除 |
-
-
 
 ### 4、复制 .gitignore 文件到 Worktree
 
@@ -205,8 +206,6 @@ __
   * 修改不会影响主仓库
   * 适合探索性任务和方案对比
 
-
-
 * * *
 
 ## Pull Request 工作流
@@ -235,8 +234,6 @@ __
   * 会话链接到 PR 后，可以从 PR 恢复对话
   * 使用 `claude --from-pr <number>` 恢复关联的会话
 
-
-
 ### 3、使用 GitHub CLI
 
 Claude 了解如何使用 `gh` CLI 工具。如果没有安装 `gh`，Claude 可以读写 GitHub API，但功能有限。
@@ -260,8 +257,6 @@ Claude 了解如何使用 `gh` CLI 工具。如果没有安装 `gh`，Claude 可
 | `claude --resume`      | 打开会话选择器或按名称恢复  |
 | `claude --from-pr 123` | 恢复与特定 PR 关联的会话 |
 
-
-
 ### 2、会话选择器 Git 功能
 
 ### 3、会话元数据显示
@@ -272,8 +267,6 @@ Claude 了解如何使用 `gh` CLI 工具。如果没有安装 `gh`，Claude 可
   * 上次活动距今时间
   * 消息数量
   * Git 分支（如果有）
-
-
 
 ### 4、分支会话
 
@@ -391,8 +384,6 @@ __
   * **错误后更新 CLAUDE.md** ：每次纠错后加一句"更新你的 CLAUDE.md，别再犯同样的错"
   * **验证环节专门进计划模式** ：确保验证过程安全可控
 
-
-
 * * *
 
 ## 常见问题
@@ -416,7 +407,6 @@ Git Worktree 共享仓库历史，新目录只包含分支差异，所以占用�
 **Q：子代理的 Worktree 什么时候清理？**
 
 正常完成时，Claude 会提示你选择保留或删除。因崩溃孤立的 worktree 会在超过 `cleanupPeriodDays` 设置的天数后自动删除。
-
 
 ---
 

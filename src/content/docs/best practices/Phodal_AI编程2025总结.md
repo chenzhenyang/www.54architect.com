@@ -1,4 +1,5 @@
 ---
+
 title: AI编程2025总结：国产模型能力追平，国产编程工具还在情感陪伴
 description: 'Phodal Huang总结2025年AI编程六大趋势：国产模型能力追平Claude、开放工具集成、Spec复兴与上下文工程、端到端门槛下降、自验证时代、全栈回归与重复劳动力替代。'
 tags:
@@ -9,9 +10,10 @@ tags:
 categories:
 - Technology
 lastUpdated: 2026-04-22
-origin_title: 'AI 编程 2025 总结：国产模型"能力追平"，国产编程工具还在"情感陪伴"'
+origin_title: 'AI 编程 2025 总结：国产模型“能力追平”，国产编程工具还在“情感陪伴”'
 original_url: https://www.phodal.com/blog/ai-coding-2025-summary/
 ---
+
 
 前几天，我看到一篇国产 AI Coding 工具的案例文章，花了不少篇幅在讲一个"智能体的附加价值"——当你写代码写到崩溃时，它可以安慰你、鼓励你，让你感觉好受一点。
 

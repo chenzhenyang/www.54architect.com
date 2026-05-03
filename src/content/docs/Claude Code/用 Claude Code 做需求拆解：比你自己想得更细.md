@@ -1,12 +1,19 @@
 ---
+
 title: 用 Claude Code 做需求拆解：比你自己想得更细
 lastUpdated: 2026-05-01
-tags: ["Claude Code", "需求分析", "独立开发", "AI 辅助开发"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - 需求分析
+  - 独立开发
+  - AI 辅助开发
+categories:
+  - Claude Code
 skill_id: 4b65384e
 generated: 2026-05-01T23:54:05.460492
 original_url: https://mp.weixin.qq.com/s/E01lug5bpMP7XZxjnP10CA
 ---
+
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/c38c2830/B19QjeJMDNAC82E6ZYIwpGAuflNeD5z5lTROdR1LPrq9lNnCsfichuloZ2icckXTLcmVtz8cT0d3pMev4ib1b2ouwHZbHtlw1X3Q)
 
 那天我把需求描述给它，说：帮我做用户订阅功能，支持月付和年付，Stripe 接入。
@@ -51,8 +58,6 @@ original_url: https://mp.weixin.qq.com/s/E01lug5bpMP7XZxjnP10CA
   * 取消订阅后用户的数据保留多久？
   * 是否需要支持退款？退款触发条件是什么？
   * 订阅状态变更是否需要发邮件通知？哪些状态变更需要？
-
-
 
 **这些问题本身就是价值。**
 
@@ -171,7 +176,6 @@ Claude Code 做这件事的价值，不在于它帮你写了多少代码，在�
 * * *
 
 **最后一个实际的问题：** 你现在在做或者计划做的功能里，有没有某个"感觉很清楚但可能没想全"的需求？用今天这套流程的第一步试试——把需求描述给 Claude Code，让它向你提问——看看它问出来的问题里，有没有你之前没想到的。结果怎样，可以告诉我。
-
 
 ---
 

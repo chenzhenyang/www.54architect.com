@@ -1,15 +1,21 @@
 ---
+
 title: Claude Code 最佳实践：历经6个生产项目淬炼的15条实战经验
 lastUpdated: 2026-05-01
-tags: ["Claude Code", "AI 编程", "最佳实践", "Prompt 工程"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - AI 编程
+  - 最佳实践
+  - Prompt 工程
+categories:
+  - Claude Code
 author: 未知
 skill_id: f76aa6c8
 generated: 2026-05-01T22:29:53.374895
 original_url: https://mp.weixin.qq.com/s/2SE7jq-VGLp3h_Vmgc2jnw
 ---
-  
 
+  
 
 > **[速读指南]**
 
@@ -20,16 +26,12 @@ original_url: https://mp.weixin.qq.com/s/2SE7jq-VGLp3h_Vmgc2jnw
   3. 在 `.claude/commands/` 中定义自定义斜杠命令（如 `/new-feature`），将重复性工作流程浓缩为单一指令。
   4. 配置 `.claudeignore` 排除无关文件，精简上下文范围，提升响应速度与准确率。
 
-
-
 **提示策略层：**
 
   5. 优先阐述「What」与「Why」，让 Claude 自主决策「How」，避免直接下达实现细节。
   6. 将大型任务拆解为「计划—评审—执行」多阶段流程，防止一次性塞满上下文窗口。
   7. 引用现文件模式（如「参照 `/api/teams` 的实现方式」），让 Claude 直接复用而非凭记忆重构。
   8. 复杂变更前先制定计划，经人工审核后再执行，显著降低返工成本。
-
-
 
 **工作流习惯层：**
 
@@ -40,8 +42,6 @@ original_url: https://mp.weixin.qq.com/s/2SE7jq-VGLp3h_Vmgc2jnw
   13. 配置 Post-ToolUse Hooks 实现自动 lint/format；
   14. 将整套 `.claude/` 配置打包为「项目套件」，新项目可直接复制复用；
   15. 最终人工 Review：执行 `git diff`、运行全量测试、构建验证，守住最后 10% 的质量关。
-
-
 
 * * *
 
@@ -76,7 +76,6 @@ original_url: https://mp.weixin.qq.com/s/2SE7jq-VGLp3h_Vmgc2jnw
 >   6. 每次我纠正你的错误后，反思问题根源并制定避免重蹈覆辙的计划。
 > 
 > 
-
 
 ## 提示工程：高效沟通的模式与范式
 
@@ -118,8 +117,6 @@ original_url: https://mp.weixin.qq.com/s/2SE7jq-VGLp3h_Vmgc2jnw
   2. https://x.com/shao__meng/status/2028627172920017002
 
   
-
-
 
 ---
 

@@ -1,13 +1,22 @@
 ---
+
 title: "AI 写代码太快，人类测试跟不上了，Meta 用新方法把 bug 检出率提升 4 倍"
 lastUpdated: 2026-05-02
-tags: ["Meta", "AI", "测试", "JiT 测试", "Agent", "bug 检测"]
-categories: ["Software Engineering"]
+tags:
+  - Meta
+  - AI
+  - 测试
+  - JiT 测试
+  - Agent
+  - bug 检测
+categories:
+  - Software Engineering
 origin_title: "AI 写代码太快，人类测试跟不上了，Meta 用新方法把 bug 检出率提升 4 倍"
 original_url: https://mp.weixin.qq.com/s/uXjVwYhPLX4939aBYwizBw
 skill_id: 446afbb3
 generated: "2026-05-02T17:03:48.773903"
 ---
+
 
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/meta_bug_detect_1.gif)作者 ｜ Leela Kumili 译者 ｜ 田橙
 
@@ -74,7 +83,6 @@ https://www.infoq.com/news/2026/04/meta-jit-testing-ai-detection/
 [AI提效20%，我们程序员加班却越来越狠：老板量生产力的尺子，歪了？](https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651281724&idx=1&sn=4867ddf8e0f234a3eaf7fef02442134b&scene=21#wechat_redirect)
 
 ![图片](https://raw.githubusercontent.com/chenzhenyang/images/master/meta_bug_detect_2.gif)
-
 
 ---
 

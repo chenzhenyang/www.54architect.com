@@ -1,12 +1,19 @@
 ---
+
 title: Claude Code 新功能 memory.md 让项目拥有全局记忆
 lastUpdated: 2026-05-01
-tags: ["Claude Code", "AI 编程", "Auto Memory", "开发工具"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - AI 编程
+  - Auto Memory
+  - 开发工具
+categories:
+  - Claude Code
 skill_id: b11dff7e
 generated: 2026-05-01T23:15:21.424376
 original_url: https://mp.weixin.qq.com/s/rX7-bIcgJ6ssbiFsoYeKcg
 ---
+
 Anthropic 最近的版本推出了新的会话记忆功能：**Auto Memory** 。
 
 Claude Code 现在会自己记笔记了。你不用动手，它会把项目里值得留下来的东西（构建命令、代码习惯、架构约定、调试经验）自动写进本地文件。下次不管你开哪个终端、开第几个会话，这些信息都会自动加载。
@@ -76,8 +83,6 @@ Auto Memory 默认开启，不需要任何配置。你正常写代码的时候�
   * • 架构笔记：关键文件、模块关系、重要的抽象设计
   * • 你的偏好：编码习惯、工具选择、工作流程
 
-
-
 你也可以主动让它记。比如直接说：
 
 > "记住这个项目用 pnpm 不用 npm"  
@@ -116,8 +121,6 @@ Claude 会把这些写入记忆文件，后续会话自动遵守。
 | 是否进 Git | 是（团队共享）   | 否（仅本地）    |
 | 维护方式    | 手动        | 自动        |
 
-
-
 两者并存，互不冲突。会话启动时一起加载。
 
 如果你熟悉 Spring Boot 的配置体系，可以这样理解：CLAUDE.md 像 application.yml 里你手写的配置，MEMORY.md 像 Spring Boot 的自动配置，根据实际情况自动生成，你不用管，但需要时可以覆盖。
@@ -152,8 +155,6 @@ Auto Memory 需要 Claude Code v2.1.59 及以上版本。更新一下：
   * • 选项 2：打开项目级 CLAUDE.md（团队共享的规则）
   * • 选项 3：打开 Auto Memory 文件夹（Claude 自己的笔记）
 
-
-
 ### 验证记忆是否生效
 
 最简单的验证方式：
@@ -162,8 +163,6 @@ Auto Memory 需要 Claude Code v2.1.59 及以上版本。更新一下：
   2. 2\. 注意终端里是否出现 `Recalled X memories (ctrl+o to expand)` 的提示
   3. 3\. 按 Ctrl+O 查看加载了哪些记忆
   4. 4\. 关闭会话，重新打开，问它："你知道这个项目用什么构建工具吗？"
-
-
 
 如果它能准确回答，说明记忆生效了。
 
@@ -217,8 +216,6 @@ Claude Code 的记忆体系其实不只是 CLAUDE.md + MEMORY.md。完整的层�
 | 项目本地        | `./CLAUDE.local.md`               | 个人     | 仅当前项目     |
 | Auto Memory | `~/.claude/projects/<项目>/memory/` | Claude | 仅你自己      |
 
-
-
 越具体的层级，优先级越高。
 
 ## 总结
@@ -230,8 +227,6 @@ Claude Code 的记忆体系其实不只是 CLAUDE.md + MEMORY.md。完整的层�
 [PIG AI 新版更新：代码评审、智能巡检、Skills 技能三箭齐发](https://mp.weixin.qq.com/s?__biz=MjM5MzEwODY4Mw==&mid=2257491421&idx=1&sn=6480b8a90b11fd3a34c7478c29d27642&scene=21#wechat_redirect)
 
   
-
-
 
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: 我是如何在 OpenClaw 之上构建多智能体系统的
-description: '---'
 tags:
 - OpenClaw
 - 多智能体

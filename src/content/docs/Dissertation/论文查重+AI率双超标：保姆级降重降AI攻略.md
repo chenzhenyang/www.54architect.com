@@ -1,12 +1,19 @@
 ---
+
 title: "论文查重+AI率双超标：保姆级降重降AI攻略"
 lastUpdated: 2026-05-02
-tags: ["论文查重", "AI率", "降重", "毕业"]
-categories: ["Dissertation"]
+tags:
+  - 论文查重
+  - AI率
+  - 降重
+  - 毕业
+categories:
+  - Dissertation
 skill_id: 12758788
 generated: 2026-05-02T00:58:33.808412
 original_url: https://mp.weixin.qq.com/s/p6_hHseORAwQrrqzO8t-7g
 ---
+
 
 毕业季的煎熬，莫过于论文好不容易写完，查重率居高不下，费尽心思改完重复率，又被导师指出AI生成痕迹过重、AI率超标，直接打回重改，甚至面临答辩延期、学术不端预警的风险。
 
@@ -130,6 +137,5 @@ AI原句："采用该模型完成数据处理，效果良好"；
 
 转发给身边被论文折磨的同学，一起告别延毕焦虑，顺利毕业、前程似锦！
 如有需要请联系：
-
 
 ![Image](https://raw.githubusercontent.com/chenzhenyang/images/master/litercrawler/thesis_ai_check.jpg)

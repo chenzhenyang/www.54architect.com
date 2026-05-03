@@ -70,8 +70,6 @@ categories:
 | **Context Engineering** （2025） | 给模型看什么  | 给马提供更好的路线图    | "AI不了解我的项目"      |
 | **Harness Engineering** （2026） | 为模型造一辆车 | 围绕马力建造完整的交通系统 | "AI不可靠、不可控、不可维护" |
 
-
-
 前两个阶段关注的都是"**怎么跟模型交互** "。
 
 Harness Engineering关注的是一个更根本的问题："**怎么围绕模型，建造一个让它稳定、可靠、持续工作的基础设施？** "
@@ -85,8 +83,6 @@ Harness Engineering关注的是一个更根本的问题："**怎么围绕模型�
   * 光写好提示词（Prompt Engineering）只能解决**单次对话** 的质量
   * 光提供好上下文（Context Engineering）只能解决**信息缺失** 的问题
   * 但AI在长周期项目中的**不可靠、不可控、不可维护** ——这些系统性问题，需要一个**系统性的工程方案** 来解决
-
-
 
 **Harness Engineering就是这个系统性方案。**
 
@@ -135,8 +131,6 @@ CODEBLOCK-PLACEHOLDER-1
 | AI加功能   | 在route里直接操作数据库 | 严格走分层架构            |
 | AI改共享模块 | 直接改，不管谁在用      | 先grep全部调用方，评估影响再动手 |
 | AI写代码   | 英文注释、代码风格随机    | 中文注释、统一规范          |
-
-
 
 实测数据：加了行为规范后，AI引发的"连锁Bug"**减少约70%** 。
 
@@ -261,8 +255,6 @@ AI看到的不是一句"帮我检查合规"，而是一份**完整的检查工�
 | doc-writer      | 文档工程  | API文档、架构文档、变更记录                   |
 | fullstack-dev   | 全栈开发  | 跨前后端完整功能                          |
 
-
-
 每个Agent都有自己的**启动协议** ：开始工作前先读三层记忆，然后读与自己角色相关的技术文档。修完代码后还有一份**完成检查清单** ——调用链是否正确、日志是否完整、数据库连接是否关闭。
 
 **你不会让测试工程师去做架构设计，也不会让前端去搞Docker部署。** 给AI"分工"之后，每个Agent在自己的专业领域内，输出质量显著提升。
@@ -299,8 +291,6 @@ CODEBLOCK-PLACEHOLDER-7
 | **可靠性**   |  低（AI随时可能跑偏）       | 中（有信息但无约束）          | 高（规范+护栏+追踪+知识）      |
 | **适用场景**  |  一次性简单任务           | 中等复杂度的项目            | 长周期、大规模、生产级项目       |
 | **工程组件数** |  1个（Prompt）        | 2-3个（Prompt+记忆+知识）  | **7个** （完整驾驭体系）     |
-
-
 
 **一句话总结三者的关系** ：
 
@@ -366,9 +356,6 @@ GitHub Copilot认copilot-instructions.md，Cursor认.cursorrules，Claude Code�
 
 用同一匹"千里马"——
 
-
-
-
 CODEBLOCK-PLACEHOLDER-10
 
 区别不是马的问题。是**有没有给马造一辆车** 的问题。
@@ -380,9 +367,6 @@ CODEBLOCK-PLACEHOLDER-10
 * * *
 
 **你目前的AI编程项目中，用了Harness Engineering的哪些组件？**
-
-
-
 
 CODEBLOCK-PLACEHOLDER-11
 
@@ -399,8 +383,6 @@ CODEBLOCK-PLACEHOLDER-11
 [#HarnessEngineering](javascript:;) [#AI编程](javascript:;) [#驾驭工程](javascript:;) [#上下文工程](javascript:;) [#Prompt工程](javascript:;) [#独立开发](javascript:;) [#AI实战](javascript:;)
 
   
-
-
 
 ---
 

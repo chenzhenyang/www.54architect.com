@@ -1,12 +1,18 @@
 ---
+
 title: "Claude Code 最佳实践曝光！87 条实战技巧 + 核心开发者经验全解析"
 lastUpdated: 2026-05-02
-tags: ["Claude Code", "AI", "编程"]
-categories: ["Claude Code"]
+tags:
+  - Claude Code
+  - AI
+  - 编程
+categories:
+  - Claude Code
 original_url: https://mp.weixin.qq.com/s/p7S1JbxOciKIp0KCVO3j9w
 skill_id: e75ace83
 generated: "2026-05-02T17:22:37.649398"
 ---
+
 
 这是一份来自 Claude Code 社区的实战指南，Boris Cherny 等核心开发者贡献了 87 条经验。如果你在用 Claude Code，或者想搞清楚子智能体、命令、技能这些东西到底怎么回事，往下看。
 
@@ -27,9 +33,7 @@ Claude Code 有三种扩展方式，很多人搞混。先说清楚：
 
   * 命令 = 给当前对话加点知识（轻量）
 
-
   * 技能 = 给当前对话加点知识（可配置，能隔离）
-
 
   * 子智能体 = 开个新对话（重量级）
 
@@ -46,19 +50,13 @@ Claude Code 有三种扩展方式，很多人搞混。先说清楚：
 
   * **钩子（Hooks）** — 在特定事件触发时运行自定义处理器
 
-
   * **MCP 服务器** — 连接外部工具、数据库、API
-
 
   * **插件** — 打包技能、子智能体、钩子、MCP 服务器
 
-
   * **检查点** — 基于 git 的自动回退，`Esc Esc` 或 `/rewind`
 
-
   * **记忆** — 通过 CLAUDE.md 和 `.claude/rules/` 持久化上下文
-
-
 
 ## 什么时候用哪个？
 
@@ -135,10 +133,7 @@ Claude Code 有三种扩展方式，很多人搞混。先说清楚：
 
   * ` /loop` — 本地，最长 3 天
 
-
   * `/schedule` — 云端
-
-
 
 ## 规划技巧
 
@@ -180,46 +175,31 @@ glob + grep 比向量数据库好用。Claude Code 试过向量数据库，后�
 
   * **自动模式** — `claude --enable-auto-mode` 或 `Shift+Tab`
 
-
   * **沙箱隔离** — `/sandbox`
-
 
   * **语音输入** — `/voice`
 
-
   * **远程控制** — `/remote-control` 或 `/rc`
-
 
   * **定时任务** — `/loop`（本地）、`/schedule`（云端）
 
-
   * **代码审查** — `/code-review`
 
-
   * **回退** — `Esc Esc` 或 `/rewind`
-
-
 
 ## 社区工作流
 
   * **Superpowers** — TDD 优先、铁律约束、全计划审查
 
-
   * **Everything Claude Code** — 本能评分、AgentShield 安全、多语言规则
-
 
   * **Spec Kit** — 规格驱动开发、宪法约束
 
-
   * **gstack** — 角色人设、/codex 审查、并行冲刺
-
 
   * **BMAD-METHOD** — 完整 SDLC、智能体人设、22+ 平台支持
 
-
   * **HumanLayer** — RPI、上下文工程、300k+ 代码行实战
-
-
 
 ## 几个没有答案的问题
 
@@ -232,8 +212,6 @@ glob + grep 比向量数据库好用。Claude Code 试过向量数据库，后�
   4. 能把现有代码库转换成规格，删除代码，然后让 AI 重新生成完全相同的代码吗？  
 
   5. 为什么 Claude 仍然忽略 CLAUDE.md 中的指令——即使全大写写着 MUST？
-
-
 
 ## 我的看法
 
@@ -254,7 +232,6 @@ glob + grep 比向量数据库好用。Claude Code 试过向量数据库，后�
 这个阈值很实用，避免上下文退化。
 
 这和 Claude Code 工具设计的底层哲学一致：核心是让开发者精细控制上下文和执行边界。
-
 
 ---
 

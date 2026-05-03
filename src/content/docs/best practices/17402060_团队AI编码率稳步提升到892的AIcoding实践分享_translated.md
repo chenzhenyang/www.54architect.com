@@ -1,6 +1,6 @@
 ---
+
 title: 团队AI编码率稳步提升到89.2%的AIcoding实践分享
-description: '---'
 tags:
 - AI
 - Technology
@@ -10,8 +10,9 @@ lastUpdated: 2026-04-22
 origin_title: 团队AI编码率稳步提升到89.2%的AIcoding实践分享
 skill_id: 17402060
 generated: 2026-04-22 08:18:38.207508
-original_url: '"https://mp.weixin.qq.com/s/dq87Orqr8SyeyECZg3BMfA"'
+original_url: '“https://mp.weixin.qq.com/s/dq87Orqr8SyeyECZg3BMfA”'
 ---
+
 ___AI应用火爆全世界，近两年不断有新的独角兽涌现，而且估值也是一浪高过一浪。乘着AI应用的浪潮，我们也在潜心专研AI在实际需求编码中的提效应用。经过近1年的探索和实践，逐渐摸索出了一些经验。截至9月底，AI编码采纳率由4月初的9.6%稳步提升至89.2%，需求交付效率提升23.6%。_
 
 回顾下我们是怎么完成编码的，首先根据需求分析设计技术方案，然后根据技术方案设计接口协议->写接口文档，再从底层朝上层分模块完成编码工作（以三层架构为例，一般编码顺序为数据层->业务逻辑层->应用层）。在这个过程中为了完成我们AI研发提效的目标需要解决以下几个问题：

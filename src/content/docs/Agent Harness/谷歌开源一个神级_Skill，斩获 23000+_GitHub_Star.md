@@ -1,13 +1,20 @@
 ---
+
 title: 谷歌开源一个神级 Skill，斩获 23000+ GitHub Star
 lastUpdated: 2026-05-01
-tags: ["Agent Skills", "AI", "开发工具", "Google"]
-categories: ["Agent Harness"]
+tags:
+  - Agent Skills
+  - AI
+  - 开发工具
+  - Google
+categories:
+  - Agent Harness
 origin_title: 谷歌开源一个神级 Skill，斩获 23000+ GitHub Star！
 author: GitHubDaily
 skill_id: "agent_skills"
 original_url: "https://mp.weixin.qq.com/s/DiRKOSV7BPkWaGUxPnLqyQ"
 ---
+
 
 AI 编程工具的能力进化速度，远超所有人预期，当前已经能快速帮我们完成众多开发任务。
 
