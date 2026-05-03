@@ -1,6 +1,3 @@
-ssh lj@n8n.hornetlabs.ca -p 1688
-密码  Qwer@1234.
-
 登录后在 project中建个子目录，cd进去后就可以执行claude命令用了
 
 oh-My-ClaudeCode https://github.com/ohmyclaudecode/oh-my-claude-code  团队开发  
