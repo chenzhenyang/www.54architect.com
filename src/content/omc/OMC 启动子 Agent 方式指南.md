@@ -1,3 +1,15 @@
+---
+title: 'OMC 启动子 Agent 方式指南'
+lastUpdated: 2026-05-04
+tags:
+  - OMC
+  - Agent
+categories:
+  - o
+  - m
+  - c
+---
+
 # OMC 启动子 Agent 方式指南
 
 ## 概述

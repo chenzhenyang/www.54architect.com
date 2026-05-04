@@ -1,3 +1,15 @@
+---
+title: 'OMC 四大工作流完整文档'
+lastUpdated: 2026-05-04
+tags:
+  - OMC
+  - 工作流
+categories:
+  - o
+  - m
+  - c
+---
+
 # OMC 四大工作流完整文档
 
 > oh-my-claudecode 核心执行模式权威指南：Autopilot、Ralph、Ultrawork、UltraQA

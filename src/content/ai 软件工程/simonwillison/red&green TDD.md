@@ -1,3 +1,35 @@
+---
+title: 'Red & Green TDD'
+lastUpdated: 2026-05-04
+tags:
+  - TDD
+  - 测试驱动开发
+categories:
+  - a
+  - i
+  - -
+  - s
+  - o
+  - f
+  - t
+  - w
+  - a
+  - r
+  - e
+  - -
+  - e
+  - n
+  - g
+  - i
+  - n
+  - e
+  - e
+  - r
+  - i
+  - n
+  - g
+---
+
 https://skills.pawgrammer.com/skills/test-driven-development
 
 ## Red-Green-Refactor

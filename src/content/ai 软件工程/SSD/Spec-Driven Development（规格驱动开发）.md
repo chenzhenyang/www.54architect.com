@@ -1,0 +1,31 @@
+---
+title: 'Spec-Driven Development（规格驱动开发）'
+lastUpdated: 2026-05-04
+tags:
+  - SSD
+  - 规格驱动开发
+categories:
+  - a
+  - i
+  - -
+  - s
+  - o
+  - f
+  - t
+  - w
+  - a
+  - r
+  - e
+  - -
+  - e
+  - n
+  - g
+  - i
+  - n
+  - e
+  - e
+  - r
+  - i
+  - n
+  - g
+---

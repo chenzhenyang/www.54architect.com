@@ -1,3 +1,16 @@
+---
+title: '使用 Ralph/Autopilot 生成测试用例完整指南'
+lastUpdated: 2026-05-04
+tags:
+  - OMC
+  - Ralph
+  - 测试
+categories:
+  - o
+  - m
+  - c
+---
+
 # 使用 Ralph/Autopilot 生成测试用例完整指南
 
 > OMC 测试用例生成权威教程

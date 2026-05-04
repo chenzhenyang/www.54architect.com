@@ -1,3 +1,15 @@
+---
+title: 'OMC'
+lastUpdated: 2026-05-04
+tags:
+  - OMC
+  - 模型配置
+categories:
+  - o
+  - m
+  - c
+---
+
 # OMC 模型配置完整指南
 
 > oh-my-claudecode 模型路由与配置权威文档

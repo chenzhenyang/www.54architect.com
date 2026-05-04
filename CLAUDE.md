@@ -1,3 +1,20 @@
+---
+title: 'CLAUDE.md - Claude Code 项目配置指南'
+lastUpdated: 2026-05-04
+tags:
+  - Claude Code
+  - CLAUDE.md
+  - 项目配置
+categories:
+  - p
+  - r
+  - o
+  - j
+  - e
+  - c
+  - t
+---
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
