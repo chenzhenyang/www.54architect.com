@@ -1,5 +1,5 @@
 ---
-title: Harness Engineering：从"驯马"到"造车"——我用这套驾驭工程让AI稳定输出了23000行代码
+title: 'Harness Engineering：从“驯马”到“造车”——我用这套驾驭工程让AI稳定输出了23000行代码'
 skill_id: 20ddef3b
 generated: 2026-05-02 01:27:56.078717
 original_url: https://mp.weixin.qq.com/s/PkVYEf1QbaAqtx4Qbpknsw
