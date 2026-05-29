@@ -106,8 +106,6 @@ Symphony 在大型单体仓库（就像我们在 OpenAI 用的那种) 中同样�
 当你打开 Symphony 代码仓库时，首先会注意到的是：从技术上讲，Symphony 其实只是一个 `SPEC.md` 文件 — 它定义了问题以及预期的解决方案。我们没有构建一个复杂的监督系统，而是通过定义问题和目标解法，为智能体提供高层次的引导。
 
 
-> **注**：此处 OpenAI 原文嵌入了完整的 `SPEC.md` 规范文档（约 5800 行代码），定义了 Symphony 的服务规范、工作流配置、编排状态机、调度策略等。完整规范请查看 [GitHub 仓库 SPEC.md](https://github.com/openai/symphony/blob/main/SPEC.md)。以下为原文后半部分内容。
-
 参考实现使用 Elixir 编写 — 因为当代码的生成成本接近于零时，我们终于可以根据语言本身的优势来做选择，例如 Elixir 在并发方面的能力 — 但其核心思想其实可以通过一份简单的 Markdown 文档来表达。我们建议你让常用的编程智能体参考该规范 (spec)，并实现一套自己的版本。
 
 Symphony 的第一个版本只是一个运行在 `tmux` 中的 Codex 会话，它会轮询 Linear，并为新任务生成子智能体。它能够工作，但稳定性并不理想。第二个版本被集成进我们的主项目代码仓库中，而该仓库本身就是围绕智能体设计的。我们已经构建了智能体运行框架 (harness)，为智能体提供在该仓库中完成高质量工作的技能和上下文，因此 Symphony 的作用只是将这些组件连接起来。
@@ -137,4 +135,13 @@ Symphony 是一个刻意保持简洁的编排层。我们将其开源，是为�
 ### 社区反响
 
 我们很高兴看到工程社区在发布后的几周内开始使用 Symphony。截至 4 月 23 日，[该项目已在 GitHub 上获得超过 1.5 万颗星](https://github.com/openai/symphony)。
+
+
+---
+
+### 社区反响
+
+我们很高兴看到工程社区在发布后的几周内开始使用 Symphony。截至 4 月 23 日，[该项目已在 GitHub 上获得超过 1.5 万颗星](https://github.com/openai/symphony)。
+
+社区开发者也积极响应，推出了多种语言的实现版本，包括 Elixir、Go、TypeScript、Rust、Java、Python 等。还有开发者将其适配为 Claude Code + GitHub Issues 的版本。
 
