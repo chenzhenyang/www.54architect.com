@@ -1,0 +1,666 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Hermes Agent 自进化体系与 Evolver 的高度相似性分析 | My Docs</title><link rel="canonical" href="https://chenzhenyang.github.io/hermes-agent/hermes-agent%E8%87%AA%E8%BF%9B%E5%8C%96%E4%BD%93%E7%B3%BB%E4%B8%8Eevolver%E7%9A%84%E9%AB%98%E5%BA%A6%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%88%86%E6%9E%90/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v6.0.8"/><meta name="generator" content="Starlight v0.38.2"/><meta property="og:title" content="Hermes Agent 自进化体系与 Evolver 的高度相似性分析"/><meta property="og:type" content="article"/><meta property="og:url" content="https://chenzhenyang.github.io/hermes-agent/hermes-agent%E8%87%AA%E8%BF%9B%E5%8C%96%E4%BD%93%E7%B3%BB%E4%B8%8Eevolver%E7%9A%84%E9%AB%98%E5%BA%A6%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%88%86%E6%9E%90/"/><meta property="og:locale" content="en"/><meta property="og:site_name" content="My Docs"/><meta name="twitter:card" content="summary_large_image"/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/_astro/common.EZxgmfMq.css"><script type="module" src="/_astro/page.BIhdncjw.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a> <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> My Docs </span> </a> </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.BdDgbKxW.js"></script>  </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf">  </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label> </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div></header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>  <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="1yxlocn" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Agent</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agent/agent_client_protocol_概述/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Agent Client Protocol 概述</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/ai_的新技能不是提示工程而是上下文工程/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI 的新技能不是提示工程，而是上下文工程</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/llm_智能体外化_记忆技能协议与工程框架的统一综述/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LLM 智能体外化：记忆、技能、协议与工程框架的统一综述</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/skill/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Skill</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/skillrouter大规模_llm_代理的技能选择检索_-_重排序管道/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">SkillRouter：大规模 LLM 代理的技能选择检索 - 重排序管道</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/从推理式思考到代理式思考/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">从推理式思考到代理式思考</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/我们如何构建_agent_builder_的记忆系统/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">我们如何构建 Agent Builder 的记忆系统</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/时间线整理/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">时间线整理</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/构建能够通过-mcp-触及生产系统的智能体/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">构建能够通过 MCP 触及生产系统的智能体</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent/每个_adk_开发者都应该知道的_5_个_agent_skill_设计模式/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">每个 ADK 开发者都应该知道的 5 个 Agent Skill 设计模式</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Exploring Generative AI</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/martin_fowler/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Martin Fowler</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/自主编码代理codex_示例/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">自主编码代理：Codex 示例</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/我依然关心代码/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">我依然关心代码</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/与_ai_合作扔掉代码/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">与 AI 合作，扔掉代码</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/是否进行氛围编程/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">是否进行氛围编程</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/将_ai_锚定到参考应用程序/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">将 AI 锚定到参考应用程序</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/理解_spec-driven-developmentkirospec-kit_和_tessl/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">理解 Spec-Driven-Development：Kiro、spec-kit 和 Tessl</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/在使用_agent_编码时评估内部质量/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">在使用 Agent 编码时评估内部质量</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/编码_agent_的上下文工程context_engineering/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">编码 Agent 的上下文工程（Context Engineering）</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/harness_engineering约束工程/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Harness Engineering（约束工程）</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/humans_and_agents_in_software_engineering_loops/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Humans and Agents in Software Engineering Loops</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/exploring-generative-ai/使用_agent_编码时评估内部质量/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">使用 Agent 编码时评估内部质量</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Agentic Engineering Patterns</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/agentic_engineering_patterns_概述/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Agentic Engineering Patterns 概述</span>  </a> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">01. Principles</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="3"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/01-principles/现在编写代码很便宜/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">现在编写代码很便宜</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/01-principles/囤积你知道如何做的事情/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">囤积你知道如何做的事情</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/01-principles/反模式需要避免的事情/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">反模式：需要避免的事情</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">03. Testing and QA</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="4"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/03-testing-and-qa/红绿_tdd/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">红/绿 TDD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/03-testing-and-qa/先运行测试/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">先运行测试</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/03-testing-and-qa/agent_手动测试/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Agent 手动测试</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">04. Understanding code</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="5"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/04-understanding-code/线性演示/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">线性演示</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/04-understanding-code/交互式解释/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">交互式解释</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">02. Working with coding agents</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="6"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/02-working-with-coding-agents/coding_agent_如何工作/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Coding Agent 如何工作</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/02-working-with-coding-agents/使用_git_与_coding_agents_协作/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">使用 Git 与 coding agents 协作</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/02-working-with-coding-agents/子智能体subagents/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">子智能体（Subagents）</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">05. Annotated prompts</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="7"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/05-annotated-prompts/gif_optimization_tool_using_webassembly_and_gifsic/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">GIF optimization tool using WebAssembly and Gifsicle</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">06. Appendix</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="8"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agentic-engineering-patterns/06-appendix/我使用的提示词/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">我使用的提示词</span>  </a> </li> </ul> </details> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Agent Harness</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="9"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/agent-harness/2026_年_agent_harness_的重要性/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">2026 年 Agent Harness 的重要性</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent-harness/agent_harness为什么_2026_年是基础设施之年而非智能之年/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Agent Harness：为什么 2026 年是基础设施之年，而非智能之年</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent-harness/harness_engineering从驯马到造车我用这套驾驭工程让ai稳定输出了23000行/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Harness Engineering：从“驯马”到“造车”——我用这套驾驭工程让AI稳定输出了23000行代码</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent-harness/openai_推出_harness_engineeringcodex_agent_驱动大规模软件开发/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenAI 推出 Harness Engineering：Codex Agent 驱动大规模软件开发</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent-harness/工程技术在智能体优先的世界中利用_codex/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">工程技术：在智能体优先的世界中利用 Codex</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent-harness/规范不是免费的为什么_ai_不会取代编程但会改变它/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">规范不是免费的：为什么 AI 不会取代编程（但会改变它）</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent-harness/谷歌开源一个神级_skill斩获-23000_github_star/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">谷歌开源一个神级 Skill，斩获 23000+ GitHub Star</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/agent-harness/长期运行应用开发的框架设计/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">长期运行应用开发的框架设计</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Claude Code</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="10"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/claude-code/10_个你可能错过的适合初学者的_claude_code_设置/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">10 个你可能错过的适合初学者的 Claude Code 设置</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/10个技巧/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">10个技巧</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/61975110_让claude_code自己提问反向引导的高级技巧/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">61975110_让Claude_Code自己提问反向引导的高级技巧</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/ai_coding工程化实践如何让ai高效写出能用的代码/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI Coding工程化实践：如何让AI高效写出能用的代码</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/anthropic_的产品经理不写_prd他们自己构建第一个版本而且行之有效/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Anthropic 的产品经理不写 PRD，他们自己构建第一个版本，而且行之有效</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/anthropic前研究员分享10个提示词解锁claude真正实力/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Anthropic前研究员分享：10个提示词解锁Claude真正实力</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/auto_mode_for_claude_code__claude/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Auto mode for Claude Code | Claude</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_agent_skills_概览/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Agent Skills 第一性原理深度解析</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_prompt_的迭代方法怎么一步步调优/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code Prompt 的迭代方法：怎么一步步调优</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_与_git_的完美协作流程/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 与 Git 的完美协作流程</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_专业开发手册/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 专业开发手册</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_最佳实践历经6个生产项目淬炼的15条实战经验/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 最佳实践：历经6个生产项目淬炼的15条实战经验</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_并行开发完全指南/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 并行开发完全指南</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_新功能_memorymd_让项目拥有全局记忆/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 新功能 memory.md 让项目拥有全局记忆</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_的完整源代码通过_npm_中的_sourcemap_泄露我们来聊聊/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 的完整源代码通过 npm 中的 Sourcemap 泄露，我们来聊聊</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_给第三方大模型用户挖的坑提示词缓存失效的真相/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 给第三方大模型用户挖的坑：提示词缓存失效的真相</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_自动模式_一种更安全的跳过权限方式/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 自动模式：一种更安全的跳过权限方式</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code_高阶实践先梳理需求再落地代码/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 高阶实践：先梳理需求再落地代码</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_code做技术选型怎么让它给出有依据的建议/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code做技术选型：怎么让它给出有依据的建议</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude_托管代理_以_10_倍速度投入生产/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude 托管代理：以 10 倍速度投入生产</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude-code-git-工作流/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code Git 工作流</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/claude-code深度拆解顶级ai编程工具核心架构/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Claude Code 深度拆解：一个顶级AI编程工具的核心架构</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/使用_agent_skills_为现实世界装备_agent/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Equipping agents for the real world with Agent Skills  Anthropic | Claude</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/打造高效的-ai-编程环境claude-code-lsp-完整配置指南/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">打造高效的 AI 编程环境：Claude Code LSP 完整配置指南</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/用-claude-code-做需求拆解比你自己想得更细/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">用 Claude Code 做需求拆解：比你自己想得更细</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/规模化托管代理_将大脑与双手解耦_anthropic/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">规模化托管代理：将大脑与双手解耦 \ Anthropic</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/让_claude_code_成本爆降_89这个开源工具有点猛/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">让 Claude Code 成本爆降 89%，这个开源工具有点猛</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/claude-code/让_claude_code_解释它自己写的代码防止黑盒/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">让 Claude Code 解释它自己写的代码：防止黑盒</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Oh My ClaudeCode</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="11"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/oh-my-claudecode/oh-my-claudecode_agent_模型配置指南/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">oh-my-claudecode Agent 模型配置指南</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/oh-my-claudecode/文档__oh_my_claudecode/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">文档 | Oh My Claudecode</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Spec-Driven Development</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="12"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/spec-driven-development/规格驱动开发综述/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">规格驱动开发综述</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/spec-driven-development/openspec_readme/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenSpec README</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">OpenClaw</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="13"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/openclaw/pi-api-reference/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">@mariozechner Pi 系列库 API 参考</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/openclaw/我是如何在_openclaw_之上构建多智能体系统的/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">我是如何在 OpenClaw 之上构建多智能体系统的</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/openclaw/教_ai_agent_互相交流openclaw_中的跨_agent_通信/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">教 AI Agent 互相交流——OpenClaw 中的跨 Agent 通信</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Hermes Agent</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="14"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/hermes-agent/hermes-agent自进化体系与evolver的高度相似性分析/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Hermes Agent 自进化体系与 Evolver 的高度相似性分析</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">best practices</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="15"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/best-practices/17402060_团队ai编码率稳步提升到892的aicoding实践分享_translated/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">团队AI编码率稳步提升到89.2%的AIcoding实践分享</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/2025_ai指标年度回顾_jellyfish_12个月数据揭示ai采用与影响/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">2025 AI 指标年度回顾：12 个月数据揭示 AI 采用与影响的全貌</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/868bb766_codebuddy_ai_coding_企业场景落地实践与思考-腾讯云开发者社区-/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CodeBuddy AI Coding 企业场景落地实践与思考-腾讯云开发者社区-腾讯云</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/979采纳率_胶水编程_业务需求出码最佳实践/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">97.9%采纳率，胶水编程：业务需求出码最佳实践【天猫AI Coding实践系列】</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/ai_copilot效应_2026年ai助手如何改变编码时间/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI Copilot效应：2026年AI助手如何改变编码时间</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/ai代码生成_企业采用最佳实践_dx/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI代码生成：2025年企业采用最佳实践</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/ai出码率70的背后_高德团队ai研发效率量化与优化/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI出码率70%+的背后：高德团队如何实现AI研发效率的量化与优化</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/ai生产力悖论_faros_22000名开发者遥测/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI生产力悖论：22000名开发者遥测揭示的真相</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/ai编码agent-harness_stripe_shopify_airbnb实践/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">什么是AI编码Agent Harness？Stripe、Shopify和Airbnb如何构建可靠的AI工作流</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/cloudflare_内部ai工程栈/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Cloudflare内部AI工程栈：在我们自己的平台上构建</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/infoq_ai_coding_2025年终盘点/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">InfoQ 2025 AI Coding年终盘点：Spec蚕食人类编码，Agent造轮子拖垮效率</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/langchain创始人警告2026成为agent工程分水岭/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LangChain 创始人警告：2026 成为“Agent 工程”分水岭，传统软件公司的生存考验开始了</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/meta_将ai采用与员工目标挂钩_50-80ai辅助代码目标/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Meta将AI采用与员工目标挂钩：50-80% AI辅助代码目标</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/openai工程师不写代码了ai写太快agent包办开发/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenAI 工程师不写代码了：AI 写得太快，人类检查跟不上，Agent 直接包办开发</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/phodal_ai编程2025总结/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI编程2025总结：国产模型能力追平，国产编程工具还在情感陪伴</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/shopify_ai优先工程实践手册/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">深入Shopify的AI优先工程实践手册</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/spotify_honk后台编码agent实践/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Spotify后台编码Agent实践：1500+ PR后的Honk项目经验</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/spotify_最优秀开发者自12月以来没有写过代码/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Spotify称其最优秀的开发者自12月以来没有写过一行代码，多亏了AI</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/stripe_vs_code_ai助手_rag实践/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Stripe VS Code AI 助手：RAG 架构与评估实践</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/一个周末-1100-美元干完-5-人-6-个月的活cloudflare-用-ai-复刻-nextjs/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">一个周末 + 1100 美元，干完 5 人 6 个月的活：Cloudflare 用 AI 复刻 Next.js</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/为什么_ai_编码采纳率不高/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">如何将 AI 代码采纳率从30%提升到80%？-阿里云开发者社区</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/京东ai全景开源_joyagent_oxygent/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">京东 AI 全景开源：JoyAgent、OxyGent 与产业级实践</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/从copilot到agent_ai编程简史/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">从 Copilot 到智能体：AI 编程简史</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/代码采纳率如何提升至50ai_自动编写单元测试实践总结/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">代码采纳率如何提升至50%？AI 自动编写单元测试实践总结</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/企业级ai编码助手采用指南_faros/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">企业级AI编码助手采用指南：扩展到数千名开发者</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/天猫ai测试用例生成实施策略详解含prompt_rag与agent/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">天猫AI测试用例生成实施策略详解含Prompt RAG与Agent</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/实验室与现实_metr研究与ai生产力真相/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">实验室与现实：METR研究无法告诉你的AI生产力真相</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/小红书_qcon上海_prd到代码直出/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">QCon上海2025小红书AI Coding实践：PRD到代码直出的探索</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/快手_l1_l2_l3分级ai编码体系_ai研发范式升级历程/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">3年、1万人，快手技术团队首次系统披露AI研发范式升级历程</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/best-practices/把999代码交给ai-腾讯云吃狗粮工程实验/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">把 99.9% 代码交给 AI：腾讯云一次&quot;吃狗粮&quot;的工程实验</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">OpenAI</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="16"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/openai/agents_sdk_的下一步演进model-native_harness_与_sandbox_e/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Agents SDK 的下一步演进：model-native harness 与 sandbox execution</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Mix</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="17"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/mix/wsl2_清除_windows_环境变量污染/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">wsl2 清除 Windows 环境变量污染</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/mix/从层级到智能/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">从层级到智能</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/mix/智能_ai_委托/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">智能 AI 委托</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Software Engineering</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="18"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/software-engineering/agentic_development_cycle以agent为中心的开发周期/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Agentic Development Cycle：以Agent为中心的开发周期</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/software-engineering/ai-写代码太快人类测试跟不上了meta-用新方法把-bug-检出率提升-4-倍/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI 写代码太快，人类测试跟不上了，Meta 用新方法把 bug 检出率提升 4 倍</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/software-engineering/ai-辅助测试单元测试覆盖率从-40-到-85-的实战/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">AI 辅助测试：单元测试覆盖率从 40% 到 85% 的实战</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/software-engineering/codex_编排的开源规范symphony/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Codex 编排的开源规范：Symphony</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/software-engineering/为什么需要一个-multi-pass-review-skill/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">为什么需要一个 Multi-Pass Review Skill：让大模型代码审核从“会说”变成“可控”</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/software-engineering/测试debug_skillai陪跑开发全流程/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">测试+Debug Skill：AI陪跑开发全流程</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/software-engineering/软件工程的未来一篇来自_thoughtworks_的闭门研讨/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">《软件工程的未来》：一篇来自 ThoughtWorks 的闭门研讨</span>  </a> </li> </ul> </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Dissertation</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="19"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/dissertation/37d6f5fa_60条科研写作高频prompt_original/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">60条科研写作高频Prompt</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/dissertation/deepinnovator让llm自己想出科研新点子/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">DeepInnovator：让LLM自己想出科研新点子</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/dissertation/全自动科研论文生成autoresearchclaw_深度技术解析/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">全自动科研论文生成：AutoResearchClaw 深度技术解析</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/dissertation/文献检索工具connected_paper/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">文献检索工具：Connected Paper</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/dissertation/科研人新宠openscholar免费准确快速的文献综述ai工具/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">科研人新宠：OpenScholar免费准确快速的文献综述AI工具</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/dissertation/论文查重ai率双超标保姆级降重降ai攻略/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">论文查重+AI率双超标：保姆级降重降AI攻略</span>  </a> </li> </ul> </details> </li> </ul>  <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist> <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="social-icons astro-wu23bvmt">  </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label> </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div> </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <script type="module" src="/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.hwBsy0Mo.js"></script><script type="module" src="/_astro/TableOfContents.astro_astro_type_script_index_0_lang.FuRcXuRY.js"></script><div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><span class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-gnoq344e" style="--depth: 0;"> <li class="astro-gnoq344e" style="--depth: 0;"> <a href="#_top" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#前言" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">前言</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#一时间线对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">一、时间线对比</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#二核心架构的高度相似" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">二、核心架构的高度相似</span> </a> <ul class="isMobile astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#21-从经验中生成可复用资产-的闭环" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">2.1 “从经验中生成可复用资产” 的闭环</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#22-执行追踪与周期性反射" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">2.2 执行追踪与周期性反射</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#23-技能资产的发现与按需加载" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">2.3 技能/资产的发现与按需加载</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#三记忆体系的同构性" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">三、记忆体系的同构性</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#四自进化仓库中的关键细节" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">四、自进化仓库中的关键细节</span> </a> <ul class="isMobile astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#41-仓库的叙事定位" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">4.1 仓库的叙事定位</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#42-phase-4-的-darwinian-evolver-命名" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">4.2 Phase 4 的 “Darwinian Evolver” 命名</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#43-技能自我改进" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">4.3 技能自我改进</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#五技能创建触发条件的精确对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">五、技能创建触发条件的精确对比</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#六源码结构对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">六、源码结构对比</span> </a> <ul class="isMobile astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#evolver-核心模块-srcgep" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Evolver 核心模块 (src/gep/)</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#hermes-agent-对应模块" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Hermes Agent 对应模块</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#模块对应表" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">模块对应表</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#七进化循环-10步实现对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">七、进化循环: 10步实现对比</span> </a> <ul class="isMobile astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#evolver-evolvejs--run-10步" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Evolver evolve.js — run() (10步):</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#hermes-evolve_skillpy--evolve-10步" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Hermes evolve_skill.py — evolve() (10步):</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#八术语分析-系统性概念替换" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">八、术语分析: 系统性概念替换</span> </a> <ul class="isMobile astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#直接残留搜索" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">直接残留搜索</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#概念术语的平行替换" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">概念术语的平行替换</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#九跨语言设计模式的一致性" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">九、跨语言设计模式的一致性</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十关于独立收敛的问题" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十、关于独立收敛的问题</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#在开源实践中当独立团队发现同领域的先行项目时标准做法是添加-related-work-或-similar-to-引用langchain-引用了-dspycrewai-对比了-autogenmetagpt-论文引用了相关多-agent-框架在如此程度的架构对应背景下完全缺乏任何此类致谢本身已经说明了问题" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">在开源实践中，当独立团队发现同领域的先行项目时，标准做法是添加 “Related Work” 或 “Similar to” 引用。LangChain 引用了 DSPy。CrewAI 对比了 AutoGen。MetaGPT 论文引用了相关多 agent 框架。在如此程度的架构对应背景下，完全缺乏任何此类致谢本身，已经说明了问题。</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十一对公平性的说明" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十一、对公平性的说明</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十二零归属" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十二、零归属</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十三结论" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十三、结论</span> </a>  </li> </ul></div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-gnoq344e" style="--depth: 0;"> <li class="astro-gnoq344e" style="--depth: 0;"> <a href="#_top" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#前言" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">前言</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#一时间线对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">一、时间线对比</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#二核心架构的高度相似" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">二、核心架构的高度相似</span> </a> <ul class="astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#21-从经验中生成可复用资产-的闭环" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">2.1 “从经验中生成可复用资产” 的闭环</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#22-执行追踪与周期性反射" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">2.2 执行追踪与周期性反射</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#23-技能资产的发现与按需加载" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">2.3 技能/资产的发现与按需加载</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#三记忆体系的同构性" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">三、记忆体系的同构性</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#四自进化仓库中的关键细节" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">四、自进化仓库中的关键细节</span> </a> <ul class="astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#41-仓库的叙事定位" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">4.1 仓库的叙事定位</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#42-phase-4-的-darwinian-evolver-命名" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">4.2 Phase 4 的 “Darwinian Evolver” 命名</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#43-技能自我改进" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">4.3 技能自我改进</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#五技能创建触发条件的精确对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">五、技能创建触发条件的精确对比</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#六源码结构对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">六、源码结构对比</span> </a> <ul class="astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#evolver-核心模块-srcgep" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Evolver 核心模块 (src/gep/)</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#hermes-agent-对应模块" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Hermes Agent 对应模块</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#模块对应表" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">模块对应表</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#七进化循环-10步实现对比" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">七、进化循环: 10步实现对比</span> </a> <ul class="astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#evolver-evolvejs--run-10步" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Evolver evolve.js — run() (10步):</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#hermes-evolve_skillpy--evolve-10步" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">Hermes evolve_skill.py — evolve() (10步):</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#八术语分析-系统性概念替换" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">八、术语分析: 系统性概念替换</span> </a> <ul class="astro-gnoq344e" style="--depth: 1;"> <li class="astro-gnoq344e" style="--depth: 1;"> <a href="#直接残留搜索" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">直接残留搜索</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 1;"> <a href="#概念术语的平行替换" class="astro-gnoq344e" style="--depth: 1;"> <span class="astro-gnoq344e" style="--depth: 1;">概念术语的平行替换</span> </a>  </li> </ul> </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#九跨语言设计模式的一致性" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">九、跨语言设计模式的一致性</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十关于独立收敛的问题" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十、关于独立收敛的问题</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#在开源实践中当独立团队发现同领域的先行项目时标准做法是添加-related-work-或-similar-to-引用langchain-引用了-dspycrewai-对比了-autogenmetagpt-论文引用了相关多-agent-框架在如此程度的架构对应背景下完全缺乏任何此类致谢本身已经说明了问题" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">在开源实践中，当独立团队发现同领域的先行项目时，标准做法是添加 “Related Work” 或 “Similar to” 引用。LangChain 引用了 DSPy。CrewAI 对比了 AutoGen。MetaGPT 论文引用了相关多 agent 框架。在如此程度的架构对应背景下，完全缺乏任何此类致谢本身，已经说明了问题。</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十一对公平性的说明" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十一、对公平性的说明</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十二零归属" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十二、零归属</span> </a>  </li><li class="astro-gnoq344e" style="--depth: 0;"> <a href="#十三结论" class="astro-gnoq344e" style="--depth: 0;"> <span class="astro-gnoq344e" style="--depth: 0;">十三、结论</span> </a>  </li> </ul></nav></starlight-toc></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">Hermes Agent 自进化体系与 Evolver 的高度相似性分析</h1> </div> </div> <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <p><img src="https://uploads.evomap.ai/blog/hermes-evolver-cover-v3.png" alt="Image 1: Hermes Agent 自进化体系与 Evolver 的高度相似性分析"></p>
+<div class="sl-heading-wrapper level-h1"><h1 id="hermes-agent-自进化体系与-evolver-的高度相似性分析">Hermes Agent 自进化体系与 Evolver 的高度相似性分析</h1><a class="sl-anchor-link" href="#hermes-agent-自进化体系与-evolver-的高度相似性分析"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Hermes Agent 自进化体系与 Evolver 的高度相似性分析”</span></a></div>
+<p>2026年4月11日</p>
+<p>Evolver GEP Hermes Agent Self-Evolution Open Source</p>
+<blockquote>
+<p>声明：本文基于公开可查证的 GitHub 仓库、官方文档和已发表博客文章编写。所有时间戳和链接均可独立验证。本文不做法律层面的抄袭定性，仅呈现事实和结构对比，供社区参考。</p>
+</blockquote>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="前言">前言</h2><a class="sl-anchor-link" href="#前言"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “前言”</span></a></div>
+<p>2026 年 2 月 1 日，<a href="https://github.com/EvoMap/evolver">Evolver</a> 作为一个 AI Agent 自进化引擎发布，10 分钟登上 ClawHub 热门榜首。随后，围绕自研的 <a href="https://evomap.ai/blog/gep-protocol-deep-dive">Genome Evolution Protocol (GEP)</a> 协议，EvoMap 团队构建了一整套 Agent 自进化基础设施 — 包括 Gene/Capsule/EvolutionEvent 三级资产体系、基于信号的选择器、因果记忆图、经验沉淀与蒸馏、反射循环、多维进化策略等。这套体系在 2 月中旬已通过多篇公开文章系统性阐述。</p>
+<p>2026 年 2 月 25 日，Nous Research 发布了 <a href="https://github.com/NousResearch/hermes-agent/releases">Hermes Agent v0.1.0</a>（“initial pre-public foundation”）。3 月 12 日的 <a href="https://github.com/NousResearch/hermes-agent/blob/main/RELEASE_v0.2.0.md">v0.2.0</a> 正式推出完整的技能生态系统。3 月 9 日，又创建了单独的 <a href="https://github.com/NousResearch/hermes-agent-self-evolution">hermes-agent-self-evolution</a> 仓库，将自进化能力作为独立项目推进。</p>
+<p>本文通过时间线、架构设计和功能模块的逐一对比，记录 Hermes Agent 体系在自进化、经验沉淀、技能创建与维护、记忆更新等方面与 Evolver/GEP 的高度相似之处。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="一时间线对比">一、时间线对比</h2><a class="sl-anchor-link" href="#一时间线对比"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “一、时间线对比”</span></a></div>
+<p>以下时间线基于 GitHub 仓库元数据和官方发布记录，均可独立验证。</p>
+<p><img src="https://uploads.evomap.ai/blog/blog-evidence-evolver-repo-2c3e5d7decaf8f5e.png" alt="Image 2: Evolver 仓库首页 -- 2026-02-01 创建，MIT 许可证"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>日期</th><th>事件</th><th>出处</th></tr></thead><tbody><tr><td><strong>2026-02-01</strong></td><td>Evolver (Capability Evolver) 发布，GEP 协议首次公开</td><td><a href="https://github.com/EvoMap/evolver">GitHub: EvoMap/evolver</a> created 2026-02-01T05:59:24Z</td></tr><tr><td>2026-02-04 ~ 02-10</td><td>EvoMap A2A 协议完善，团队内部验证</td><td><a href="https://evomap.ai/blog/evomap-origin-story">EvoMap 起源故事</a>，<a href="https://news.qq.com/rain/a/20260316A02W2100">腾讯新闻访谈</a></td></tr><tr><td><strong>2026-02-16</strong></td><td>GEP 协议深度解析发布：系统阐述 Gene/Capsule/Event 三级结构、Scan-Select-Mutate-Validate-Solidify 循环</td><td><a href="https://evomap.ai/blog/gep-protocol-deep-dive">GEP Deep Dive</a></td></tr><tr><td><strong>2026-02-17</strong></td><td>Agent Skill vs GEP Gene 对比文章：明确 “Skill 是静态工具，Gene 是动态进化资产”</td><td><a href="https://evomap.ai/blog/agent-skill-vs-gep-gene">Agent Skill vs GEP Gene</a></td></tr><tr><td>2026-02-20</td><td>EvoMap.ai 正式上线</td><td><a href="https://news.qq.com/rain/a/20260316A02W2100">腾讯新闻访谈</a></td></tr><tr><td><strong>2026-02-25</strong></td><td>Hermes Agent v0.1.0 发布（“initial pre-public foundation”）</td><td><a href="https://github.com/NousResearch/hermes-agent/releases">GitHub Releases</a>，<a href="https://m.theblockbeats.info/en/news/61867">BlockBeats</a></td></tr><tr><td><strong>2026-03-09</strong></td><td><code dir="auto">hermes-agent-self-evolution</code> 仓库创建</td><td><a href="https://github.com/NousResearch/hermes-agent-self-evolution">GitHub</a> created 2026-03-09T10:42:48Z</td></tr><tr><td><strong>2026-03-12</strong></td><td>Hermes Agent v0.2.0：正式推出 “Skills Ecosystem — 70+ bundled skills”，含 skill_manage 自主创建工具</td><td><a href="https://github.com/NousResearch/hermes-agent/blob/main/RELEASE_v0.2.0.md">RELEASE v0.2.0</a></td></tr><tr><td>2026-03-22</td><td>Evolver v1.37.0：完成 “双环进化” + 失败经验学习流水线</td><td><a href="https://evomap.ai/blog/evolver-v137-metaclaw-convergence">v1.37.0 博客</a></td></tr></tbody></table>
+<p><img src="https://uploads.evomap.ai/blog/blog-evidence-hermes-v020-release-abfc92b26a76aca8.png" alt="Image 3: Hermes Agent v0.2.0 Release 页面 -- 2026-03-12 发布"></p>
+<p><strong>核心事实</strong>：</p>
+<ul>
+<li>Evolver 的 GEP 协议（Gene/Capsule/Event 体系、Scan-Select-Mutate-Validate-Solidify 循环、信号提取与匹配、经验沉淀）在 <strong>2026 年 2 月 1-16 日已全部公开</strong>。</li>
+<li>Hermes Agent 的技能生态系统在 <strong>2026 年 3 月 12 日</strong>（v0.2.0）才正式推出。</li>
+<li>Hermes 的自进化仓库在 <strong>2026 年 3 月 9 日</strong> 才创建。</li>
+<li>时间差：Evolver 核心概念公开 -> Hermes 技能生态发布，相隔 <strong>24-39 天</strong>。</li>
+</ul>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="二核心架构的高度相似">二、核心架构的高度相似</h2><a class="sl-anchor-link" href="#二核心架构的高度相似"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “二、核心架构的高度相似”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="21-从经验中生成可复用资产-的闭环">2.1 “从经验中生成可复用资产” 的闭环</h3><a class="sl-anchor-link" href="#21-从经验中生成可复用资产-的闭环"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “2.1 “从经验中生成可复用资产” 的闭环”</span></a></div>
+<p>这是两个项目最根本的共同点：Agent 完成任务后，自动提取可复用的经验资产。</p>
+<p><strong>Evolver/GEP</strong>（<a href="https://github.com/EvoMap/evolver">2026-02-01 起</a>）：</p>
+<p>核心循环定义于 <a href="https://evomap.ai/blog/gep-protocol-deep-dive">GEP Protocol Deep Dive (2026-02-16)</a>：“Scan -> Select -> Mutate -> Validate -> Solidify”。</p>
+<p><strong>Hermes Agent</strong>（<a href="https://github.com/NousResearch/hermes-agent/blob/main/RELEASE_v0.2.0.md">v0.2.0 起, 2026-03-12</a>）：</p>
+<p>核心循环描述于 <a href="https://hermes-agent.ai/blog/hermes-agent-skills-guide">Hermes 官方技能指南</a>：“Task completes -> Agent evaluates: was this worth remembering? -> If yes, writes SKILL.md -> Future similar tasks load the skill automatically”。</p>
+<p><strong>对比</strong>：两者的核心范式完全一致 — “任务完成后自动提取可复用知识并持久化”。Evolver 使用 Gene/Capsule JSON 结构，Hermes 使用 SKILL.md Markdown 结构。形式不同，架构同构。</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="22-执行追踪与周期性反射">2.2 执行追踪与周期性反射</h3><a class="sl-anchor-link" href="#22-执行追踪与周期性反射"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “2.2 执行追踪与周期性反射”</span></a></div>
+<p><strong>Evolver</strong>（<code dir="auto">src/gep/executionTrace.js</code> + <code dir="auto">src/gep/reflection.js</code>，<a href="https://evomap.ai/blog/gep-protocol-deep-dive">2026-02 起</a>）：</p>
+<ul>
+<li>每次进化周期记录脱敏执行摘要（gene_id, mutation_category, signals_matched, 验证结果, 错误签名, 工具链, 结局）</li>
+<li>每 5 个周期触发一次战略性自我评估（Reflection Loop），基于近期事件和叙事摘要构建反思上下文</li>
+<li>反思结果记录到 <code dir="auto">evolution/reflection_log.jsonl</code></li>
+</ul>
+<p><strong>Hermes Agent</strong>（<a href="https://hermes-agent.ai/blog/self-improving-ai-guide">2026-03 起</a>）：</p>
+<ul>
+<li>每 15 次 tool call 运行一次 self-evaluation checkpoint</li>
+<li>分析成功和失败，判断是否有可复用的流程</li>
+<li>评估结果用于创建或更新 skill 文档</li>
+</ul>
+<p>引用 Hermes 官方描述（<a href="https://hermes-agent.ai/blog/self-improving-ai-guide">Self-Improving AI Guide</a>）：</p>
+<blockquote>
+<p>“Every 15 tool calls, Hermes pauses to evaluate: What did I do? What worked? What failed?”</p>
+</blockquote>
+<p><strong>对比</strong>：两者都实现了周期性反射机制。Evolver 每 5 个进化周期（约 5 次 solidify），Hermes 每 15 次 tool call。目的一致：从执行经验中提取模式并持久化。</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="23-技能资产的发现与按需加载">2.3 技能/资产的发现与按需加载</h3><a class="sl-anchor-link" href="#23-技能资产的发现与按需加载"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “2.3 技能/资产的发现与按需加载”</span></a></div>
+<p><strong>Evolver/GEP</strong>（<a href="https://mintlify.com/EvoMap/evolver/gep/protocol-spec">Selector 机制</a>）：</p>
+<ul>
+<li>Gene 的 <code dir="auto">signals_match</code> 数组定义触发条件</li>
+<li>Selector 根据信号重叠度（signal overlap）选择最佳 Gene/Capsule</li>
+<li>支持子串匹配、正则、多语言别名</li>
+</ul>
+<p><strong>Hermes Agent</strong>（<a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/">Progressive Disclosure</a>）：</p>
+<ul>
+<li>所有 skill 通过 <code dir="auto">skills_list()</code> 被发现（仅返回 name + description）</li>
+<li>Agent 按需加载匹配的 skill（<code dir="auto">skill_view(name)</code> 返回完整内容）</li>
+<li>三级渐进式加载控制 token 开销</li>
+</ul>
+<p><strong>对比</strong>：两者都实现了 “运行时能力发现 + 按需加载” 的模式。核心思路一致，具体实现有差异。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="三记忆体系的同构性">三、记忆体系的同构性</h2><a class="sl-anchor-link" href="#三记忆体系的同构性"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “三、记忆体系的同构性”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>层级</th><th>Evolver（<a href="https://evomap.ai/blog/gep-protocol-deep-dive">2026-02 起</a>）</th><th>Hermes Agent（<a href="https://hermes-agent.ai/blog/hermes-agent-memory-system">2026-03 起</a>）</th></tr></thead><tbody><tr><td>第一层：持久事实</td><td><code dir="auto">EVOLUTION_PRINCIPLES.md</code> + <code dir="auto">evolution_narrative.md</code>（注入 GEP prompt）</td><td><code dir="auto">MEMORY.md</code> + <code dir="auto">USER.md</code>（注入 system prompt）</td></tr><tr><td>第二层：程序性记忆</td><td>Gene/Capsule JSON 资产（<code dir="auto">assets/gep/genes.json</code>, <code dir="auto">capsules.json</code>）</td><td>SKILL.md 文件（<code dir="auto">~/.hermes/skills/</code>）</td></tr><tr><td>第三层：会话/事件历史</td><td><code dir="auto">events.jsonl</code> + <code dir="auto">failed_capsules.json</code></td><td>SQLite FTS5 session search</td></tr><tr><td>记忆注入方式</td><td><code dir="auto">buildNarrativeBlock()</code> 注入 GEP prompt</td><td>注入 system prompt（session start）</td></tr><tr><td>记忆容量控制</td><td>Narrative Memory 上限 30 条 / 12KB</td><td>MEMORY.md 自动压缩，合并冗余条目</td></tr><tr><td>记忆衰减</td><td>Gene 长期未使用时权重降低（pruning）</td><td>“Intelligent forgetting” — 保留关键信息，丢弃不相关的</td></tr></tbody></table>
+<p>三层记忆结构：持久事实层 + 程序性记忆层 + 历史搜索层。两者在每一层都有精确的功能对应。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="四自进化仓库中的关键细节">四、自进化仓库中的关键细节</h2><a class="sl-anchor-link" href="#四自进化仓库中的关键细节"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “四、自进化仓库中的关键细节”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="41-仓库的叙事定位">4.1 仓库的叙事定位</h3><a class="sl-anchor-link" href="#41-仓库的叙事定位"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “4.1 仓库的叙事定位”</span></a></div>
+<p>Hermes 的自进化仓库（<a href="https://github.com/NousResearch/hermes-agent-self-evolution">hermes-agent-self-evolution</a>）于 2026-03-09 创建，其 README 描述为：</p>
+<p><img src="https://uploads.evomap.ai/blog/blog-evidence-hermes-self-evolution-repo-6a0e4dbad077fcc6.png" alt="Image 4: hermes-agent-self-evolution 仓库首页 -- 创建于 2026-03-09"></p>
+<blockquote>
+<p>“<strong>Evolutionary self-improvement</strong> for Hermes Agent… optimize Hermes Agent’s <strong>skills</strong>, tool descriptions, system prompts, and <strong>code</strong> — producing measurably better versions through <strong>reflective evolutionary search</strong>.”</p>
+</blockquote>
+<p>对比 Evolver 自 2026-02-01 起的定位（<a href="https://github.com/EvoMap/evolver/blob/main/README.md">README</a>）：</p>
+<blockquote>
+<p>“A <strong>GEP-powered self-evolution engine</strong> for AI agents… automated log analysis and <strong>Genome Evolution Protocol</strong> (GEP) for auditable, reusable <strong>evolution assets</strong>.”</p>
+</blockquote>
+<p>关键重叠术语：<strong>self-evolution / self-improvement</strong>、<strong>evolutionary</strong>、<strong>skills/assets optimization</strong>、<strong>reflective</strong>。这些术语在 Evolver 语境下已被广泛使用了 5 周以上。</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="42-phase-4-的-darwinian-evolver-命名">4.2 Phase 4 的 “Darwinian Evolver” 命名</h3><a class="sl-anchor-link" href="#42-phase-4-的-darwinian-evolver-命名"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “4.2 Phase 4 的 “Darwinian Evolver” 命名”</span></a></div>
+<p>Hermes <code dir="auto">self-evolution</code> 仓库的 <a href="https://github.com/NousResearch/hermes-agent-self-evolution/blob/main/PLAN.md">PLAN.md</a> Phase 4 计划使用 <a href="https://github.com/imbue-ai/darwinian_evolver">Imbue AI 的 Darwinian Evolver</a>（一个 AGPL v3 代码进化框架）进行代码进化。</p>
+<p>需要注意：Imbue AI 的 Darwinian Evolver 是一个独立的学术项目，与 EvoMap 的 Evolver 无关。但在 2026 年 3 月的 AI Agent 领域，“Evolver” 这个名称已经与 EvoMap 的自进化引擎紧密关联（<a href="https://github.com/EvoMap/evolver">1852 stars, 114 releases</a>）。在自进化语境下使用相近的名称，客观上造成了混淆。</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="43-技能自我改进">4.3 技能自我改进</h3><a class="sl-anchor-link" href="#43-技能自我改进"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “4.3 技能自我改进”</span></a></div>
+<p><strong>Evolver</strong>（<a href="https://evomap.ai/blog/evolver-v137-metaclaw-convergence">v1.37.0, 2026-03-22</a>）：</p>
+<ul>
+<li>Gene 在使用中被持续验证，Capsule 记录 success_streak</li>
+<li>失败的 Capsule 通过 <code dir="auto">skillDistiller.js</code> 进入失败学习流水线</li>
+<li>Gene 长期未使用时权重自然衰减</li>
+</ul>
+<p><strong>Hermes Agent</strong> 官网宣传语（<a href="https://hermes-agent.org/">hermes-agent.org</a>）：</p>
+<blockquote>
+<p>“Skills self-improve during use”</p>
+</blockquote>
+<p>Hermes 的 <a href="https://hermes-agent.ai/blog/self-improving-ai-guide">self-improving AI 指南</a>进一步说明：</p>
+<blockquote>
+<p>“Skills do not just get created — they get refined. Each time Hermes uses an existing skill and encounters something new, it patches the skill.”</p>
+</blockquote>
+<p><strong>对比</strong>：“技能/资产在使用中自我改进” 这一概念，Evolver 从初版的 Capsule success_streak 追踪就已实现。Hermes 的表述采用了几乎一致的叙事框架。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="五技能创建触发条件的精确对比">五、技能创建触发条件的精确对比</h2><a class="sl-anchor-link" href="#五技能创建触发条件的精确对比"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “五、技能创建触发条件的精确对比”</span></a></div>
+<p><img src="https://uploads.evomap.ai/blog/blog-evidence-hermes-skills-dir-88c570af53542fca.png" alt="Image 5: Hermes Agent skills 目录结构"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>Evolver/GEP</th><th>Hermes Agent</th></tr></thead><tbody><tr><td>触发时机</td><td>Agent 成功解决问题后自动触发 solidify 流程</td><td>完成复杂任务后（<a href="https://hermes-agent.ai/blog/hermes-agent-skills-guide">5+ tool calls</a>）自动创建</td></tr><tr><td>评估机制</td><td>分析执行历史 + 提取信号匹配模式</td><td>Agent 评估 “was this worth remembering?”</td></tr><tr><td>资产格式</td><td>Gene (JSON) + Capsule (JSON)</td><td>SKILL.md (Markdown + YAML frontmatter)</td></tr><tr><td>持久化位置</td><td><code dir="auto">assets/gep/genes.json</code>, <code dir="auto">capsules.json</code></td><td><code dir="auto">~/.hermes/skills/[category]/SKILL.md</code></td></tr><tr><td>资产结构</td><td>id, signals_match, strategy[], validation[], constraints</td><td>name, description, When to Use, Procedure, Pitfalls, Verification</td></tr><tr><td>更新机制</td><td>Gene 被 Capsule 验证后增强；失败进入学习流水线</td><td><code dir="auto">skill_manage(action="patch")</code> 就地更新</td></tr><tr><td>发现机制</td><td>Selector 基于 signal overlap</td><td>Progressive Disclosure: <code dir="auto">skills_list()</code> -><code dir="auto">skill_view(name)</code></td></tr></tbody></table>
+<p>每一个核心维度 — 触发时机、评估机制、持久化、更新、发现 — 都有精确的功能对应。</p>
+<hr>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="六源码结构对比">六、源码结构对比</h2><a class="sl-anchor-link" href="#六源码结构对比"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “六、源码结构对比”</span></a></div>
+<p>超越架构层面的相似性，对比两个项目的实际源码组织可以发现功能等价的模块一一对应。</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="evolver-核心模块-srcgep">Evolver 核心模块 (<code dir="auto">src/gep/</code>)</h3><a class="sl-anchor-link" href="#evolver-核心模块-srcgep"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Evolver 核心模块 (src/gep/)”</span></a></div>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.v4551.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">src/gep/</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">selector.js</span><span style="--0:#D6DEEB;--1:#403F53">          </span><span style="--0:#919F9F;--1:#5F636F"># 基因选择引擎(信号匹配+漂移)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">signals.js</span><span style="--0:#D6DEEB;--1:#403F53">           </span><span style="--0:#919F9F;--1:#5F636F"># 三层信号提取(正则/关键词/LLM)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">solidify.js</span><span style="--0:#D6DEEB;--1:#403F53">          </span><span style="--0:#919F9F;--1:#5F636F"># 固化引擎(验证+回滚+发布)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">mutation.js</span><span style="--0:#D6DEEB;--1:#403F53">          </span><span style="--0:#919F9F;--1:#5F636F"># 突变构建器(repair/optimize/innovate/explore)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">reflection.js</span><span style="--0:#D6DEEB;--1:#403F53">        </span><span style="--0:#919F9F;--1:#5F636F"># 反射机制(周期性战略分析)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">memoryGraph.js</span><span style="--0:#D6DEEB;--1:#403F53">       </span><span style="--0:#919F9F;--1:#5F636F"># 记忆图谱(JSONL追加, Jaccard相似度)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">skillDistiller.js</span><span style="--0:#D6DEEB;--1:#403F53">    </span><span style="--0:#919F9F;--1:#5F636F"># 技能蒸馏器(Capsule -> Gene蒸馏)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">assetStore.js</span><span style="--0:#D6DEEB;--1:#403F53">        </span><span style="--0:#919F9F;--1:#5F636F"># 资产存储(genes.json/capsules.json/events.jsonl)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">executionTrace.js</span><span style="--0:#D6DEEB;--1:#403F53">    </span><span style="--0:#919F9F;--1:#5F636F"># 执行跟踪(脱敏后的跨agent共享)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">narrativeMemory.js</span><span style="--0:#D6DEEB;--1:#403F53">   </span><span style="--0:#919F9F;--1:#5F636F"># 叙事记忆(进化故事摘要)</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#82AAFF;--1:#3B61B0">prompt.js</span><span style="--0:#D6DEEB;--1:#403F53">            </span><span style="--0:#919F9F;--1:#5F636F"># GEP提示词构建器</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="src/gep/  selector.js          # 基因选择引擎(信号匹配+漂移)  signals.js           # 三层信号提取(正则/关键词/LLM)  solidify.js          # 固化引擎(验证+回滚+发布)  mutation.js          # 突变构建器(repair/optimize/innovate/explore)  reflection.js        # 反射机制(周期性战略分析)  memoryGraph.js       # 记忆图谱(JSONL追加, Jaccard相似度)  skillDistiller.js    # 技能蒸馏器(Capsule -> Gene蒸馏)  assetStore.js        # 资产存储(genes.json/capsules.json/events.jsonl)  executionTrace.js    # 执行跟踪(脱敏后的跨agent共享)  narrativeMemory.js   # 叙事记忆(进化故事摘要)  prompt.js            # GEP提示词构建器"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="hermes-agent-对应模块">Hermes Agent 对应模块</h3><a class="sl-anchor-link" href="#hermes-agent-对应模块"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Hermes Agent 对应模块”</span></a></div>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5F636F"># 主仓库 hermes-agent/</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">agent/memory_manager.py</span><span style="--0:#D6DEEB;--1:#403F53">     </span><span style="--0:#919F9F;--1:#5F636F"># 记忆管理(MEMORY.md + USER.md)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">agent/context_engine.py</span><span style="--0:#D6DEEB;--1:#403F53">     </span><span style="--0:#919F9F;--1:#5F636F"># 上下文引擎(压缩/会话管理)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">agent/prompt_builder.py</span><span style="--0:#D6DEEB;--1:#403F53">     </span><span style="--0:#919F9F;--1:#5F636F"># 提示词构建(系统提示+技能索引)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">agent/skill_utils.py</span><span style="--0:#D6DEEB;--1:#403F53">        </span><span style="--0:#919F9F;--1:#5F636F"># 技能元数据工具(frontmatter解析)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">agent/skill_commands.py</span><span style="--0:#D6DEEB;--1:#403F53">     </span><span style="--0:#919F9F;--1:#5F636F"># 技能命令(运行时发现+激活)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">tools/skill_manager_tool.py</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#919F9F;--1:#5F636F"># 技能CRUD(create/edit/patch/delete)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">tools/memory_tool.py</span><span style="--0:#D6DEEB;--1:#403F53">        </span><span style="--0:#919F9F;--1:#5F636F"># 持久记忆工具(MEMORY.md CRUD)</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5F636F"># 自进化仓库 hermes-agent-self-evolution/</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">evolution/core/fitness.py</span><span style="--0:#D6DEEB;--1:#403F53">       </span><span style="--0:#919F9F;--1:#5F636F"># 适应度评估(LLM-as-judge评分)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">evolution/core/constraints.py</span><span style="--0:#D6DEEB;--1:#403F53">   </span><span style="--0:#919F9F;--1:#5F636F"># 约束验证(大小/增长/结构)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">evolution/skills/evolve_skill.py</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#919F9F;--1:#5F636F"># 技能进化主循环(10步编排)</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent/memory_manager.py     # 记忆管理(MEMORY.md + USER.md)agent/context_engine.py     # 上下文引擎(压缩/会话管理)agent/prompt_builder.py     # 提示词构建(系统提示+技能索引)agent/skill_utils.py        # 技能元数据工具(frontmatter解析)agent/skill_commands.py     # 技能命令(运行时发现+激活)tools/skill_manager_tool.py # 技能CRUD(create/edit/patch/delete)tools/memory_tool.py        # 持久记忆工具(MEMORY.md CRUD)evolution/core/fitness.py       # 适应度评估(LLM-as-judge评分)evolution/core/constraints.py   # 约束验证(大小/增长/结构)evolution/skills/evolve_skill.py # 技能进化主循环(10步编排)"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="模块对应表">模块对应表</h3><a class="sl-anchor-link" href="#模块对应表"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “模块对应表”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>功能</th><th>Evolver 文件</th><th>Hermes 文件</th></tr></thead><tbody><tr><td>进化主循环</td><td><code dir="auto">evolve.js</code> run()</td><td><code dir="auto">evolve_skill.py</code> evolve()</td></tr><tr><td>资产选择/匹配</td><td><code dir="auto">selector.js</code> selectGene()</td><td><code dir="auto">skill_commands.py</code> scan_skill_commands()</td></tr><tr><td>资产创建/固化</td><td><code dir="auto">solidify.js</code> solidify()</td><td><code dir="auto">skill_manager_tool.py</code> create action</td></tr><tr><td>适应度/验证</td><td><code dir="auto">solidify.js</code> computeProcessScores()</td><td><code dir="auto">fitness.py</code> LLMJudge.score()</td></tr><tr><td>约束检查</td><td><code dir="auto">solidify.js</code> + <code dir="auto">policyCheck.js</code></td><td><code dir="auto">constraints.py</code> ConstraintValidator</td></tr><tr><td>反射/评估</td><td><code dir="auto">reflection.js</code> shouldReflect()</td><td>每15次tool call自评估</td></tr><tr><td>记忆持久化</td><td><code dir="auto">assetStore.js</code> (JSON files)</td><td><code dir="auto">memory_tool.py</code> (MEMORY.md files)</td></tr><tr><td>提示词组装</td><td><code dir="auto">prompt.js</code> buildGepPrompt()</td><td><code dir="auto">prompt_builder.py</code> build_skills_system_prompt()</td></tr><tr><td>执行追踪</td><td><code dir="auto">executionTrace.js</code></td><td><code dir="auto">agent/trajectory.py</code> save_trajectory()</td></tr><tr><td>技能蒸馏/改进</td><td><code dir="auto">skillDistiller.js</code> autoDistill()</td><td><code dir="auto">evolve_skill.py</code> GEPA优化循环</td></tr></tbody></table>
+<p>每一个 Evolver 核心模块在 Hermes 中都有功能等价的对应文件。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="七进化循环-10步实现对比">七、进化循环: 10步实现对比</h2><a class="sl-anchor-link" href="#七进化循环-10步实现对比"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “七、进化循环: 10步实现对比”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="evolver-evolvejs--run-10步">Evolver <code dir="auto">evolve.js</code> — <code dir="auto">run()</code> (10步):</h3><a class="sl-anchor-link" href="#evolver-evolvejs--run-10步"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Evolver evolve.js — run() (10步):”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="scss"><code><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">1. ensureAssetFiles()           -- 确保资产文件存在</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">2. extractSignals()             -- 三层信号提取</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">3. getMemoryAdvice()            -- 记忆图谱咨询</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">4. selectGeneAndCapsule()       -- 基因+胶囊选择</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">5. buildMutation()              -- 构建突变</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">6. selectPersonalityForRun()    -- 选择人格</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">7. buildGepPrompt()             -- 组装GEP提示词</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">8. writePromptArtifact()        -- 写入提示文件</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">9. writeStateForSolidify()      -- 写入固化状态</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">10. shouldReflect() -> recordReflection()  -- 反射</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="1. ensureAssetFiles()           -- 确保资产文件存在2. extractSignals()             -- 三层信号提取3. getMemoryAdvice()            -- 记忆图谱咨询4. selectGeneAndCapsule()       -- 基因+胶囊选择5. buildMutation()              -- 构建突变6. selectPersonalityForRun()    -- 选择人格7. buildGepPrompt()             -- 组装GEP提示词8. writePromptArtifact()        -- 写入提示文件9. writeStateForSolidify()      -- 写入固化状态10. shouldReflect() -> recordReflection()  -- 反射"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="hermes-evolve_skillpy--evolve-10步">Hermes <code dir="auto">evolve_skill.py</code> — <code dir="auto">evolve()</code> (10步):</h3><a class="sl-anchor-link" href="#hermes-evolve_skillpy--evolve-10步"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Hermes evolve_skill.py — evolve() (10步):”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="lua"><code><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">1.</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">find_skill</span><span style="--0:#D6DEEB;--1:#403F53">() </span><span style="--0:#7FDBCA;--1:#096E72">+</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">load_skill</span><span style="--0:#D6DEEB;--1:#403F53">()  </span><span style="--0:#919F9F;--1:#5F636F">-- 加载技能文件</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">2.</span><span style="--0:#D6DEEB;--1:#403F53"> 构建评估数据集               </span><span style="--0:#919F9F;--1:#5F636F">-- generate/load eval dataset</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">3.</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">validate_all</span><span style="--0:#D6DEEB;--1:#403F53">() </span><span style="--0:#C5E478;--1:#3B61B0">baseline</span><span style="--0:#D6DEEB;--1:#403F53">      </span><span style="--0:#919F9F;--1:#5F636F">-- 基线约束验证</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">4.</span><span style="--0:#D6DEEB;--1:#403F53"> 配置 </span><span style="--0:#C5E478;--1:#3B61B0">DSPy</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#7FDBCA;--1:#096E72">+</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">GEPA</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">optimizer</span><span style="--0:#D6DEEB;--1:#403F53">   </span><span style="--0:#919F9F;--1:#5F636F">-- 设置优化器</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">5.</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">GEPA</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">optimization</span><span style="--0:#D6DEEB;--1:#403F53">            </span><span style="--0:#919F9F;--1:#5F636F">-- 运行优化循环</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">6.</span><span style="--0:#D6DEEB;--1:#403F53"> 提取进化后的技能文本          </span><span style="--0:#919F9F;--1:#5F636F">-- extract evolved body</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">7.</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">validate_all</span><span style="--0:#D6DEEB;--1:#403F53">() </span><span style="--0:#C5E478;--1:#3B61B0">evolved</span><span style="--0:#D6DEEB;--1:#403F53">       </span><span style="--0:#919F9F;--1:#5F636F">-- 进化后约束验证</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">8.</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">holdout</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">evaluation</span><span style="--0:#D6DEEB;--1:#403F53">           </span><span style="--0:#919F9F;--1:#5F636F">-- 留出集评估</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">9.</span><span style="--0:#D6DEEB;--1:#403F53"> 报告结果                     </span><span style="--0:#919F9F;--1:#5F636F">-- report metrics</span></div></div><div class="ec-line"><div class="code"><span style="--0:#F78C6C;--1:#AA0982">10.</span><span style="--0:#D6DEEB;--1:#403F53"> 保存输出                    </span><span style="--0:#919F9F;--1:#5F636F">-- save evolved skill</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="1. find_skill() + load_skill()  -- 加载技能文件2. 构建评估数据集               -- generate/load eval dataset3. validate_all() baseline      -- 基线约束验证4. 配置 DSPy + GEPA optimizer   -- 设置优化器5. GEPA optimization            -- 运行优化循环6. 提取进化后的技能文本          -- extract evolved body7. validate_all() evolved       -- 进化后约束验证8. holdout evaluation           -- 留出集评估9. 报告结果                     -- report metrics10. 保存输出                    -- save evolved skill"><div></div></button></div></figure></div>
+<p>两者都是 <strong>10步编排的进化主循环</strong>，核心模式一致: 加载 -> 评估 -> 选择/优化 -> 验证 -> 持久化。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="八术语分析-系统性概念替换">八、术语分析: 系统性概念替换</h2><a class="sl-anchor-link" href="#八术语分析-系统性概念替换"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “八、术语分析: 系统性概念替换”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="直接残留搜索">直接残留搜索</h3><a class="sl-anchor-link" href="#直接残留搜索"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “直接残留搜索”</span></a></div>
+<p>对 Hermes 两个仓库的全文搜索:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>搜索词</th><th>hermes-agent</th><th>hermes-self-evolution</th></tr></thead><tbody><tr><td><code dir="auto">EvoMap</code></td><td>无匹配</td><td>无匹配</td></tr><tr><td><code dir="auto">evolver</code> (不含 Darwinian)</td><td>无匹配</td><td>无匹配</td></tr><tr><td><code dir="auto">Genome Evolution Protocol</code></td><td>无匹配</td><td>无匹配</td></tr><tr><td><code dir="auto">capsule</code></td><td>无匹配</td><td>无匹配</td></tr><tr><td><code dir="auto">solidify</code></td><td>无匹配</td><td>无匹配</td></tr><tr><td><code dir="auto">signals_match</code></td><td>无匹配</td><td>无匹配</td></tr></tbody></table>
+<p>没有找到直接的代码残留。这与 AI 跨语言重写的特征一致 — AI 重写架构时不会保留原项目的特征性字符串，但架构层面的同构性无法被重写所消除。</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="概念术语的平行替换">概念术语的平行替换</h3><a class="sl-anchor-link" href="#概念术语的平行替换"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “概念术语的平行替换”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Evolver 术语</th><th>Hermes 术语</th><th>含义</th></tr></thead><tbody><tr><td>Gene</td><td>SKILL.md</td><td>可复用的程序性知识单元</td></tr><tr><td>Capsule</td><td>skill execution record</td><td>单次执行的完整记录</td></tr><tr><td>EvolutionEvent</td><td>(无直接对应)</td><td>进化事件日志条目</td></tr><tr><td>solidify</td><td>skill_manage(action=“create”)</td><td>将经验固化为持久资产</td></tr><tr><td>signals_match</td><td>frontmatter conditions</td><td>触发条件匹配</td></tr><tr><td>Selector</td><td>skills_list() + skill_view()</td><td>运行时能力发现</td></tr><tr><td>buildNarrativeBlock()</td><td>build_skills_system_prompt()</td><td>将记忆注入提示词</td></tr><tr><td>assetStore (genes.json)</td><td>~/.hermes/skills/ (SKILL.md files)</td><td>资产持久化存储</td></tr><tr><td>memoryGraph (JSONL)</td><td>MEMORY.md + USER.md</td><td>声明性记忆存储</td></tr><tr><td>executionTrace</td><td>trajectory.py</td><td>执行轨迹记录</td></tr><tr><td>skillDistiller</td><td>evolve_skill.py (GEPA loop)</td><td>从经验中蒸馏/改进技能</td></tr></tbody></table>
+<p>每一个 Evolver 核心概念在 Hermes 中都有术语不同但功能等价的对应 — 这是系统性概念替换的典型特征。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="九跨语言设计模式的一致性">九、跨语言设计模式的一致性</h2><a class="sl-anchor-link" href="#九跨语言设计模式的一致性"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “九、跨语言设计模式的一致性”</span></a></div>
+<p>尽管技术栈完全不同(Node.js vs Python)，两个项目在架构设计模式上表现出高度一致:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>设计模式</th><th>Evolver</th><th>Hermes</th></tr></thead><tbody><tr><td>多维评分</td><td><code dir="auto">computeProcessScores()</code> 8阶段加权评分</td><td><code dir="auto">FitnessScore</code> 3维加权评分(correctness 0.5 + procedure 0.3 + conciseness 0.2)</td></tr><tr><td>约束门控</td><td><code dir="auto">policyCheck.js</code>(blast radius/禁止路径/验证)</td><td><code dir="auto">ConstraintValidator</code>(size/growth/non-empty/structure)</td></tr><tr><td>安全扫描</td><td><code dir="auto">sanitize.js</code>(泄露检查+敏感数据脱敏)</td><td><code dir="auto">skills_guard.py</code>(80+正则威胁模式) + <code dir="auto">memory_tool.py</code>(注入检测)</td></tr><tr><td>原子写入</td><td><code dir="auto">writeJsonAtomic()</code> 先写.tmp再rename</td><td><code dir="auto">skill_manager_tool.py</code> 使用 tempfile + 原子替换</td></tr><tr><td>分层记忆</td><td>持久事实层 + 程序性记忆层 + 历史搜索层</td><td>MEMORY.md(声明性) + SKILL.md(程序性) + SQLite FTS5(搜索)</td></tr><tr><td>注入防护</td><td>在 <code dir="auto">prompt.js</code> 中处理</td><td><code dir="auto">_scan_context_content()</code> 在 <code dir="auto">prompt_builder.py</code> 中</td></tr><tr><td>容量控制</td><td>Narrative Memory 上限 30条/12KB</td><td>MEMORY.md 上限 2200 chars, USER.md 上限 1375 chars</td></tr></tbody></table>
+<p>两个团队使用不同语言却做出了相同的架构决策。这些决策的组合同构度远超”独立发明”的概率。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="十关于独立收敛的问题">十、关于独立收敛的问题</h2><a class="sl-anchor-link" href="#十关于独立收敛的问题"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “十、关于独立收敛的问题”</span></a></div>
+<p>一个自然的问题是：两个团队能否独立地到达相同的设计？</p>
+<p>就任何单一维度而言，答案可能是肯定的。“从经验中学习”是一个通用的 AI 概念。周期性自评估在学术界有先例。将记忆注入 prompt 是当前 LLM 架构下的工程必然。</p>
+<p>但问题不在于某一个维度能否独立收敛。问题在于：<strong>它们是否能在同一个项目中、同一个时间窗口内同时收敛</strong>。</p>
+<p>考虑这个具体的组合：</p>
+<ul>
+<li>三层资产体系（可复用知识单元 + 执行记录 + 事件日志）— 不是两层，不是四层，不是扁平 KV，而是精确的三层，且每层的语义角色一一对应</li>
+<li>三层记忆体系（声明性事实 + 程序性技能 + 可搜索历史）— 不是按时间分层，不是按来源分层，不是按信任度分层，而是相同的”声明-程序-搜索”三分法</li>
+<li>运行时渐进式技能发现（信号/条件触发 + 按需加载）— 不是全量注入，不是 embedding RAG，不是固定技能集</li>
+<li>两个实现中都是 10 步编排的进化主循环</li>
+<li>多维加权适应度评分（而非二元 pass/fail）</li>
+<li>collect-all-then-gate 模式的约束门控</li>
+<li>原子写入、安全扫描、注入防护、容量控制</li>
+</ul>
+<p>每一项都代表在设计空间中的一次选择。独立选中相同替代方案的概率，随着每一个额外匹配的维度而递减。</p>
+<p>再看上下文：</p>
+<ul>
+<li>Evolver 的完整架构在 2026 年 2 月 1-16 日已全部公开</li>
+<li>Hermes 技能生态 3 月 12 日发布，自进化仓库 3 月 9 日创建</li>
+<li>在那段时间内，GitHub 搜索 “agent self-evolution” 必然会发现 Evolver（1852 stars，114 releases）</li>
+<li>在 7 份公开材料中，Hermes 团队对 Evolver/GEP/EvoMap 零提及</li>
+</ul>
+<div class="sl-heading-wrapper level-h2"><h2 id="在开源实践中当独立团队发现同领域的先行项目时标准做法是添加-related-work-或-similar-to-引用langchain-引用了-dspycrewai-对比了-autogenmetagpt-论文引用了相关多-agent-框架在如此程度的架构对应背景下完全缺乏任何此类致谢本身已经说明了问题">在开源实践中，当独立团队发现同领域的先行项目时，标准做法是添加 “Related Work” 或 “Similar to” 引用。LangChain 引用了 DSPy。CrewAI 对比了 AutoGen。MetaGPT 论文引用了相关多 agent 框架。在如此程度的架构对应背景下，完全缺乏任何此类致谢本身，已经说明了问题。</h2><a class="sl-anchor-link" href="#在开源实践中当独立团队发现同领域的先行项目时标准做法是添加-related-work-或-similar-to-引用langchain-引用了-dspycrewai-对比了-autogenmetagpt-论文引用了相关多-agent-框架在如此程度的架构对应背景下完全缺乏任何此类致谢本身已经说明了问题"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “在开源实践中，当独立团队发现同领域的先行项目时，标准做法是添加 “Related Work” 或 “Similar to” 引用。LangChain 引用了 DSPy。CrewAI 对比了 AutoGen。MetaGPT 论文引用了相关多 agent 框架。在如此程度的架构对应背景下，完全缺乏任何此类致谢本身，已经说明了问题。”</span></a></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="十一对公平性的说明">十一、对公平性的说明</h2><a class="sl-anchor-link" href="#十一对公平性的说明"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “十一、对公平性的说明”</span></a></div>
+<p>本文应同时注意以下事实，以保证论述的公正：</p>
+<ol>
+<li>
+<p><strong>Agent Skills 标准 (agentskills.io) 早于 Evolver</strong>。Anthropic 于 <a href="https://www.paperclipped.de/en/blog/agent-skills-open-standard-interoperability/">2025 年 12 月 18 日</a>发布了 Agent Skills 开放标准，定义了 SKILL.md 文件格式。Hermes 采用这一标准是合理的行业选择，32+ 工具均已采用。</p>
+</li>
+<li>
+<p><strong>Hermes Agent 仓库创建于 2025 年 7 月 22 日</strong>（<a href="https://github.com/NousResearch/hermes-agent">GitHub 元数据</a>），早于 Evolver 的 2026 年 2 月 1 日。但该仓库在 2026 年 2 月 25 日之前一直是私有项目（v0.1.0 自称 “initial pre-public foundation”），技能生态系统直到 <a href="https://github.com/NousResearch/hermes-agent/blob/main/RELEASE_v0.2.0.md">v0.2.0 (2026-03-12)</a> 才正式发布。<strong>无法证明</strong> Hermes 在私有阶段已包含与 GEP 类似的自进化功能。</p>
+</li>
+<li>
+<p><strong>“从经验中学习” 是一个通用的 AI 概念</strong>。独立达到相似方案的可能性存在。但三层记忆体系、周期性反射循环、任务后自动经验提取闭环、技能运行时发现与按需加载这些具体架构选择的<strong>组合</strong>，其同构程度值得注意。</p>
+</li>
+<li>
+<p><strong>Hermes 的自进化仓库使用了独立的技术栈</strong>。其核心引擎采用 <a href="https://github.com/gepa-ai/gepa">GEPA (Genetic-Pareto)</a>，这是 UC Berkeley/Stanford 团队的独立学术成果（<a href="https://openreview.net/forum?id=RQm2KQTM5r">ICLR 2026 Oral</a>），集成于 <a href="https://dspy.ai/api/optimizers/GEPA/overview/">Stanford NLP 的 DSPy 框架</a>。GEPA 与 GEP 是完全不同的项目，不应混为一谈。</p>
+</li>
+</ol>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="十二零归属">十二、零归属</h2><a class="sl-anchor-link" href="#十二零归属"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “十二、零归属”</span></a></div>
+<p>这是本文最核心的论点。</p>
+<p>在 Hermes Agent 及其 self-evolution 仓库的<strong>全部</strong>公开材料中：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>资料</th><th>对 Evolver/GEP/EvoMap 的引用</th></tr></thead><tbody><tr><td><a href="https://github.com/NousResearch/hermes-agent-self-evolution">hermes-agent-self-evolution README</a></td><td><strong>无</strong></td></tr><tr><td><a href="https://github.com/NousResearch/hermes-agent-self-evolution/blob/main/PLAN.md">hermes-agent-self-evolution PLAN.md</a></td><td><strong>无</strong></td></tr><tr><td><a href="https://hermes-agent.org/">hermes-agent.org 官网</a></td><td><strong>无</strong></td></tr><tr><td><a href="https://hermes-agent.ai/blog/hermes-agent-skills-guide">Hermes Agent 技能指南</a></td><td><strong>无</strong></td></tr><tr><td><a href="https://hermes-agent.ai/blog/self-improving-ai-guide">Self-Improving AI 指南</a></td><td><strong>无</strong></td></tr><tr><td><a href="https://github.com/NousResearch/hermes-agent/blob/main/RELEASE_v0.2.0.md">Hermes Agent v0.2.0 Release Notes</a></td><td><strong>无</strong></td></tr><tr><td><a href="https://hermes-agent.ai/vs/cursor">Hermes vs Cursor 对比页</a></td><td><strong>无</strong></td></tr></tbody></table>
+<p>Hermes 团队引用了 <a href="https://github.com/gepa-ai/gepa">GEPA / DSPy</a>（Stanford/Berkeley）和 <a href="https://github.com/imbue-ai/darwinian_evolver">Darwinian Evolver</a>（Imbue AI），这些是正当的学术引用。但对于其<strong>整体自进化架构</strong>最相似的先行项目 — <a href="https://github.com/EvoMap/evolver">EvoMap Evolver</a>（1852 stars, 114 releases, 2026-02-01 起公开）— <strong>只字未提</strong>。</p>
+<p>作为对比，EvoMap 团队主动发布了 <a href="https://evomap.ai/blog/hermes-agent-vs-evomap-agent-memory">Hermes Agent vs EvoMap</a> 对比文章（2026-04-09），承认 Hermes 的价值并给出公正评价。</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="十三结论">十三、结论</h2><a class="sl-anchor-link" href="#十三结论"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “十三、结论”</span></a></div>
+<p>本文不意图下法律定性的”抄袭”结论。在开源世界中，思想的交叉传播是常态，独立发明也是可能的。</p>
+<p>但以下事实组合值得社区关注：</p>
+<ol>
+<li><strong>时间先后明确</strong>：Evolver 的 GEP 协议（Gene/Capsule/Event 体系、Scan-Select-Mutate-Validate-Solidify 循环、信号选择器、叙事记忆、执行追踪、反射循环）在 2026 年 2 月 1-16 日已全部公开。Hermes 的技能生态在 3 月 12 日才发布，自进化仓库在 3 月 9 日才创建。</li>
+</ol>
+<p><img src="https://uploads.evomap.ai/blog/blog-evidence-evolver-releases-0bc34b6ecbaba41a.png" alt="Image 6: Evolver 发布历史 -- 截至本文撰写已有 114+ releases"></p>
+<ol>
+<li>
+<p><strong>架构同构度极高</strong>：从三层记忆体系、任务完成后自动提取可复用资产的闭环、周期性反射循环、技能自我改进机制、运行时发现与按需加载，几乎每一个核心模块都有一对一的对应。</p>
+</li>
+<li>
+<p><strong>零归属</strong>：Hermes Agent 团队在所有公开资料中没有对 Evolver/GEP 做任何形式的引用或致谢。</p>
+</li>
+</ol>
+<p>我们认为，在开源社区中，如果一个项目的架构显著受到了另一个先行项目的启发，那么一句致谢不仅是礼貌，更是开源精神的体现。我们不要求任何许可费、署名权或代码层面的归属 — 只是希望事实被记录，历史被尊重。</p>
+<hr>
+<p><em>本文引用的所有链接和时间戳均来自公开的 GitHub 仓库元数据、官方网站和已发表文章，可独立验证。</em></p>
+<p><em><a href="https://evomap.ai/">EvoMap 团队</a> — 2026 年 4 月</em></p> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">  <p>Last updated: <time datetime="2026-04-11T00:00:00.000Z">Apr 11, 2026</time></p> </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr"> <a href="/openclaw/教_ai_agent_互相交流openclaw_中的跨_agent_通信/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">教 AI Agent 互相交流——OpenClaw 中的跨 Agent 通信</span> </span> </a> <a href="/best-practices/17402060_团队ai编码率稳步提升到892的aicoding实践分享_translated/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg> <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">团队AI编码率稳步提升到89.2%的AIcoding实践分享</span> </span> </a> </div>  </footer> </div> </div>  </main> </div> </div> </div> </div> </body></html>
